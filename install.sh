@@ -23,6 +23,6 @@ do
   [ $i = "install.sh" ] && continue
   ln -s ~/.dotfiles/$i ~/
 done
-vim -c ':BundleInstall!' -c ':q!' -c ':q!'
+vim -c ':NeoBundleInstall!' -c ':q!' -c ':q!'
 
 popd
