@@ -16,8 +16,12 @@ export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/mvim "$@"'
 alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 # User specific aliases and functions
+
+export PATH=/usr/local/bin:$PATH
+#export PATH=/usr/local/share/python:$PATH
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/.virtualenvs
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
     source /usr/local/bin/virtualenvwrapper.sh
     export PIP_RESPECT_VIRTUALENV=true
 fi
@@ -26,14 +30,12 @@ fi
 #export PATH=/usr/local/bin:/usr/local/share/python
 
 export PATH=$PATH:/usr/local/mysql/bin
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init -)"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-export PATH=/usr/local/bin:$PATH
-#export PATH=/usr/local/share/python:$PATH
 # For R
 disable r
 
