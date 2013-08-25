@@ -1,6 +1,9 @@
-colorscheme jellybeans
+"colorscheme jellybeans
+colorscheme landscape
 set guifontwide=Osaka:h12 "フォント設定
-set guifont=Osaka-Mono:h14 "フォント設定
+"set guifont=Osaka-Mono:h14 "フォント設定
+set guifont=Ricty-RegularForPowerline:h14
+
 
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
 au BufNewFile,BufRead * match ZenkakuSpace /　/ "全角スペースを視覚化
