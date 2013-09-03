@@ -303,12 +303,15 @@ endif
   NeoBundle 'nanotech/jellybeans.vim'
   NeoBundle 'itchyny/landscape.vim'
   " カラースキーム一覧表示に Unite.vim を使う
-  NeoBundle 'Shougo/unite.vim'
+  NeoBundleLazy "Shougo/unite.vim", {
+      \ "autoload": {
+      \   "commands": ["Unite", "UniteWithBufferDir"]
+      \ }}
   NeoBundle 'ujihisa/unite-colorscheme'
   "NeoBundle 'git://github.com/mattn/zencoding-vim.git'
   NeoBundleLazy 'mattn/zencoding-vim', {
-    \ "autoload": {"filetypes": ['html']}}
-  NeoBundle 'scrooloose/nerdtree.git'
+      \ "autoload": {"filetypes": ['html']}}
+  "NeoBundle 'scrooloose/nerdtree.git'
   NeoBundle 'thinca/vim-quickrun.git'
   NeoBundle 'kien/ctrlp.vim'
   NeoBundle 'tpope/vim-surround'
@@ -360,7 +363,38 @@ endif
      let g:jedi#goto_command = '<Leader>G'
    endfunction
 
-"endfunction
+   " vimfiler
+   NeoBundleLazy "Shougo/vimfiler", {
+         \ "depends": ["Shougo/unite.vim"],
+         \ "autoload": {
+         \   "commands": ["VimFilerTab", "VimFiler", "VimFilerExplorer"],
+         \   "mappings": ['<Plug>(vimfiler_switch)'],
+         \   "explorer": 1,
+         \ }}
+   nnoremap <Leader>e :VimFilerExplorer<CR>
+   " close vimfiler automatically when there are only vimfiler open
+   autocmd MyAutoCmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') | q | endif
+   let s:hooks = neobundle#get_hooks("vimfiler")
+   function! s:hooks.on_source(bundle)
+     let g:vimfiler_as_default_explorer = 1
+     let g:vimfiler_enable_auto_cd = 1
+
+     " .から始まるファイルおよび.pycで終わるファイルを不可視パターンに
+     " 2013-08-14 追記
+     let g:vimfiler_ignore_pattern = "\%(^\..*\|\.pyc$\)"
+
+     " vimfiler specific key mappings
+     autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
+     function! s:vimfiler_settings()
+       " ^^ to go up
+       nmap <buffer> ^^ <Plug>(vimfiler_switch_to_parent_directory)
+       " use R to refresh
+       nmap <buffer> R <Plug>(vimfiler_redraw_screen)
+       " overwrite C-l
+       nmap <buffer> <C-l> <C-w>l
+     endfunction
+   endfunction
+  "endfunction
 
 " NeoBundle がインストールされているなら LoadBundles() を呼び出す
 " そうでないなら WithoutBundles() を呼び出す
@@ -390,17 +424,17 @@ filetype indent plugin on
 "#######################
 " NERDTree
 "#######################
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-nmap <silent> <C-e>      :NERDTreeToggle<CR>
-vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-omap <silent> <C-e>      :NERDTreeToggle<CR>
-imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
-cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
-
-let g:NERDTreeShowHidden=1
-let g:NERDTreeDirArrows=0
+"autocmd vimenter * if !argc() | NERDTree | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"
+"nmap <silent> <C-e>      :NERDTreeToggle<CR>
+"vmap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+"omap <silent> <C-e>      :NERDTreeToggle<CR>
+"imap <silent> <C-e> <Esc>:NERDTreeToggle<CR>
+"cmap <silent> <C-e> <C-u>:NERDTreeToggle<CR>
+"
+"let g:NERDTreeShowHidden=1
+"let g:NERDTreeDirArrows=0
 "#######################
 " Zen Coding
 "#######################
