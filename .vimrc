@@ -148,7 +148,7 @@ set smartindent "オートインデント
 set shiftround  " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
 set infercase   " 補完時に大文字小文字を区別しない
 " tab関連
-"set smarttab 
+set smarttab 
 set expandtab "タブの代わりに空白文字挿入
 "set ts=4 sw=4 sts=0 "タブは半角4文字分のスペース
 " ファイルを開いた際に、前回終了時の行で起動
@@ -395,6 +395,31 @@ endif
      endfunction
    endfunction
   "endfunction
+
+  " w3m.vim
+  NeoBundle 'yuratomo/w3m.vim'
+  " NeoBundleLazy 'yuratomo/w3m.vim', {
+  "     \ "autoload": {"filetypes": ['rst']}}
+  " function! RestWatch()
+  "     " TODO バックエンドで起動する
+  "     " !restview -l 9999 . &
+  "     " TODO 事前にプロセスとwindow情報を確認する。今は固定
+  "     " let restview_pid = !pgrep -n -f restview
+  "     " echo !lsof -Fc -a -i -p restview_pid
+  "     :W3mSplit http://localhost:9999
+  "     :wincmd L
+  " endfunction
+
+  " function! RestW3mReload()
+  "     :wincmd w
+  "     :W3mReload
+  "     :wincmd w
+  " endfunction
+"  
+" command! -nargs=0 RestWatch call RestWatch()
+" command! -nargs=0 RestReload call RestW3mReload()
+"  
+" autocmd BufWritePost *.rst silent call RestW3mReload()
 
 " NeoBundle がインストールされているなら LoadBundles() を呼び出す
 " そうでないなら WithoutBundles() を呼び出す

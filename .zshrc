@@ -6,6 +6,11 @@ fpath=(path/to/zsh-completions/src /Users/kossy7 ~/.zsh/functions/Completion(N-/
 autoload -U compinit; compinit -u
 # 色設定
 autoload -U colors; colors
+
+PROMPT='[%F{magenta}%B%n%b%f@%F{blue}%U%m%u%f]# '
+RPROMPT='[%F{green}%d%f]'
+
+
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
@@ -29,7 +34,8 @@ fi
 #export PATH=/usr/local/bin:$PATH
 #export PATH=/usr/local/bin:/usr/local/share/python
 
-export PATH=$PATH:/usr/local/mysql/bin
+#export PATH=$PATH:/usr/local/mysql/bin
+export PATH="/usr/local/mysql/bin:$PATH"
 #export PATH="$HOME/.rbenv/bin:$PATH"
 #eval "$(rbenv init -)"
 
