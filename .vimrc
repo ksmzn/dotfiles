@@ -2,7 +2,6 @@ filetype off
 "#######################
 " キースワップ
 "#######################
-"let mapleader = "¥"
 map ¥ <leader>
 
 "" .vimrcの編集を簡単にする{{{
@@ -27,7 +26,7 @@ autocmd MyAutoCmd BufWritePost $MYGVIMRC if has('gui_running') | source $MYGVIMR
 endif
 ""}}}
 
-"<Leader><Leader>で変更があれば保存
+" <Leader><Leader>で変更があれば保存
 noremap <Leader><Leader> :up<CR>
 
 " ESCを二回押すことでハイライトを消す
@@ -95,6 +94,7 @@ augroup END
 hi clear CursorLine
 hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
+
 " iTerm2で、カーソルの形状を変更
 let &t_SI = "\e]50;CursorShape=1\x7"
 let &t_EI = "\e]50;CursorShape=0\x7"
@@ -152,7 +152,7 @@ set smartindent "オートインデント
 set shiftround  " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
 set infercase   " 補完時に大文字小文字を区別しない
 " tab関連
-set smarttab 
+set smarttab " 'shiftwidth' の数だけインデントする
 set expandtab "タブの代わりに空白文字挿入
 "set ts=4 sw=4 sts=0 "タブは半角4文字分のスペース
 " ファイルを開いた際に、前回終了時の行で起動
@@ -304,7 +304,7 @@ else
 endif
 
 
-  " colorschemes 
+  " カラースキーマ
   NeoBundle 'rainux/vim-desert-warm-256'
   NeoBundle 'nanotech/jellybeans.vim'
   colorscheme jellybeans
