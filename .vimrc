@@ -2,7 +2,9 @@ filetype off
 "#######################
 " キースワップ
 "#######################
-let mapleader = "¥"
+"let mapleader = "¥"
+map ¥ <leader>
+
 "" .vimrcの編集を簡単にする{{{
 nnoremap <silent> <Space>ev  :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> <Space>eg  :<C-u>edit $MYGVIMRC<CR>
@@ -25,8 +27,8 @@ autocmd MyAutoCmd BufWritePost $MYGVIMRC if has('gui_running') | source $MYGVIMR
 endif
 ""}}}
 
-noremap <Leader><Leader> :up<CR>
 "<Leader><Leader>で変更があれば保存
+noremap <Leader><Leader> :up<CR>
 
 " ESCを二回押すことでハイライトを消す
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
@@ -93,8 +95,10 @@ augroup END
 hi clear CursorLine
 hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
-"Escの2回押しでハイライト消去
-nmap <ESC><ESC> :nohlsearch<CR><ESC>
+" iTerm2で、カーソルの形状を変更
+let &t_SI = "\e]50;CursorShape=1\x7"
+let &t_EI = "\e]50;CursorShape=0\x7"
+
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
@@ -300,8 +304,21 @@ else
 endif
 
 
+  " colorschemes 
+  NeoBundle 'rainux/vim-desert-warm-256'
   NeoBundle 'nanotech/jellybeans.vim'
+  colorscheme jellybeans
   NeoBundle 'itchyny/landscape.vim'
+  NeoBundle 'w0ng/vim-hybrid'
+  " colorscheme hybrid
+  NeoBundle 'vim-scripts/twilight'
+  NeoBundle 'jonathanfilip/vim-lucius'
+  NeoBundle 'jpo/vim-railscasts-theme'
+  NeoBundle 'altercation/vim-colors-solarized'
+  NeoBundle 'vim-scripts/Wombat'
+  NeoBundle 'tomasr/molokai'
+  NeoBundle 'vim-scripts/rdark'
+
   " カラースキーム一覧表示に Unite.vim を使う
   NeoBundleLazy "Shougo/unite.vim", {
       \ "autoload": {

@@ -33,8 +33,11 @@ zstyle ':completion:*:default' menu select=1 list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls -G'
 
 export PATH=$PATH:/Library/Python/2.7/site-packages/bs4
+
+# デフォルトのVimをMacVim Kaoriyaに
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-#alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/mvim "$@"'
+alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 # User specific aliases and functions
 alias julia='/Applications/Julia-0.2.0-rc3.app/Contents/Resources/julia/bin/julia'

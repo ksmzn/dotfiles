@@ -1,5 +1,6 @@
-"colorscheme jellybeans
-colorscheme landscape
+"colorscheme desert-warm-256
+colorscheme jellybeans
+"colorscheme landscape
 set guifontwide=Osaka:h12 "フォント設定
 "set guifont=Osaka-Mono:h14 "フォント設定
 set guifont=Ricty-RegularForPowerline:h14
