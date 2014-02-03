@@ -1,6 +1,9 @@
 #complete
 fpath=(path/to/zsh-completions/src /Users/kossy7 ~/.zsh/functions/Completion(N-/) ${fpath})
 
+# Vi ライクな操作が好みであれば `bindkey -v` とする
+bindkey -e
+
 # zshのTAB補完を有効にする
 #autoload -U compinit && compinit
 autoload -U compinit; compinit -u
@@ -9,11 +12,24 @@ autoload -U colors; colors
 
 PROMPT='[%F{magenta}%B%n%b%f@%F{blue}%U%m%u%f]# '
 RPROMPT='[%F{green}%d%f]'
+# 入力したコマンドが存在せず、かつディレクトリ名と一致するなら、ディレクトリに cd する
+# 例： /usr/bin と入力すると /usr/bin ディレクトリに移動
+setopt auto_cd
 
+# ↑に加えて、 .. とだけ入力したら1つ上のディレクトリに cd できるようにする
+alias ..='cd ..'
+
+# もっと増やしてもよい
+alias ...='cd ../..'
+alias ....='cd ../../..'
 
 export LSCOLORS=gxfxxxxxcxxxxxxxxxgxgx
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
-zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
+# <Tab> でパス名の補完候補を表示したあと、
+# 続けて <Tab> を押すと候補からパス名を選択できるようになる
+# 候補を選ぶには <Tab> か Ctrl-N,B,F,P
+zstyle ':completion:*:default' menu select=1 list-colors 'di=36' 'ln=35' 'ex=32'
+#zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls -G'
 
 export PATH=$PATH:/Library/Python/2.7/site-packages/bs4
@@ -21,6 +37,7 @@ export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/mvim "$@"'
 alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 # User specific aliases and functions
+alias julia='/Applications/Julia-0.2.0-rc3.app/Contents/Resources/julia/bin/julia'
 
 export PATH=/usr/local/bin:$PATH
 #export PATH=/usr/local/share/python:$PATH
