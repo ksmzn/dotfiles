@@ -65,6 +65,9 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # For R
 disable r
 
+# javac の出力する文字コードをUTF-8に
+alias javac='javac -J-Dfile.encoding=UTF-8'
+alias java='java -Dfile.encoding=UTF-8'
 
 #chpwd() {
 #    ls_abbrev

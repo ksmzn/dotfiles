@@ -66,6 +66,11 @@ nnoremap <S-Down>  <C-w>+<CR>
 "#######################
 " 表示系
 "#######################
+" 文字コードの指定
+set enc=utf-8
+set fenc=utf-8
+set fencs=iso-2022-jp,utf-8,euc-jp,cp932
+
 set number "行番号表示
 set showmode "モード表示
 set title "編集中のファイル名を表示
@@ -377,7 +382,8 @@ endif
      " quickrunと被るため大文字に変更
      let g:jedi#rename_command = '<Leader>R'
      " gundoと被るため大文字に変更 (2013-06-24 10:00 追記）
-     let g:jedi#goto_command = '<Leader>G'
+     "let g:jedi#goto_command = '<Leader>G'
+     let g:jedi#goto_assignments_command = '<Leader>G'
    endfunction
 
    " vimfiler
@@ -536,6 +542,8 @@ let g:quickrun_config['*'] = {'runner': 'vimproc'}
 "let g:quickrun_config['*'] = {'runmode': 'async:remote:vimproc', 'split': ''}
 "let g:quickrun_config['*'] = {'runmode': 'async:remote:vimproc'}
 
+" quickrunで開いたバッファを閉じる
+nnoremap <Space>o :only<CR>
 "###################
 " neocomplcache
 "###################
