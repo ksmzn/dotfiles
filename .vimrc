@@ -335,7 +335,7 @@ endif
   "     \ 'autoload': {'filetypes': ['html']}}
   " NeoBundle 'mattn/emmet-vim'
   NeoBundleLazy 'mattn/emmet-vim', {
-      \ 'autoload': {'filetypes': ['html', 'erb']}}
+      \ 'autoload': {'filetypes': ['html', 'eruby']}}
   "NeoBundle 'scrooloose/nerdtree.git'
   NeoBundle 'thinca/vim-quickrun.git'
   NeoBundle 'kien/ctrlp.vim'
@@ -493,7 +493,7 @@ filetype indent plugin on
 
 let g:user_emmet_settings = {
   \  'lang' : 'ja',
-  \  'erb' : {
+  \  'eruby' : {
   \    'extends' : 'html',
   \    'indentation' : ' '
   \  },
