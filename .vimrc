@@ -186,7 +186,7 @@ if has("autocmd")
   autocmd FileType eruby      setlocal sw=4 sts=4 ts=4 et
   autocmd FileType html       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType javascript setlocal sw=2 sts=2 ts=2 et
+  autocmd FileType javascript setlocal sw=4 sts=4 ts=8 et
   autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
   autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
   autocmd FileType python     setlocal sw=4 sts=4 ts=8 et
@@ -336,6 +336,11 @@ endif
   " NeoBundle 'mattn/emmet-vim'
   NeoBundleLazy 'mattn/emmet-vim', {
       \ 'autoload': {'filetypes': ['html', 'eruby']}}
+
+  NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {
+      \ 'autoload': {'filetypes': ['html', 'javascript']}}
+  let g:used_javascript_libs = 'angularjs'
+
   "NeoBundle 'scrooloose/nerdtree.git'
   NeoBundle 'thinca/vim-quickrun.git'
   NeoBundle 'kien/ctrlp.vim'
@@ -629,8 +634,19 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType c,cpp,perl set cindent
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+let g:neocomplcache_source_rank = {
+  \ 'jscomplete' : 500,
+  \ }
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
