@@ -66,8 +66,14 @@ export PATH="/usr/local/heroku/bin:$PATH"
 disable r
 
 # javac の出力する文字コードをUTF-8に
-alias javac='javac -J-Dfile.encoding=UTF-8'
-alias java='java -Dfile.encoding=UTF-8'
+# alias javac='javac -J-Dfile.encoding=UTF-8'
+# alias java='java -Dfile.encoding=UTF-8'
+
+# rvmによるRubyのインストール
+# [[ -s "/usr/local/rvm/scripts/rvm" ]] && source "/usr/local/rvm/scripts/rvm"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
 
 #chpwd() {
 #    ls_abbrev
