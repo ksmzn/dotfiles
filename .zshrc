@@ -62,9 +62,6 @@ export PATH="/usr/local/mysql/bin:$PATH"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# HOMEBREW_CASKのアプリインストール先変更
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
 # For R
 disable r
 
