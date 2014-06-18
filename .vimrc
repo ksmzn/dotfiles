@@ -222,8 +222,8 @@ set nocompatible "vi非互換モード
 set nowritebackup
 set nobackup
 set noswapfile " No Swap
+set noundofile " .un~ファイルを作らない
 
-set noswapfile "スワップファイルなし
 let g:VimShell_EnableInteractive = 1 "vimshell
 " カーソルを自動的に()の中へ
 "imap {} {}<Left>
