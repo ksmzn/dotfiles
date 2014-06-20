@@ -1,6 +1,6 @@
 *unite.txt*	Unite and create user interfaces.
 
-Version: 6.0
+Version: 6.1
 Author : Shougo <Shougo.Matsu@gmail.com>
 Documentation Author: ujihisa <ujihisa at gmail com>
 License: MIT license  {{{
@@ -232,17 +232,21 @@ More advanced configuration example:
 	        \ file_rec:! file file/new<CR>
 
 	" Start insert.
-	"let g:unite_enable_start_insert = 1
-	"let g:unite_enable_short_source_names = 1
+	"call unite#custom#profile('default', 'context', {
+	"\   'start_insert': 1
+	"\ })
 
 	" Like ctrlp.vim settings.
-	"let g:unite_enable_start_insert = 1
-	"let g:unite_winheight = 10
-	"let g:unite_split_rule = 'botright'
+	"call unite#custom#profile('default', 'context', {
+	"\   'start_insert': 1,
+	"\   'winheight': 10,
+	"\   'direction': 'botright',
+	"\ })
 
 	" Prompt choices.
-	"let g:unite_prompt = '❫ '
-	"let g:unite_prompt = '» '
+	"call unite#custom#profile('default', 'context', {
+	"\   'prompt': '» ',
+	"\ })
 
 	autocmd FileType unite call s:unite_my_settings()
 	function! s:unite_my_settings()"{{{
@@ -285,20 +289,17 @@ More advanced configuration example:
 	  imap <silent><buffer><expr> <C-s>     unite#do_action('split')
 	endfunction"}}}
 
-	let g:unite_cursor_line_highlight = 'TabLineSel'
-	let g:unite_abbr_highlight = 'TabLine'
-
 	if executable('jvgrep')
 	  " For jvgrep.
 	  let g:unite_source_grep_command = 'jvgrep'
-	  let g:unite_source_grep_default_opts = '--exclude ''\.(git|svn|hg|bzr)'''
+	  let g:unite_source_grep_default_opts = '-i --exclude ''\.(git|svn|hg|bzr)'''
 	  let g:unite_source_grep_recursive_opt = '-R'
 	endif
 
 	" For ack.
 	if executable('ack-grep')
 	  " let g:unite_source_grep_command = 'ack-grep'
-	  " let g:unite_source_grep_default_opts = '--no-heading --no-color -k -H'
+	  " let g:unite_source_grep_default_opts = '-i --no-heading --no-color -k -H'
 	  " let g:unite_source_grep_recursive_opt = ''
 	endif
 <
@@ -360,6 +361,11 @@ COMMANDS 					*unite-commands*
 		Equivalent to |:Unite| except that it will prompt the user for
 		narrowing text before opening the unite buffer.
 
+						*:UniteWithInputDirectory*
+:UniteWithInputDirectory [{options}] {sources}
+		Equivalent to |:Unite| except that it will prompt the user for
+		narrowing directory before opening the unite buffer.
+
 :UniteWithCursorWord [{options}] {sources}	*:UniteWithCursorWord*
 		Equivalent to |:Unite| except that it targets the word under
 		the cursor for the initial narrowing text.
@@ -386,89 +392,6 @@ The commands of source				*:unite-sources-commands*
 
 ------------------------------------------------------------------------------
 VARIABLES 					*unite-variables*
-
-g:unite_update_time				*g:unite_update_time*
-		The time interval for updating the canidate list as the filter
-		text it typed.
-		If it is 0, this feature is disabled.
-
-		In Msec.
-
-		The default value is 500.
-
-g:unite_prompt			                *g:unite_prompt*
-		Unite default prompt.  Can also be set with the `-prompt`
-		command line argument.
-
-		The default value is '> '.
-
-g:unite_enable_start_insert			*g:unite_enable_start_insert*
-		If this variable is 1, unite buffer will be in Insert Mode
-		immediately.
-
-		The default value is 0.
-
-g:unite_split_rule				*g:unite_split_rule*
-		Defines split position rule.
-
-		The default value is "topleft".
-
-					*g:unite_enable_split_vertically*
-g:unite_enable_split_vertically
-		If this variable is 1, unite window is split vertically.
-
-		The default value is 0; window is split horizontally.
-
-g:unite_winheight				*g:unite_winheight*
-		The height of unite window when split horizontally. Ignored
-		when splitting vertically.
-
-		The default value is 20.
-
-g:unite_winwidth				*g:unite_winwidth*
-		The width of unite window when split vertically. Ignored
-		when splitting horizontally.
-
-		The default value is 90.
-
-g:unite_cursor_line_highlight		*g:unite_cursor_line_highlight*
-		Specify the cursor line highlight group.
-
-		The default value is "PmenuSel".
-
-g:unite_cursor_line_time		*g:unite_cursor_line_time*
-		Specify the cursor line highlight time.
-		If you scrolls cursor quickly less than it, unite will skip
-		cursor line highlight.
-		If it is "0.0", this feature will be disabled.
-
-		The default value is "0.10".
-
-g:unite_abbr_highlight				*g:unite_abbr_highlight*
-		Specify abbreviated candidates highlight.
-
-		The default value is "Normal".
-
-				*g:unite_enable_short_source_names*
-g:unite_enable_short_source_names
-		If this variable is 1, unite buffer will show short source
-		names.
-
-		The default value is 0.
-
-g:unite_marked_icon				*g:unite_marked_icon*
-		Controls unite marked candidates icon.
-
-		Note: This must be one character.
-
-		Default value is "*".
-
-g:unite_candidate_icon				*g:unite_candidate_icon*
-		Controls unite normal candidates icon.
-
-		Note: It must be one character.
-
-		Default value is " ".
 
 					*g:unite_force_overwrite_statusline*
 g:unite_force_overwrite_statusline
@@ -571,7 +494,7 @@ g:unite_source_rec_max_cache_files
 		Specify the maximum number of files that
 		|unite-source-file_rec| saves the caches.
 
-		The default value is 2000.
+		The default value is 20000.
 
 				*g:unite_source_file_rec_max_cache_files*
 		Note: This variable is obsolete.
@@ -584,7 +507,7 @@ g:unite_source_rec_unit
 		Note: This option does not work in
 		|unite-source-file_rec/async| source.
 
-		The default value is 200.
+		The default value is 4000.
 
 					*g:unite_source_rec_async_command*
 g:unite_source_rec_async_command
@@ -594,10 +517,14 @@ g:unite_source_rec_async_command
 		" Using ack-grep as recursive command.
 		let g:unite_source_rec_async_command = 'ack -f --nofilter'
 <
-		The default value is "ag" or "pt" or "find" and the args.
+		The default value is "find" and the args.
 
 					*g:unite_source_file_rec_async_command*
 		Note: This variable is obsolete.
+
+					*g:unite_source_rec_git_command*
+g:unite_source_rec_git_command
+		Specify the git command in file_rec/git source.
 
 g:unite_source_grep_command		*g:unite_source_grep_command*
 		Set grep command.
@@ -854,6 +781,20 @@ g:unite_kind_jump_list_after_jump_scroll
 
 		The default value is 25.
 
+g:unite_kind_file_vertical_preview		*g:unite_kind_file_vertical_preview*
+		If this variable is 1, Unite will open the preview window
+		(when executing the file preview action) vertically rather than
+		horizontally. It will take up half the width of the current
+		Unite buffer.
+
+		The default value is 0.
+
+					*g:unite_kind_file_preview_max_filesize*
+g:unite_kind_file_preview_max_filesize
+		It is max file size of preview action in file kind.
+
+		The default value is 1000000.
+
 			*g:unite_kind_openable_persist_open_blink_time*
 g:unite_kind_openable_persist_open_blink_time
 		The amount of blink time after "persist_open" action from
@@ -894,6 +835,87 @@ g:unite_matcher_fuzzy_max_input_length
 		falls back to |unite-filter-matcher_glob|.
 
 		The default value is 20.
+
+DEPRECATED VARIABLES				*unite-deprecated-variables*
+
+g:unite_update_time				*g:unite_update_time*
+		The time interval for updating the canidate list as the filter
+		text it typed in Msec.
+		If it is 0, this feature is disabled.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_prompt			                *g:unite_prompt*
+		Unite default prompt.  Can also be set with the `-prompt`
+		command line argument.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_enable_start_insert			*g:unite_enable_start_insert*
+		If this variable is 1, unite buffer will be in Insert Mode
+		immediately.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_split_rule				*g:unite_split_rule*
+		Defines split position rule.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+					*g:unite_enable_split_vertically*
+g:unite_enable_split_vertically
+		If this variable is 1, unite window is split vertically.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_winheight				*g:unite_winheight*
+		The height of unite window when split horizontally. Ignored
+		when splitting vertically.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_winwidth				*g:unite_winwidth*
+		The width of unite window when split vertically. Ignored
+		when splitting horizontally.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_cursor_line_highlight		*g:unite_cursor_line_highlight*
+		Specify the cursor line highlight group.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+				*g:unite_enable_short_source_names*
+g:unite_enable_short_source_names
+		If this variable is 1, unite buffer will show short source
+		names.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_marked_icon				*g:unite_marked_icon*
+		It controls unite marked candidates icon.
+		Note: This must be one character.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_candidate_icon				*g:unite_candidate_icon*
+		It controls unite normal candidates icon.
+		Note: It must be one character.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_abbr_highlight				*g:unite_abbr_highlight*
+		Specify abbreviated candidates highlight.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
+
+g:unite_cursor_line_time		*g:unite_cursor_line_time*
+		Specify the cursor line highlight time.
+		If you scrolls cursor quickly less than it, unite will skip
+		cursor line highlight.
+		If it is "0.0", this feature will be disabled.
+		Note: It is deprecated variable.  Please use
+		|unite#custom#profile()| instead.
 
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*unite-key-mappings*
@@ -1152,6 +1174,9 @@ Insert mode mappings.
 
 <Plug>(unite_new_candidate)			*i_<Plug>(unite_new_candidate)*
 		The same as |<Plug>(unite_new_candidate)|.
+
+<Plug>(unite_complete)				*i_<Plug>(unite_complete)*
+		Complete narrowing text by candidate words.
 
 Visual mode mappings.
 
@@ -1461,15 +1486,25 @@ unite#custom#profile({profile-name}, {option-name}, {value})
 		Note: In temporary unite buffers and script created unite
 		buffers, the context overwrites current context instead of
 		default context.
+		Note: If you want to change default context, you should use
+		"default" profile name.
 
 		Example:
 >
 		" Start insert mode in unite-action buffer.
-		call unite#custom#profile('action', 'context',
-		\ {'start_insert' : 1})
+		call unite#custom#profile('action', 'context', {
+		\   'start_insert' : 1
+		\ })
+
 		" Set "-no-quit" automatically in grep unite source.
-		call unite#custom#profile('source/grep', 'context',
-		\ {'no_quit' : 1})
+		call unite#custom#profile('source/grep', 'context', {
+		\   'no_quit' : 1
+		\ })
+
+		" Use start insert by default.
+		call unite#custom#profile('default', 'context', {
+		\   'start_insert' : 1
+		\ })
 <
 					*unite#custom#substitute()*
 unite#custom#substitute({profile-name}, {pattern}, {subst} [, {priority}])
@@ -1636,6 +1671,35 @@ Note: In unite.vim options are converted to a context dictionary.
 The "-buffer-name" option is the same as the "buffer_name" key in 
 the context dictionary.
 
+						*unite-options-no-*
+		-no-{option-name}
+		Disable {option-name} flag.
+		Note: If you use both {option-name} and -no-{option-name} in
+		same unite buffer, it is undefined.
+
+						*unite-options-no-quit*
+		-no-quit
+		Doesn't close unite buffer after firing an action.  Unless you
+		specify it, a unite buffer gets closed when you selected an
+		action which is "is_quit".
+
+						*unite-options-no-empty*
+		-no-empty
+		If candidate is empty, it doesn't open any unite buffer.
+
+						*unite-options-no-split*
+		-no-split
+		Open the unite buffer in the current window.
+
+						*unite-options-no-cursor-line*
+		-no-cursor-line
+		Disable cursor line highlight.  This option is useful for
+		animation source.
+
+						*unite-options-no-focus*
+		-no-focus
+		Do not focus the unite buffer after opening it.
+
 						*unite-options-buffer-name*
 		-buffer-name={buffer-name}
 		Specify a buffer name. The default buffer name is "default".
@@ -1655,29 +1719,32 @@ the context dictionary.
 
 						*unite-options-prompt*
 		-prompt={prompt-text}
-		Specify a prompt.  The default value is '> '.
+		Specify the prompt.  The default value is '> '.
+
+						*unite-options-prompt-visible*
+		-prompt-visible
+		Visible prompt if narrowing text is empty.
+		Note: It is old prompt behavior.
+
+						*unite-options-prompt-direction*
+		-prompt-direction="top" or "below"
+		Specify the prompt direction.  The default value is "below" if
+		|unite-options-direction| contains "below".
+		Note: If it is "below", |unite-options-auto-resize| is used
+		automatically.  To disable it, you must set "-no-auto-resize"
+		option.
 
 						*unite-options-default-action*
 		-default-action={default-action}
 		Specify a default action.  The default value is 'default'.
 
 					*unite-options-start-insert*
-					*unite-options-no-start-insert*
 		-start-insert
 		Opens a unite buffer in the narrowing mode.
-
-		-no-start-insert
-		Opens a unite buffer in the normal mode.
 
 		When both options are undefined, it depends on
 		|g:unite_enable_start_insert| option.
 		The behavior is undefined when both options are defined.
-
-						*unite-options-no-quit*
-		-no-quit
-		Doesn't close unite buffer after firing an action.  Unless you
-		specify it, a unite buffer gets closed when you selected an
-		action which is "is_quit".
 
 						*unite-options-keep-focus*
 		-keep-focus
@@ -1687,22 +1754,18 @@ the context dictionary.
 						*unite-options-winwidth*
 		-winwidth={window-width}
 		Specify the width of a unite buffer.  Unless you specify
-		it, |g:unite_winwidth| is used.
+		it, "90" is used.
 
 						*unite-options-winheight*
 		-winheight={window-height}
 		Specify the height of a unite buffer.  Unless you specify
-		it, |g:unite_winheight| is used.
+		it, "20" is used.
 
 						*unite-options-immediately*
 		-immediately
 		If the number of candidates is exactly one, it runs the
 		default action immediately.  If the candidate list is 
 		empty, it does not open any unite buffer.
-
-						*unite-options-no-empty*
-		-no-empty
-		If candidate is empty, it doesn't open any unite buffer.
 
 						*unite-options-auto-preview*
 		-auto-preview
@@ -1724,24 +1787,21 @@ the context dictionary.
 
 						*unite-options-vertical*
 		-vertical
-		Splits unite window vertically. |g:unite_winwidth| is used.
+		Splits unite window vertically. |unite-options-winwidth| is
+		used.
 
 						*unite-options-horizontal*
 		-horizontal
 		Splits unite window horizontally.
 
-		When both options are undefined, it depends on
-		|g:unite_enable_split_vertically| option.
+		When both options are undefined, "-horizontal" is used by
+		default.
 		The behavior is undefined when both options are defined.
 
 						*unite-options-direction*
 		-direction={direction}
 		Defines split position rule.  The default value is
-		as |g:unite_split_rule|.
-
-						*unite-options-no-split*
-		-no-split
-		Open the unite buffer in the current window.
+		"topleft".
 
 						*unite-options-verbose*
 		-verbose
@@ -1767,18 +1827,17 @@ the context dictionary.
 						*unite-options-update-time*
 		-update-time={new-update-time}
 		Change 'updatetime' option.  If this option is omitted,
-		|g:unite_update_time| is used.  This option is useful for
+		"200" is used.  This option is useful for
 		animation source.
 
 					*unite-options-cursor-line-highlight*
-		-cursor-line-high-light={highlight-name}
+		-cursor-line-highlight={highlight-name}
 		Change cursor line highlight.  If this option is omitted,
-		|g:unite_cursor_line_highlight| is used.
+		"PmenuSel" is used.
 
-						*unite-options-no-cursor-line*
-		-no-cursor-line
-		Disable cursor line highlight.  This option is useful for
-		animation source.
+					*unite-options-abbr-highlight*
+		-abbr-highlight={highlight-name}
+		Specify abbreviated candidates highlight.
 
 					*unite-options-hide-source-names*
 		-hide-source-names
@@ -1810,17 +1869,9 @@ the context dictionary.
 		Closes unite buffer automatically when all candidates are
 		shown.
 
-						*unite-options-no-focus*
-		-no-focus
-		Do not focus the unite buffer after opening it.
-
 					*unite-options-short-source-names*
 		-short-source-names
 		Use short source names.
-
-					*unite-options-long-source-names*
-		-long-source-names
-		Use long source names.
 
 						*unite-options-multi-line*
 		-multi-line
@@ -1868,6 +1919,23 @@ the context dictionary.
 		-unique
 		Unique candidates by word attribute.
 
+						*unite-options-candidate-icon*
+		-candidate-icon={icon-text}
+		Specify the candidate icon text.  The default value is ' '.
+		Note: It must be one character.
+
+						*unite-options-marked-icon*
+		-marked-icon={icon-text}
+		Specify the marked icon text.  The default value is '*'.
+		Note: It must be one character.
+
+						*unite-options-cursor-line-time*
+		-cursor-line-time={icon-text}
+		Specify the cursor line highlight time.
+		If you scrolls cursor quickly less than it, unite will skip
+		cursor line highlight.
+		If it is "0.0", this feature will be disabled.
+
 ==============================================================================
 SOURCES						*unite-sources*
 
@@ -1905,8 +1973,8 @@ file_rec	Gather files recursive and nominates all directory or file
 
 						*unite-source-file_rec/async*
 file_rec/async	Similar to |unite-source-file_rec|, but get files asynchronously.
-		Note: This source requires vimproc.
-		Note: This source requires the "ag" or "find" command.
+		Note: It requires vimproc.
+		Note: It requires the "ag" or "find" command.
 		Note: Windows "find" command is not supported.
 		Note: If you edit one of the files in Vim, the
 		file_rec/async source will update its cache.
@@ -1916,6 +1984,20 @@ file_rec/async	Similar to |unite-source-file_rec|, but get files asynchronously.
 
 		Source arguments:
 		1. the search directory.
+
+						*unite-source-file_rec/git*
+file_rec/git	Similar to |unite-source-file_rec|, but get files by "git
+		ls-files" command.  It is faster than file_rec/async source.
+		Note: It requires vimproc.
+		Note: It requires "git" command.
+		Note: It searches from current directory only.
+
+		Source arguments:
+		1. "git ls-files" arguments
+
+		Example: >
+	nnoremap <silent> ,ug  :<C-u>Unite
+	\ file_rec/async:--cached:--others:--exclude-standard<CR>
 
 						*unite-source-directory*
 directory	Nominates an input directory as a candidate.
@@ -1938,11 +2020,12 @@ buffer		Nominates opened buffers as candidates, ordering by time
 		series.
 		If argument 1 is "!", both listed and non-listed buffer are
 		displayed.
-		If argument 1 is "?", non-listed buffer is displayed.
+		If argument 1 is "?", non-listed buffers are displayed.
 		If argument 1 is "+", only modified buffers are displayed.
+		If argument 1 is "-", only file buffers are displayed.
 
 		Source arguments:
-		1. "!", "?", or "+".
+		1. "!", "?", "+" or "-".
 
 						*unite-source-buffer_tab*
 buffer_tab	Nominates opened buffers only in the current tab as
@@ -1950,7 +2033,7 @@ buffer_tab	Nominates opened buffers only in the current tab as
 		Arguments are the same as for |unite-source-buffer|.
 
 		Source arguments:
-		1. "!" or "?".
+		1. "!", "?", "+" or "-".
 
 						*unite-source-tab*
 tab		Nominates opened tabs as candidates, regarding t:cwd as the
@@ -1996,6 +2079,10 @@ window		Nominates opened windows as candidates, ordering by time
 
 		Source arguments:
 		1. "no-current" removes current window from candidates.
+
+						*unite-source-window/gui*
+window/gui	Nominates opened GUI windows as candidates.
+		Note: "wmctrl" command is needed.  For Linux only.
 
 						*unite-source-output*
 output		Nominates executed Vim command as candidates.
@@ -2066,20 +2153,20 @@ grep		Nominates "grep" command output as candidates.
 	  " Use ag in unite grep source.
 	  let g:unite_source_grep_command = 'ag'
 	  let g:unite_source_grep_default_opts =
-	  \ '--line-numbers --nocolor --nogroup --hidden --ignore ' .
+	  \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
 	  \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
 	  let g:unite_source_grep_recursive_opt = ''
 	elseif executable('pt')
 	  " Use pt in unite grep source.
 	  " https://github.com/monochromegane/the_platinum_searcher
 	  let g:unite_source_grep_command = 'pt'
-	  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+	  let g:unite_source_grep_default_opts = '-i --nogroup --nocolor'
 	  let g:unite_source_grep_recursive_opt = ''
 	elseif executable('ack-grep')
 	  " Use ack in unite grep source.
 	  let g:unite_source_grep_command = 'ack-grep'
 	  let g:unite_source_grep_default_opts =
-	  \ '--no-heading --no-color -k -H'
+	  \ '-i --no-heading --no-color -k -H'
 	  let g:unite_source_grep_recursive_opt = ''
 	endif
 <
@@ -2122,11 +2209,10 @@ line		Nominates current buffer lines as candidates.
 		direction is "forward" or "backward". If it is omitted,
 		'wrapscan' option will be used.
 
-		Example:
->
+		Example: >
 	nnoremap <silent> /  :<C-u>Unite -buffer-name=search
 	\ line:forward -start-insert -no-quit<CR>
-<
+
 						*unite-source-jump*
 jump		Nominates results of |:jumps| command as candidates.
 
@@ -2387,7 +2473,8 @@ matcher_fuzzy	A matcher which filters the candidates with user given fuzzy
 		This recognizes "!" as negative.
 		Narrowing down can be done by word.
 		Note: This matcher does not sort candidates. If you want to
-		use fuzzy sort, you can use |unite-filter-sorter_rank|.
+		use fuzzy sort, you can use |unite-filter-sorter_rank| or
+		|unite-filter-sorter_selecta|.
 		Note: The narrowing down might be slower if this matcher is
 		used.
 		Note: If the fuzzy string is longer than
@@ -2449,6 +2536,16 @@ sorter_rank	Matched rank order sorter.  The higher the matched word is or
 		call unite#custom#source('buffer,file,file_rec',
 		\ 'sorters', 'sorter_rank')
 <
+						*unite-filter-sorter_selecta
+sorter_selecta	Another matched rank order sorter. Uses the scoring algorithm
+		from selecta: https://github.com/garybernhardt/selecta.
+		If the matched length is shorter, the rank is higher.
+		This sorter is useful for file candidate source.
+		Note: This sorter requires |if_ruby| support.
+>
+		call unite#custom#source('buffer,file,file_rec',
+		\ 'sorters', 'sorter_selecta')
+<
 						*unite-filter-sorter_reverse*
 sorter_reverse	Reverse order sorter.
 
@@ -2487,6 +2584,11 @@ converter_relative_abbr
 					*unite-filter-converter_tail*
 converter_tail
 		A converter which converts a candidate's word into the
+		tail of the filename.
+
+					*unite-filter-converter_tail_abbr*
+converter_tail_abbr
+		A converter which converts a candidate's abbr into the
 		tail of the filename.
 
 					*unite-filter-converter_file_directory*
@@ -2536,6 +2638,7 @@ kind to define "open" action.
 	below		Open the file in the bottom, splitting horizontally.
 	persist_open	Open the file in alternate window.  unite window
 			isn't closed.
+	tabsplit	Open the files and vsplit in a new tab.
 
 cdable						*unite-action-cdable*
 Defines an interface for files you can move to with cd command.
@@ -2673,6 +2776,11 @@ function					*unite-action-source-function*
 	call		Call the function and print result.
 	preview		View the help documentation.
 
+window/gui				 *unite-action-source-window/gui*
+	open		Move to the window.
+	delete		Close the window.
+	rename		Change the title of the window.
+
 						*unite-default-action*
 Default actions
 
@@ -2706,180 +2814,170 @@ SOURCE ATTRIBUTES				*unite-source-attributes*
 
 						*unite-source-attribute-name*
 name			String		(Required)
-			The name of a source.  It must consist of the
-			following characters:
-			- a-z
-			- 0-9
-			- _
-			- /
-			- - (Not head)
+			The source name, which will be made available as
+			    :Unite {name}
+			Name may contain only the following characters:
+			    a-z
+			    0-9
+			    _
+			    /
+			    -    (except the first character)
 
-			For example:
-			- "buffer" , "file_mru" and "view/git" are
-			  valid.
-			- "BadOne", "!@#$%^&*()_[]{}-|" and "" are
-			  invalid.
+			    Good: "buffer" , "file_mru", "view/git"
+			    Bad:  "BadOne", "!@#$%^&*()_[]{}-|", ""
 
 				*unite-source-attribute-gather_candidates*
-gather_candidates	Function	(Required)
-			This function is called once in gathering candidates
-			and anytime in redrawing by |<Plug>(unite_redraw)|.
-			If a source is defined as |unite-source-is_volatile|,
-			this function is called whenever the input string is
-			changed.  This function takes {args} and {context} as
-			its parameter and returns a list of {candidate}.
-			Here, {args} is a list of parameters given to the
-			source when |:Unite| command is executed and {context}
-			is the context information when the source is called.
-			If either of these are not given, the argument becomes
-			"".  Hence, this function must handle empty string.
-			Arguments should be checked by |get()| function.
-			For more details, you can refer to
-			|unite-notation-{context}| about {context} and
-			|unite-notation-{candidate}| about {candidate}.
-			This attribute can be omitted if other attributes can
-			gather some candidates.
-			The candidates gathered by this attribute are cached
-			by unite buffer.  The cache is available until the
-			unite buffer is closed and is discarded unless you use
-			|:UniteResume|.  To cache persistently regardless of
-			the life of the unite buffer, you have some source to
-			save the cache on non-volatile storage.
+gather_candidates	Function	(Required*)
+			    * Unless some other attribute is explicitly
+			      registered to gather the source candidates
+			This function is called once when the source in
+			initialized, and again whenever the user invokes
+			|<Plug>(unite_redraw)| to reload the source. If the
+			source is registerd as |unite-source-is_volatile|,
+			gather_candidates() is called on _every_ change of the
+			input string. This function takes {args} and {context} as
+			parameters and returns a {candidate} list. {args} is a
+			list of parameters passed to source via the |:Unite|
+			command. {context} is the context information when the
+			source is called.
+			{args} and {context} default to "" if they are not
+			provided, so gather_candidates() must handle that
+			See also:
+			    |get()|
+			    |unite-notation-{context}|
+			    |unite-notation-{candidate}|
+			Unite caches the results of gather_candidates() until the
+			unite buffer is closed and is discarded (unless you use
+			|:UniteResume|). To cache persistently regardless of
+			the life of the unite buffer, a source may implement
+			logic to save the cache to disk.
 
 				*unite-source-attribute-change_candidates*
 change_candidates	Function	(Optional)
 			This function is called if the input string is changed
-			in gathering candidates by unite.  You can make use of
-			this attribute to generate candidates from the input
-			string.  The candidates generated by these attributes
-			are added to the candidates cached by
-			|unites-source-attribute-gather_candidates|.
-			This function takes {args} and {context} as its
-			parameter and returns a list of {candidate}.
-			The specification of the parameters and the returned
-			value is the same as for
+			while unite is gathering candidates.
+			change_candidates() generates new candidates
+			based on the changed input string. Unite adds these
+			candidates to the candidates cached from the initial 
+			|unite-source-attribute-gather_candidates|.
+
+			This function takes {args} and {context} parameters
+			and returns a {candidate} list, as described in
 			|unite-source-attribute-gather_candidates|.
 
 			*unite-source-attribute-async_gather_candidates*
 async_gather_candidates	Function	(Optional)
-			This function is called asynchronously in gathering
-			candidates.  You can make use of this function to
-			split time-consuming job into small jobs.
-			|g:unite_update_time| is the default timing.  This
-			function takes {args} and {context} as its parameter
-			and returns a list of {candidate}.
+			This function is called asynchronously to gather
+			candidates. You can use this function to split a
+			time-consuming job into smaller steps, to avoid
+			blocking the Vim UI.
+			|g:unite_update_time| is the default callback period.
 
-			The specification of the parameters and the returned
-			value is the same as for
+			This function takes {args} and {context} parameters
+			and returns a {candidate} list, as described in
 			|unite-source-attribute-gather_candidates|.
 
 					*unite-source-attribute-complete*
 complete		Function	(Optional)
-			This function is called to complete the source
-			argument of |:Unite|.  This function takes {args},
-			{context}, {arglead}, {cmdline} and {cursorpos} as its
-			parameter and returns a list of candidates.
+			This function provides auto-completeion at the command
+			line when the source is invoked via |:Unite| {source}.
+
+			This function takes {args}, {context}, {arglead},
+			{cmdline} and {cursorpos} parameters and returns
+			a {candidate} list.
 
 						*unite-source-attribute-hooks*
 hooks			Dictionary		(Optional)
 			You may put hook functions in this dictionary in which
-			the key is the position to hook and the value is the
-			reference to the function to be called.  The following
-			hook functions are defined:
+			the key is the hook position (or priority) and the
+			value is the function to be called.
 
-			on_init		*unite-source-attribute-hooks-on_init*
-			Called just before returning to unite buffer after
-			executing |:Unite| commands or calling |unite#start()|
-			but executing |:UniteResume|.
-			This function takes {args} and {context} as its
-			parameters.
-			Note that you must be careful to select the function
-			to call because the unite buffer may no longer be
-			initialized when calling this hook function.
+			Unite provides the following hook functions:
+
+			on_init
+				*unite-source-attribute-hooks-on_init*
+			Called just before entering (or returning to) the
+			unite buffer (after executing |:Unite| or calling
+			|unite#start()|, but _not_ |:UniteResume|).
+			This function takes {args} and {context} parameters.
+			Note: if this function fails, it may prevent the unite
+			buffer from initializing.
 
 			on_syntax
 				*unite-source-attribute-hooks-on_syntax*
+			Performs highlight configuration for each source.
 			Called after the unite buffer is initialized and
 			syntax for each source is set but not called if
 			|unite-source-attribute-syntax| is not set.
-			This function takes {args} and {context} as its
-			parameters.
-			Highlight configuration for each source is done by
-			this function.
+			This function takes {args} and {context} parameters.
 
-			Note: To get abbr head column, use
-			"unite#get_current_unite().abbr_head".
-			Example:
->
+			Note: To get abbr head column, use:
+			    unite#get_current_unite().abbr_head
+			Example: >
 			  syntax match uniteSource__Buffer_Name /[^/ \[\]]\+\s/
 			        \ contained containedin=uniteSource__Buffer
 			  highlight default link uniteSource__Buffer_Name Function
 <
-			Note you must set the contained in of the same syntax
+			Note you must set "contained in" to the same syntax
 			name as for |unite-source-attribute-syntax|.
 
 			on_close
 				*unite-source-attribute-hooks-on_close*
 			Called after executing |<Plug>(unite_exit)| or closing
 			the unite buffer following some command execution.
-			This function takes {args} and {context} as its
-			parameters.
+			This function takes {args} and {context} parameters.
 
 			on_pre_filter
 				*unite-source-attribute-hooks-on_pre_filter*
 			Called before the filters to narrow down the
-			candidates.  This function takes {args} and {context}
-			as its parameters.
+			candidates.
+			This function takes {args} and {context} parameters.
 
 			on_post_filter
 				*unite-source-attribute-hooks-on_post_filter*
 			Called after the filters to narrow down the
-			candidates.  This is used to set attributes.
+			candidates.  Used to set attributes.
 			These filters are to avoid adversely affecting the
-			performance.  This function takes {args} and {context}
-			as its parameters.
+			performance.
+			This function takes {args} and {context} parameters.
 
 			on_pre_init
 				*unite-source-attribute-hooks-on_pre_init*
 			Called before source is initialized.
 			{args} is empty.
-			Current source is set as "a:context.source" in
+			Current source is set as `a:context.source` in
 			{context}.
-			You can dynamically initialize source by changing
-			"a:context.source" in this function.
+			You can dynamically initialize a source by changing
+			`a:context.source` in this function.
 
 					*unite-source-attribute-action_table*
 action_table		Dictionary		(Optional)
-			Adds source's own action table.
-			In this dictionary, the key is the kind and the value
-			is the action table.  The specification of action
-			table is the same as for
-			|unite-kind-attribute-action_table|.
-			With this dictionary, you can define original
-			|unite-kind-attribute-action_table| for each kind in
-			source's own context.
-			For example:
+			Defines custom actions for the given source, for a
+			given "kind".
+			The dictionary key is the "kind" and the dictionary
+			value is the action table.
+			See |unite-kind-attribute-action_table| for the action
+			table structure.
+			Example: 
 >
-			'action_table' : { 'buffer' : foo_action_table }
+			    'action_table' : { 'buffer' : foo_action_table }
 <
-			means that foo_action_table is used for kind "buffer"
-			in this source's context.
-			You can use "*" for the key to match any kind.
-			This is useful if you expect only one kind.  If no
-			key-value pair is set, this dictionary is left empty.
-			You can put action table without a corresponding key
-			and it means the key is "*".
-			For example, the following two are the same.
->
-			'action_table' : foo_action_table
-			'action_table' : { '*' : foo_action_table }
+			foo_action_table is used for the "buffer" kind.
+
+			Use "*" for the key to match all kinds (useful if you
+			expect only one kind). If no key-value pair is set,
+			this dictionary is left empty.
+			An action table without a key defaults to "*".
+			For example, the following two are the same: >
+			    'action_table' : foo_action_table
+			    'action_table' : { '*' : foo_action_table }
 <
 				*unite-source-attribute-default_action*
 default_action		Dictionary		(Optional)
-			Adds default action unique to the source.
-			In this dictionary, the key is the kind and the value
-			is the default action.
-			If it's not given, the kind's default action is used.
+			Specifies the default action for the source.
+			The dictionary key is the "kind" and the value is the
+			default action for that kind, for this source.
+			Without this, the kind's own default action is used.
 			The default action can be in string format and
 			it means the same as:
 >
@@ -2887,102 +2985,97 @@ default_action		Dictionary		(Optional)
 <
 					*unite-source-attribute-default_kind*
 default_kind		String			(Optional)
-			Default kind in source candidates.
-			If it's not given, the "common" is used.
+			Default kind in the source candidates.
+			Without this, "common" is used.
 
 					*unite-source-attribute-alias_table*
 alias_table		Dictionary		(Optional)
-			Adds an alias table unique to the source.
-			In this dictionary, the key is the kind and the value
-			is the alias table.
-			If the key is '*', it matches any kinds.
-			Please refer to |unite-kind-attribute-action_table|
-			for the specification of alias table.
-			If no key-value is set, this dictionary is left
-			empty.
+			Defines custom aliases for the given source.
+			The dictionary key is the "kind" and the value is the
+			alias table. If the key is '*', it matches any kinds.
+			See |unite-kind-attribute-action_table| for the
+			specification of alias table.
+			If no key-value is set, this dictionary is left empty.
 
 					*unite-source-attribute-max_candidates*
 max_candidates		Number		(Optional)
 			The maximum number of candidates.
-
-			This attribute is optional; if it is not given,
-			0 is used as the default value.  This means
-			maximum number is infinity.
+			Defaults to 0, which means no limit (infinity).
 
 			*unite-source-attribute-required_pattern_length*
 required_pattern_length	Number		(Optional)
-			The least string length to narrow down the candidates.
-			This attribute is optional.
-			If it's not given, 0 is used as the default value and
-			all the possible candidates are collected.
+			The minimum string length required for Unite to begin
+			narrowing candidates.
+			Defaults to 0, which means no minimum length (all
+			possible candidates are collected).
 
 					*unite-source-attribute-is_volatile*
 is_volatile		Number		(Optional)
 			Whether the source recalculates the candidates
 			every time the input is changed.
-			This attribute is optional.
-			If it's not given, 0 is set as the default value.  In
-			this case, candidates are cached in unite buffer and
-			it does not call
-			|unite-source-attribute-gather_candidates|
-			repeatedly and the cache is available until the unite
-			buffer is closed.  To cache longer, the source has no
-			choice but to cache by itself.
+			Defaults to 0, which means candidates are cached by
+			Unite and |unite-source-attribute-gather_candidates|
+			will _not_ be called after the initial load (except
+			if the user explicitly invokes |<Plug>(unite_redraw)|
+			or if the Unite buffer is closed).
+			To cache longer, a source may implement its own
+			caching logic.
 
 					*unite-source-attribute-is_listed*
 is_listed		Number		(Optional)
 			Whether the source name is visible to the user.
-			If the source is internal, it must be set to 0.  If
-			it's omitted, it's set to 1.
+			If the source is internal, it must be set to 0.
+			Defaults to 1.
 
 					*unite-source-attribute-is_grouped*
 is_grouped		Number		(Optional)
 			Whether the source candidates are grouped.
-			Grouped candidates must have "group" attribute.
-			If it's omitted, it's set to 0.
+			Defaults to 0.
+			Grouped candidates must have "group" attribute; see
+			|unite-notation-{candidate}|
 
 					*unite-source-attribute-description*
 description		String		(Optional)
-			The description of the source.
-			If it's omitted, it's set to "".
-			|unite-source-source| uses this.
+			User-friendly description of the source.
+			Defaults to "".
+			Appears in the list shown by the |unite-source-source|:
+			    |:Unite| source
 
 					*unite-source-attribute-syntax*
 syntax			String		(Optional)
-			The syntax name used within the source.  This syntax
-			name is defined automatically by unite itself.
-			If it's omitted, it's set to
-			"uniteSource__(source name)".
-			This is used to configure the source's own highlight.
-			According to the unite's naming conversion to avoid
-			syntax name conflicts, use syntax names like
-			"uniteSource__(source name)".  Configuration of
-			highlight itself must use
-			|unite-source-attribute-hooks-on_syntax|.
+			Syntax |group-name| used within the source buffer
+			(useful for highlighting).
+			If omitted, unite auto-generates a syntax group-name:
+			    uniteSource__{source name}
+			The above naming convention is recommended to avoid
+			conflicts. Highlighting must be performed in this
+			hook: |unite-source-attribute-hooks-on_syntax|.
 
 					*unite-source-attribute-filters*
 filters			List		(Optional)
-			The list of filters used by the source.  The elements
-			are filter name or function reference (accepted
-			dictionary function in current source).  Please refer
-			to |unite-filter-attributes| for the specification of
-			filter.  If it's omitted, unite uses
-			|unite-filter-default|.
+			List of filters used by the source. Each element
+			is a filter name or function reference (accepted
+			dictionary function in current source).  Refer
+			to |unite-filter-attributes| for the filter structure.
+			If omitted, unite uses |unite-filter-default|.
+
 					*unite-source-attribute-matchers*
 matchers		List/String	(Optional)
-			The list of matchers used by the source.
+			List of matchers used by the source.
+
 					*unite-source-attribute-sorters*
 sorters			List/String	(Optional)
-			The list of sorters used by the source.
+			List of sorters used by the source.
+
 					*unite-source-attribute-converters*
 converters		List/String	(Optional)
-			The list of converters used by the source.
+			List of converters used by the source.
 
 					*unite-source-attribute-source__*
 source__		Unknown		(Optional)
-			The Attribute unique for each source.  To avoid the
-			attribute from conflicting with the unite's own,
-			"source__" prefix must be added.
+			Defines custom attributes for a source. To avoid the
+			attribute from conflicting with unite, prefix all
+			custom attributes in your source with "source__".
 
 NOTATION					*unite-notation*
 
@@ -3126,15 +3219,14 @@ KIND ATTRIBUTES					*unite-kind-attributes*
 name			String		(Required)
 			The name of a kind.  It must consist of the
 			following characters:
-			- a-z
-			- 0-9
-			- _
-			- /
-			- - (Not head)
+			    a-z
+			    0-9
+			    _
+			    /
+			    -    (except the first character)
 
-			For example:
-			- "buffer" , "file_mru" and "view/git" are valid.
-			- "BadOne", "!@#$%^&*()_[]{}-|" and "" are invalid.
+			    Good: "buffer" , "file_mru", "view/git"
+			    Bad:  "BadOne", "!@#$%^&*()_[]{}-|", ""
 
 					*unite-kind-attribute-default_action*
 default_action		String		(Required)
@@ -3390,10 +3482,11 @@ A: Yes you can use |unite-filter-matcher_fuzzy|.
 	\ 'matchers', 'matcher_fuzzy')
 <
 Note: Fuzzy matcher does not sort candidates.  If you want to sort by rank,
-you can use "sorter_rank". But it is slow.
+you can use "sorter_rank" or "sorter_selecta". But it is slow.
 >
 	call unite#filters#sorter_default#use(['sorter_rank'])
 <
+
 Q: I want to clear cache in candidates.
 
 A: Please use |<Plug>(unite_redraw)|.
@@ -3532,6 +3625,21 @@ https://github.com/Shougo/unite.vim/issues/512
 
 A: To expand tilde, you must use "-profile-name=files". >
 	Unite -profile-name=files file
+
+Q: Fuzzy matcher is not enabled in some sources.
+https://github.com/Shougo/unite.vim/issues/588
+
+A: For example, "grep" and "line" sources uses "matcher_regexp" matcher
+instead of "matcher_default".  So, you must change matchers manually.  >
+	call unite#custom#source('grep', 'matchers', 'matcher_fuzzy')
+
+Q: Unite does not respect 'splitright' option
+https://github.com/Shougo/unite.vim/issues/615
+
+A: >
+	call unite#custom#profile('default', 'context', {
+	\   'prompt_direction': 'top'
+	\ })
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:

@@ -1,6 +1,13 @@
-"colorscheme desert-warm-256
-colorscheme jellybeans
-"colorscheme landscape
+" Reload vimrc to overwrite OS default settings
+let s:config_root = expand('~/.vim')
+let s:bundle_root = s:config_root . '/bundle'
+
+if isdirectory(s:bundle_root . '/Zenburn')
+  colorscheme jellybeans
+else
+  colorscheme desert
+endif
+
 set guifontwide=Osaka:h12 "フォント設定
 "set guifont=Osaka-Mono:h14 "フォント設定
 set guifont=Ricty-RegularForPowerline:h14

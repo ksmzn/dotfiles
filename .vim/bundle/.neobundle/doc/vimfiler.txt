@@ -35,6 +35,8 @@ Interface		|vimfiler-interface|
 Columns			|vimfiler-columns|
 Examples		|vimfiler-examples|
 Unite sources		|vimfiler-unite-sources|
+Create source		|vimfiler-create-source|
+Create kind		|vimfiler-create-kind|
 FAQ			|vimfiler-faq|
 
 ==============================================================================
@@ -359,6 +361,13 @@ g:vimfiler_ignore_pattern			 *g:vimfiler_ignore_pattern*
 <
 		Default value is '^\.' (dot files pattern).
 
+					*g:vimfiler_expand_jump_to_first_child*
+g:vimfiler_expand_jump_to_first_child			 
+		This variable controls if you jump to the first child when you
+		expand a directory tree.
+		
+		Default value is 1.
+
 						*g:vimfiler_draw_files_limit*
 g:vimfiler_draw_files_limit
 		Specify the limit of redraw files.
@@ -372,6 +381,13 @@ g:vimfiler_min_cache_files
 		caches.
 
 		Default value is 100.
+
+					*g:vimfiler_restore_alternate_file*
+g:vimfiler_restore_alternate_file
+		Option to restore alternate file after open action. The
+		vimfiler buffer becomes the alternate file by default.
+
+		Default value is 0.
 
 SOURCES VARIABLES 				*vimfiler-sources-variables*
 
@@ -1038,6 +1054,61 @@ vimfiler/popd					*vimfiler-unite-action-vimfiler-popd*
 	delete		Delete directory from directory stack
 
 ==============================================================================
+CREATE SOURCE					*vimfiler-create-source*
+
+See |unite-create-source|.
+
+------------------------------------------------------------------------------
+SOURCE ATTRIBUTES				*vimfiler-source-attributes*
+
+See |unite-source-attributes|.
+
+			*vimfiler-source-attribute-vimfiler_check_filetype*
+vimfiler_check_filetype
+			Function	(Required*)
+
+			*vimfiler-source-attribute-vimfiler_gather_candidates*
+vimfiler_gather_candidates
+			Function	(Required*)
+
+			*vimfiler-source-attribute-vimfiler_dummy_candidates*
+vimfiler_dummy_candidates
+			Function	(Required*)
+
+			*vimfiler-source-attribute-vimfiler_complete*
+vimfiler_complete
+			Function	(Optional)
+
+==============================================================================
+CREATE KIND					*vimfiler-create-kind*
+
+See |unite-create-kind|.
+
+------------------------------------------------------------------------------
+KIND ATTRIBUTES					*vimfiler-kind-attributes*
+
+See |unite-kind-attributes|.
+
+------------------------------------------------------------------------------
+KIND ACTIONS					*vimfiler-kind-actions*
+
+Below "vimfiler__" prefixed actions are used for vimfiler.
+
+	vimfiler__write		Save file.  To save file in vimfiler, you must
+				define it.
+	vimfiler__shell		Create shell.
+	vimfiler__shellcmd	Execute shell command.
+	vimfiler__mkdir		Make this directory and parents directory.
+	vimfiler__newfile	Make this file.
+	vimfiler__delete	Delete files.
+	vimfiler__rename	Rename files.
+	vimfiler__copy	 	Copy files.
+	vimfiler__move	 	Move files.
+	vimfiler__execute	Execute files with associated program.
+	vimfiler__external_filer
+				Execute files with external file explorer.
+
+==============================================================================
 FAQ						*vimfiler-faq*
 
 Like NERDTree FAQ(https://github.com/scrooloose/nerdtree).
@@ -1070,7 +1141,7 @@ Q: I want to close one vimfile window in double mode.
 A: <Plug>(vimfiler_hide) closes both vimfiler windows. You can use
 <Plug>(vimfiler_close) instead of it:
 >
-	autocmd FileType vimfiler nnoremap q <buffer> <Plug>(vimfiler_close)
+	autocmd FileType vimfiler nmap q <buffer> <Plug>(vimfiler_close)
 <
 
 Q: I want to put trashbox instead of "rm" command.
