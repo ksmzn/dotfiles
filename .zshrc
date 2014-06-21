@@ -1,8 +1,19 @@
 #complete
 fpath=(path/to/zsh-completions/src /Users/kossy7 ~/.zsh/functions/Completion(N-/) ${fpath})
 
-# Vi ライクな操作が好みであれば `bindkey -v` とする
-bindkey -e
+# 履歴ファイルの保存先
+export HISTFILE=${HOME}/.zsh_history
+# メモリに保存される履歴の件数
+export HISTSIZE=1000
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=100000
+# 重複を記録しない
+setopt hist_ignore_dups
+# 開始と終了を記録
+setopt EXTENDED_HISTORY
+
+# Vi ライクな操作
+bindkey -v
 
 # zshのTAB補完を有効にする
 #autoload -U compinit && compinit
@@ -39,8 +50,6 @@ export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
-# User specific aliases and functions
-alias julia='/Applications/Julia-0.2.0-rc3.app/Contents/Resources/julia/bin/julia'
 
 export PATH=/usr/local/bin:$PATH
 #export PATH=/usr/local/share/python:$PATH
@@ -62,18 +71,18 @@ export PATH="/usr/local/mysql/bin:$PATH"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
+# homebrew_cask のアプリインストール先
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# brewでインストールしたbasictexのpath
+export PATH=/usr/texbin:$PATH
+
 # For R
 disable r
 
 # javac の出力する文字コードをUTF-8に
 # alias javac='javac -J-Dfile.encoding=UTF-8'
 # alias java='java -Dfile.encoding=UTF-8'
-
-# rvmによるRubyのインストール
-# [[ -s "/usr/local/rvm/scripts/rvm" ]] && source "/usr/local/rvm/scripts/rvm"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
 
 #chpwd() {
 #    ls_abbrev
@@ -130,3 +139,22 @@ function do_enter() {
 }
 zle -N do_enter
 bindkey '^m' do_enter
+
+# rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+function gem(){
+    $HOME/.rbenv/shims/gem $*
+    if [ "$1" = "install" ] || [ "$1" = "i" ] || [ "$1" = "uninstall" ] || [ "$1" = "uni" ]
+    then
+        rbenv rehash
+    fi
+}
+
+function bundle(){
+    $HOME/.rbenv/shims/bundle $*
+    if [ "$1" = "install" ] || [ "$1" = "update" ]
+    then
+        rbenv rehash
+    fi
+}
