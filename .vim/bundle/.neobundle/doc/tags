@@ -301,6 +301,7 @@ GundoCredits	gundo.txt	/*GundoCredits*
 GundoIntro	gundo.txt	/*GundoIntro*
 GundoLicense	gundo.txt	/*GundoLicense*
 GundoUsage	gundo.txt	/*GundoUsage*
+JuliaLaTeXtoUnicodeInit()	julia-vim.txt	/*JuliaLaTeXtoUnicodeInit()*
 User:plugin-template-loaded	template.txt	/*User:plugin-template-loaded*
 User:plugin-template-preexec	template.txt	/*User:plugin-template-preexec*
 YRClear-example	yankring.txt	/*YRClear-example*
@@ -507,6 +508,10 @@ g:django_support#auto_activate	vim-django-support.txt	/*g:django_support#auto_ac
 g:django_support#project_root	vim-django-support.txt	/*g:django_support#project_root*
 g:django_support#settings_module_name	vim-django-support.txt	/*g:django_support#settings_module_name*
 g:django_support#verbose	vim-django-support.txt	/*g:django_support#verbose*
+g:julia_auto_latex_to_unicode	julia-vim.txt	/*g:julia_auto_latex_to_unicode*
+g:julia_latex_suggestions_enabled	julia-vim.txt	/*g:julia_latex_suggestions_enabled*
+g:julia_latex_to_unicode	julia-vim.txt	/*g:julia_latex_to_unicode*
+g:julia_latex_to_unicode_eager	julia-vim.txt	/*g:julia_latex_to_unicode_eager*
 g:landscape_highlight_full_space	landscape.txt	/*g:landscape_highlight_full_space*
 g:landscape_highlight_todo	landscape.txt	/*g:landscape_highlight_todo*
 g:landscape_highlight_url	landscape.txt	/*g:landscape_highlight_url*
@@ -848,6 +853,16 @@ indent-guides-mappings	indent_guides.txt	/*indent-guides-mappings*
 indent-guides-options	indent_guides.txt	/*indent-guides-options*
 indent-guides-terminal-vim	indent_guides.txt	/*indent-guides-terminal-vim*
 indent_guides.txt	indent_guides.txt	/*indent_guides.txt*
+julia-vim	julia-vim.txt	/*julia-vim*
+julia-vim-L2U	julia-vim.txt	/*julia-vim-L2U*
+julia-vim-L2U-as-you-type	julia-vim.txt	/*julia-vim-L2U-as-you-type*
+julia-vim-L2U-tab	julia-vim.txt	/*julia-vim-L2U-tab*
+julia-vim-L2U-workaround	julia-vim.txt	/*julia-vim-L2U-workaround*
+julia-vim-about	julia-vim.txt	/*julia-vim-about*
+julia-vim-functions	julia-vim.txt	/*julia-vim-functions*
+julia-vim-introduction	julia-vim.txt	/*julia-vim-introduction*
+julia-vim-variables	julia-vim.txt	/*julia-vim-variables*
+julia-vim.txt	julia-vim.txt	/*julia-vim.txt*
 landscape	landscape.txt	/*landscape*
 landscape-airline	landscape.txt	/*landscape-airline*
 landscape-contents	landscape.txt	/*landscape-contents*

@@ -628,6 +628,10 @@ else
   NeoBundleLazy 'mattn/emmet-vim', {'autoload': {
         \ 'filetypes': ['html', 'djangohtml'] }}
 
+  " Julia
+  NeoBundleLazy 'JuliaLang/julia-vim', {'autoload': {
+        \ 'filetypes': ['jl', 'julia'] }}
+
   " Python {{{
   NeoBundleLazy "lambdalisue/vim-django-support", {
         \ "autoload": {
