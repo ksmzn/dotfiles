@@ -511,6 +511,8 @@ else
       let g:acp_enableAtStartup = 0
       let g:neocomplete#enable_smart_case = 1
       let g:neocomplete#sources#syntax#min_keyword_length = 3
+      " <TAB> で補完候補の選択
+      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
     endfunction
     function! s:hooks.on_post_source(bundle)
       NeoCompleteEnable
@@ -527,6 +529,8 @@ else
       let g:acp_enableAtStartup = 0
       let g:neocomplcache_enable_smart_case = 1
       let g:neocomplcache_min_syntax_length = 3
+      " <TAB> で補完候補の選択
+      inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
     endfunction
   endif
 
@@ -582,22 +586,9 @@ else
   nmap <Leader>r <Plug>(quickrun)
   let s:hooks = neobundle#get_hooks("vim-quickrun")
   function! s:hooks.on_source(bundle)
-    if has('clientserver')
-      let g:quickrun_config = {
-            \ "*": {"runner": "remote/vimproc"}
-            \ }
-    else
-      let g:quickrun_config = {
-            \ "*": {"runner": "remote/vimproc"}
-            \ }
-    endif
-    " QML
-    let g:quickrun_config['qml/qmlscene'] = {
-          \ 'command' : 'qmlviewer',
-          \ 'exec'    : '%c %s:p',
-          \ 'quickfix/errorformat' : 'file:\/\/%f:%l %m',
-          \ }
-    let g:quickrun_config['qml'] = g:quickrun_config['qml/qmlscene']
+    let g:quickrun_config = {
+        \ "*": {"runner": "vimproc"},
+        \ }
   endfunction
 
   " タグジャンプ
@@ -629,8 +620,10 @@ else
         \ 'filetypes': ['html', 'djangohtml'] }}
 
   " Julia
+  " .jl のfiletypeがjuliaでもjulia-vimが起動しないのでやむを得ず
+  au BufNewFile,BufRead *.jl setf julia
   NeoBundleLazy 'JuliaLang/julia-vim', {'autoload': {
-        \ 'filetypes': ['jl', 'julia'] }}
+        \ 'filetypes': ['julia'] }}
 
   " Python {{{
   NeoBundleLazy "lambdalisue/vim-django-support", {
