@@ -463,6 +463,30 @@ else
     endfunction
   endfunction
 
+  " Vimからシェルを起動できる
+  NeoBundleLazy 'Shougo/vimshell.vim', {
+        \ 'depends' : [ 'Shougo/vimproc.vim' ],
+        \ 'autoload' : { 
+        \   'commands' : [ 'VimShell' ],
+        \ }}
+  nnoremap <silent> vs :VimShell<CR>
+  nnoremap <silent> vsc :VimShellCreate<CR>
+  nnoremap <silent> vp :VimShellPop<CR>
+  " NeoBundle 'Shougo/vimshell.vim'
+  " let s:hooks = neobundle#get_hooks("vimshell")
+  " function! s:hooks.on_source(bundle)
+  "   " ,is: シェルを起動
+  "   nnoremap <silent> ,is :VimShell<CR>
+  "   " ,ipy: pythonを非同期で起動
+  "   nnoremap <silent> ,ipy :VimShellInteractive python<CR>
+  "   " ,irb: irbを非同期で起動
+  "   nnoremap <silent> ,irb :VimShellInteractive irb<CR>
+  "   " ,ss: 非同期で開いたインタプリタに現在の行を評価させる
+  "   vmap <silent> ,ss :VimShellSendString<CR>
+  "   " 選択中に,ss: 非同期で開いたインタプリタに選択行を評価させる
+  "   nnoremap <silent> ,ss <S-v>:VimShellSendString<CR>
+  " endfunction
+
   " gistクライアント
   NeoBundleLazy "mattn/gist-vim", {
         \ "depends": ["mattn/webapi-vim"],

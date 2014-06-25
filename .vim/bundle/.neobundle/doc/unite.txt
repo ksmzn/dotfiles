@@ -431,7 +431,7 @@ g:unite_data_directory				*g:unite_data_directory*
 
 g:unite_no_default_keymappings		*g:unite_no_default_keymappings*
 		If this variable is 1, unite doesn't set any default key
-		mappings.  Not recomended.  You shouldn't set this to 1 unless
+		mappings.  Not recommended.  You shouldn't set this to 1 unless
 		you have a specific reason.
 
 		This variable doesn't exist unless you define it explicitly.
@@ -516,8 +516,17 @@ g:unite_source_rec_async_command
 >
 		" Using ack-grep as recursive command.
 		let g:unite_source_rec_async_command = 'ack -f --nofilter'
+
+		" Using ag as recursive command.
+		let g:unite_source_rec_async_command =
+                \ 'ag --follow --nocolor --nogroup --hidden -g ""'
+
+		" Using pt as recursive command.
+		let g:unite_source_rec_async_command =
+		\ 'pt --nocolor --nogroup -g .'
 <
 		The default value is "find" and the args.
+		Because, "find" command is fastest.
 
 					*g:unite_source_file_rec_async_command*
 		Note: This variable is obsolete.
@@ -839,7 +848,7 @@ g:unite_matcher_fuzzy_max_input_length
 DEPRECATED VARIABLES				*unite-deprecated-variables*
 
 g:unite_update_time				*g:unite_update_time*
-		The time interval for updating the canidate list as the filter
+		The time interval for updating the candidate list as the filter
 		text it typed in Msec.
 		If it is 0, this feature is disabled.
 		Note: It is deprecated variable.  Please use
@@ -1488,6 +1497,8 @@ unite#custom#profile({profile-name}, {option-name}, {value})
 		default context.
 		Note: If you want to change default context, you should use
 		"default" profile name.
+		Valid key context is in |unite-options|.  But "-" is
+		substituted to "_", and "-" prefix is removed.
 
 		Example:
 >
@@ -1643,19 +1654,19 @@ unite#undef_filter({name})			*unite#undef_filter()*
 		|unite#define_filter()|.  If such a filter doesn't exist,
 		this function does nothing.
 
-					*unite#filters#matcher_default#use(()*
+					*unite#filters#matcher_default#use()*
 unite#filters#matcher_default#use({matchers})
 		Changes the default match used by
 		|unite-filter-matcher_default| into {matchers}.
 		{matchers} must be specified with a list of matcher names.
 
-					*unite#filters#sorter_default#use(()*
+					*unite#filters#sorter_default#use()*
 unite#filters#sorter_default#use({sorters})
 		Changes the default sorter used by
 		|unite-filter-sorter_default| into {sorters}.
 		{sorters} must be specified with a list of sorter names.
 
-					*unite#filters#converter_default#use(()*
+					*unite#filters#converter_default#use()*
 unite#filters#converter_default#use({converters})
 		Changes the default converter used by
 		|unite-filter-converter_default| into {converters}.
@@ -2833,7 +2844,7 @@ gather_candidates	Function	(Required*)
 			This function is called once when the source in
 			initialized, and again whenever the user invokes
 			|<Plug>(unite_redraw)| to reload the source. If the
-			source is registerd as |unite-source-is_volatile|,
+			source is registered as |unite-source-is_volatile|,
 			gather_candidates() is called on _every_ change of the
 			input string. This function takes {args} and {context} as
 			parameters and returns a {candidate} list. {args} is a
@@ -2879,7 +2890,7 @@ async_gather_candidates	Function	(Optional)
 
 					*unite-source-attribute-complete*
 complete		Function	(Optional)
-			This function provides auto-completeion at the command
+			This function provides auto-completion at the command
 			line when the source is invoked via |:Unite| {source}.
 
 			This function takes {args}, {context}, {arglead},

@@ -48,4 +48,6 @@ vim-template
 vim-virtualenv
 vimfiler
 vimproc
+vimproc.vim
+vimshell.vim
 webapi-vim
