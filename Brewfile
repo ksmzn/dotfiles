@@ -26,6 +26,9 @@ install tree
 install tig
 install hub
 install gcc
+install proctool
+install coreutils
+install readline
 
 install python
 install python3
