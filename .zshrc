@@ -77,7 +77,7 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 # brewでインストールしたbasictexのpath
 export PATH=/usr/texbin:$PATH
 
-# For R
+# 統計環境Rを使うため、最後に実行したコマンドを実行するコマンドr を使用不可に。
 disable r
 
 # javac の出力する文字コードをUTF-8に
