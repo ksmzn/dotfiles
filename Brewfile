@@ -7,6 +7,7 @@ upgrade
 tap homebrew/versions
 # tap phinze/homebrew-cask
 tap caskroom/cask
+tap homebrew/science
 
 # 各種インストール
 install zsh
@@ -24,11 +25,11 @@ install automake
 install tree
 install tig
 install hub
+install gcc
 
 install python
 install python3
 install ruby
-install R
 install julia
 install ffmpeg
 
@@ -87,6 +88,11 @@ cask install mactex
 cask install texshop
 cask install julia-studio
 
+# R
+brew cask install xquartz
+# brew install r
+brew install r -v --env=std
+cask install rstudio
 
 cask alfred link
 
