@@ -215,6 +215,15 @@ if has("autocmd")
   autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
 endif
 
+augroup FileTypeDetect
+  autocmd!
+  autocmd BufNewFile,BufRead *.tex,*.latex,*.sty,*.dtx,*.ltx,*.bbl setf tex
+  autocmd BufNewFile,BufRead *.md  setf markdown
+  autocmd BufNewFile,BufRead *.less setf less
+  autocmd BufNewFile,BufRead *.coffee setf coffee
+  autocmd BufNewFile,BufRead *.erb set filetype=eruby.html
+augroup END
+
 " 特定のファイルの時に雛形を表示
 autocmd BufNewFile *.py 0r $HOME/.vim/template/python.py
 "#######################
@@ -265,6 +274,8 @@ inoremap <C-k>  <ESC>"*pa
 "##################
 let s:noplugin = 0
 let s:neobundle_root = s:bundle_root . "/neobundle.vim"
+filetype off
+
 if !isdirectory(s:neobundle_root) || v:version < 702
   let s:noplugin = 1
 else
@@ -466,8 +477,11 @@ else
   " Vimからシェルを起動できる
   NeoBundleLazy 'Shougo/vimshell.vim', {
         \ 'depends' : [ 'Shougo/vimproc.vim' ],
-        \ 'autoload' : { 
-        \   'commands' : [ 'VimShell' ],
+        \ 'autoload' : {
+        \ 'commands' : [{ 'name' : 'VimShell',
+        \                 'complete' : 'customlist,vimshell#complete'},
+        \                 'VimShellExecute', 'VimShellInteractive',
+        \                 'VimShellTerminal', 'VimShellPop'],
         \ }}
   nnoremap <silent> vs :VimShell<CR>
   nnoremap <silent> vsc :VimShellCreate<CR>
@@ -681,8 +695,64 @@ else
   "   let g:jedi#goto_command = '<Leader>G'
   " endfunction
   " }}}
-
-  "}}}
+  "
+  " LaTeX
+  " NeoBundle 'jcf/vim-latex'
+  NeoBundleLazy 'jcf/vim-latex', {
+        \ 'autoload': {
+        \   'filetypes': ['tex']
+        \ }}
+  " set grepprg=grep\ -nH\ $*
+  " " .tex ファイルをlatexとして認識する。
+  " let g:tex_flavor = 'latex'
+  " " Windows でもパスの区切り文字をスラッシュで扱う
+  " set shellslash
+  " let g:Tex_DefaultTargetFormat = 'pdf' " Macの人はデフォルトでpdfなので必要ない その他のOSの人はデフォルトがdviなので必要
+  " let g:Tex_ViewRule_pdf = 'open -a Preview.app' "PDFはPreview.appで開く
+  " let g:Tex_CompileRule_dvi = 'platex --interaction=nonstopmode $*'
+  " let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
+  " let g:Tex_FormatDependency_pdf = 'dvi,pdf' " .tex -(platex)-> .dvi -(dvipdfmx) -> .pdf 
+  " Vim-LaTeX settings
+  let s:bundle = neobundle#get_hooks("vim-latex")
+  function! s:hooks.on_source(bundle)
+    let OSTYPE = system('uname')
+    if OSTYPE == "Darwin\n"
+      set shellslash
+      set grepprg=grep\ -nH\ $*
+      let g:tex_flavor='latex'
+      let g:Imap_UsePlaceHolders = 1
+      let g:Imap_DeleteEmptyPlaceHolders = 1
+      let g:Imap_StickyPlaceHolders = 0
+      let g:Tex_DefaultTargetFormat = 'pdf'
+      let g:Tex_MultipleCompileFormats='dvi,pdf'
+      let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+      let g:Tex_FormatDependency_ps = 'dvi,ps'
+      let g:Tex_CompileRule_pdf = '/usr/texbin/ptex2pdf -u -l -ot "-synctex=1 -interaction=nonstopmode -file-line-error-style" $*'
+      let g:Tex_CompileRule_ps = '/usr/texbin/dvips -Ppdf -o $*.ps $*.dvi'
+      let g:Tex_CompileRule_dvi = '/usr/texbin/uplatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
+      let g:Tex_BibtexFlavor = '/usr/texbin/upbibtex'
+      let g:Tex_MakeIndexFlavor = '/usr/texbin/mendex -U $*.idx'
+      let g:Tex_UseEditorSettingInDVIViewer = 1
+      let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
+      let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
+    elseif OSTYPE == "Linux\n"
+      set shellslash
+      set grepprg=grep\ -nH\ $*
+      let g:tex_flavor='latex'
+      let g:Imap_UsePlaceHolders = 1
+      let g:Imap_DeleteEmptyPlaceHolders = 1
+      let g:Imap_StickyPlaceHolders = 0
+      let g:Tex_DefaultTargetFormat = 'pdf'
+      let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+      let g:Tex_FormatDependency_ps = 'dvi,ps'
+      let g:Tex_CompileRule_dvi = '/usr/bin/platex -shell-escape -interaction=nonstopmode $*'
+      let g:Tex_CompileRule_pdf = '/usr/bin/dvipdfmx $*.dvi'
+      let g:Tex_BibtexFlavor = '/usr/bin/pbibtex'
+      let g:Tex_ViewRule_dvi = '/usr/bin/gnome-open'
+      let g:Tex_ViewRule_pdf = '/usr/bin/gnome-open'
+    endif
+  endfunction
+  unlet s:bundle  "}}}
 
   " install missing plugins
   NeoBundleCheck
