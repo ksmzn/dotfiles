@@ -35,6 +35,8 @@ install python3
 install ruby
 install julia
 install ffmpeg
+# Clojure
+install Leiningen
 
 install freetype
 install fontforge
