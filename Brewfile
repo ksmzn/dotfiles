@@ -37,6 +37,9 @@ install julia
 install ffmpeg
 # Clojure
 install Leiningen
+# Common Lisp
+install clisp
+install mit-scheme
 
 install freetype
 install fontforge
