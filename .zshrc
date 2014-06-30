@@ -16,7 +16,6 @@ setopt EXTENDED_HISTORY
 bindkey -v
 
 # zshのTAB補完を有効にする
-#autoload -U compinit && compinit
 autoload -U compinit; compinit -u
 # 色設定
 autoload -U colors; colors
@@ -43,30 +42,29 @@ zstyle ':completion:*:default' menu select=1 list-colors 'di=36' 'ln=35' 'ex=32'
 #zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls -G'
 
+##################################################################################
+# Python
+##################################################################################
 export PATH=$PATH:/Library/Python/2.7/site-packages/bs4
 
+#virtualenv settings
+export WORKON_HOME=$HOME/.virtualenvs
+source `which virtualenvwrapper.sh`
+
+##################################################################################
+# Vim
+##################################################################################
 # デフォルトのVimをMacVim Kaoriyaに
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+
+
 alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 
 export PATH=/usr/local/bin:$PATH
-#export PATH=/usr/local/share/python:$PATH
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-    source /usr/local/bin/virtualenvwrapper.sh
-    export PIP_RESPECT_VIRTUALENV=true
-fi
-#export PATH = /usr/local/bin:/usr/local/share/python:$PATH
-#export PATH=/usr/local/bin:$PATH
-#export PATH=/usr/local/bin:/usr/local/share/python
 
-#export PATH=$PATH:/usr/local/mysql/bin
 export PATH="/usr/local/mysql/bin:$PATH"
-#export PATH="$HOME/.rbenv/bin:$PATH"
-#eval "$(rbenv init -)"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
