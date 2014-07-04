@@ -40,6 +40,10 @@ install Leiningen
 # Common Lisp
 install clisp
 install mit-scheme
+# OCaml
+install ocaml
+install opam
+
 
 install freetype
 install fontforge
