@@ -620,17 +620,17 @@ else
   "}}}
 
   " Programming {{{
-  NeoBundleLazy "thinca/vim-quickrun", {
-        \ "autoload": {
-        \   "mappings": [['nxo', '<Plug>(quickrun)']]
+  NeoBundleLazy 'thinca/vim-quickrun', {
+        \ 'autoload': {
+        \   'mappings': [['nxo', '<Plug>(quickrun)']]
         \ }}
   nmap <Leader>r <Plug>(quickrun)
   let s:hooks = neobundle#get_hooks("vim-quickrun")
-  function! s:hooks.on_source(bundle)
+  " function! s:hooks.on_source(bundle)
     let g:quickrun_config = {
-        \ "*": {"runner": "vimproc"},
+        \ '*': {'runner': 'vimproc'},
         \ }
-  endfunction
+  " endfunction
 
   " タグジャンプ
   NeoBundleLazy 'majutsushi/tagbar', {
