@@ -51,4 +51,5 @@ vimfiler
 vimproc
 vimproc.vim
 vimshell.vim
+w3m.vim
 webapi-vim

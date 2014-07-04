@@ -614,6 +614,9 @@ else
         \   "mappings": ['<Plug>TaskList'],
         \}}
   nmap <Leader>T <plug>TaskList
+
+  " ブラウジング
+  NeoBundle 'yuratomo/w3m.vim'
   "}}}
 
   " Programming {{{
