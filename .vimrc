@@ -79,6 +79,9 @@ endif
 " <Leader><Leader>で変更があれば保存
 noremap <Leader><Leader> :up<CR>
 
+" インサートモードのjjをEscにバインド
+inoremap <silent> jj <ESC>
+
 " ESCを二回押すことでハイライトを消す
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
@@ -201,6 +204,7 @@ if has("autocmd")
   autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
   autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
   autocmd FileType python     setlocal sw=4 sts=4 ts=8 et
+  autocmd FileType kivy     setlocal sw=4 sts=4 ts=8 et
   autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
   autocmd FileType sh         setlocal sw=4 sts=4 ts=4 et
@@ -221,7 +225,8 @@ augroup FileTypeDetect
   autocmd BufNewFile,BufRead *.md  setf markdown
   autocmd BufNewFile,BufRead *.less setf less
   autocmd BufNewFile,BufRead *.coffee setf coffee
-  autocmd BufNewFile,BufRead *.erb set filetype=eruby.html
+  autocmd BufNewFile,BufRead *.erb setf html
+  autocmd BufNewFile,BufRead *.kv setf kivy
 augroup END
 
 " 特定のファイルの時に雛形を表示
