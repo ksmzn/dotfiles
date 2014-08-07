@@ -118,6 +118,9 @@ nnoremap <S-Down>  <C-w>+<CR>
 
 " quickrunで開いたバッファを閉じる
 nnoremap <Space>o :only<CR>
+
+" 挿入モードにならずに改行を入れる
+noremap <CR> o<ESC>
 "#######################
 " 表示系
 "#######################
