@@ -664,7 +664,7 @@ else
 
   " NeoBundleLazy 'mattn/zencoding-vim', {'autoload': {
   NeoBundleLazy 'mattn/emmet-vim', {'autoload': {
-        \ 'filetypes': ['html', 'djangohtml'] }}
+        \ 'filetypes': ['html', 'css', 'djangohtml'] }}
 
   " Julia
   " .jl のfiletypeがjuliaでもjulia-vimが起動しないのでやむを得ず
