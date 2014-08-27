@@ -1,0 +1,17 @@
+alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
+##################################################################################
+# Vim
+##################################################################################
+# デフォルトのVimをMacVim Kaoriyaに
+export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+
+##################################################################################
+# Homebrew
+##################################################################################
+# homebrew_cask のアプリインストール先
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
+# brewでインストールしたbasictexのpath
+export PATH=/usr/texbin:$PATH

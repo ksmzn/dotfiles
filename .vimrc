@@ -654,6 +654,13 @@ else
         \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
         \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
         \ }}
+  " let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+
+  " PythonコードがPEP8に従うように自動修正
+  NeoBundleLazy 'vim-autopep8', {'autoload': {
+        \ 'filetypes': ['python', 'python3'] }}
+  " Shift + F で自動修正
+  autocmd FileType python map <buffer> <S-f> :call Autopep8()<CR>
 
   " jQuery
   NeoBundleLazy "jQuery", {'autoload': {

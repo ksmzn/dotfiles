@@ -1,5 +1,5 @@
 #complete
-fpath=(path/to/zsh-completions/src /Users/kossy7 ~/.zsh/functions/Completion(N-/) ${fpath})
+fpath=(path/to/zsh-completions/src /Users/ksmzn ~/.zsh/functions/Completion(N-/) ${fpath})
 
 # 履歴ファイルの保存先
 export HISTFILE=${HOME}/.zsh_history
@@ -56,16 +56,8 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     source /usr/local/bin/virtualenvwrapper.sh
     export PIP_RESPECT_VIRTUALENV=true
 fi
-##################################################################################
-# Vim
-##################################################################################
-# デフォルトのVimをMacVim Kaoriyaに
-export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 
 
-alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 
 export PATH=/usr/local/bin:$PATH
 
@@ -74,11 +66,6 @@ export PATH="/usr/local/mysql/bin:$PATH"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# homebrew_cask のアプリインストール先
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# brewでインストールしたbasictexのpath
-export PATH=/usr/texbin:$PATH
 
 # 統計環境Rを使うため、最後に実行したコマンドを実行するコマンドr を使用不可に。
 disable r
@@ -161,3 +148,14 @@ function bundle(){
         rbenv rehash
     fi
 }
+
+case "${OSTYPE}" in
+# MacOSX
+darwin*)
+    [ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
+    ;;
+# Linux
+linux*)
+    [ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
+    ;;
+esac
