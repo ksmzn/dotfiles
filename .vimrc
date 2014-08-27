@@ -356,26 +356,26 @@ else
   endfunction
 
   " マークの表示
-  NeoBundleLazy "vim-scripts/ShowMarks", {
-        \ "autoload": {
-        \   "commands": ["ShowMarksPlaceMark", "ShowMarksToggle"],
-        \ }}
-  nnoremap [showmarks] <Nop>
-  nmap M [showmarks]
-  nnoremap [showmarks]m :ShowMarksPlaceMark<CR>
-  nnoremap [showmarks]t :ShowMarksToggle<CR>
-  let s:hooks = neobundle#get_hooks("ShowMarks")
-  function! s:hooks.on_source(bundle)
-    let showmarks_text = '»'
-    let showmarks_textupper = '»'
-    let showmarks_textother = '»'
-    let showmarks_hlline_lower = 0
-    let showmarks_hlline_upper = 1
-    let showmarks_hlline_other = 0
-    " ignore ShowMarks on buffer type of
-    " Help, Non-modifiable, Preview Quickfix
-    let showmarks_ignore_type = 'hmpq'
-  endfunction
+  " NeoBundleLazy 'vim-scripts/ShowMarks', {
+  "       \ 'autoload': {
+  "       \   'commands': ['ShowMarksPlaceMark', 'ShowMarksToggle'],
+  "       \ }}
+  " nnoremap [showmarks] <Nop>
+  " nmap M [showmarks]
+  " nnoremap [showmarks]m :ShowMarksPlaceMark<CR>
+  " nnoremap [showmarks]t :ShowMarksToggle<CR>
+  " let s:hooks = neobundle#get_hooks("ShowMarks")
+  " function! s:hooks.on_source(bundle)
+  "   let showmarks_text = '»'
+  "   let showmarks_textupper = '»'
+  "   let showmarks_textother = '»'
+  "   let showmarks_hlline_lower = 0
+  "   let showmarks_hlline_upper = 1
+  "   let showmarks_hlline_other = 0
+  "   " ignore ShowMarks on buffer type of
+  "   " Help, Non-modifiable, Preview Quickfix
+  "   let showmarks_ignore_type = 'hmpq'
+  " endfunction
 
   NeoBundleLazy "skammer/vim-css-color", {
         \ "autoload": {

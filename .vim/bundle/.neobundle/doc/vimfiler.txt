@@ -368,13 +368,6 @@ g:vimfiler_expand_jump_to_first_child
 		
 		Default value is 1.
 
-						*g:vimfiler_draw_files_limit*
-g:vimfiler_draw_files_limit
-		Specify the limit of redraw files.
-		If it is less than equal 0, this feature is disabled.
-
-		Default value is 0.
-
 						*g:vimfiler_min_cache_files*
 g:vimfiler_min_cache_files
 		Specify the minimum number of files that vimfiler saves the
@@ -385,9 +378,9 @@ g:vimfiler_min_cache_files
 					*g:vimfiler_restore_alternate_file*
 g:vimfiler_restore_alternate_file
 		Option to restore alternate file after open action. The
-		vimfiler buffer becomes the alternate file by default.
+		vimfiler buffer does not become the alternate file by default.
 
-		Default value is 0.
+		Default value is 1.
 
 SOURCES VARIABLES 				*vimfiler-sources-variables*
 
@@ -488,7 +481,15 @@ Normal mode key mappings.
 
 				*<Plug>(vimfiler_mark_similar_lines)*
 <Plug>(vimfiler_mark_similar_lines)
-		Mark similar files with cursor file.
+		Mark files similar to the cursor file.  You can consider a
+		line to be similar when you can find both the file name and the
+		extension in that line.  For example, use this when you want to
+		mark files `foo1.txt`, `foo2_tmp.txt`, `foo35.txt.bak` but not
+		`foo.md` or `bar1.txt` etc.
+
+		More precisely, for those who know regex, it replaces the
+		non-|identifier| characters in the file name with the regular
+		expression `.\+` and looks for files that match.
 
 				*<Plug>(vimfiler_clear_mark_all_lines)*
 <Plug>(vimfiler_clear_mark_all_lines)
@@ -729,8 +730,8 @@ Normal mode key mappings.
 		disabled.
 
 <Plug>(vimfiler_toggle_simple_mode)	*<Plug>(vimfiler_toggle_simple_mode)*
-		Toggles simple mode. In simple mode, displayed information is
-		simple.
+		Toggles simple mode. VimFiler shows less information than
+		usual in vimfiler-simple-mode.
 
 <Plug>(vimfiler_pushd)				*<Plug>(vimfiler_pushd)*
 		Pushes current directory(and another vimfiler current
@@ -794,7 +795,7 @@ gg			<Plug>(vimfiler_cursor_top)
 <S-LeftMouse>		<Plug>(vimfiler_toggle_mark_current_line)
 <S-Space>		<Plug>(vimfiler_toggle_mark_current_line_up)
 *			<Plug>(vimfiler_toggle_mark_all_lines)
-&			<Plug>(vimfiler_mark_similar_lines)
+#			<Plug>(vimfiler_mark_similar_lines)
 U			<Plug>(vimfiler_clear_mark_all_lines)
 c			<Plug>(vimfiler_copy_file)
 m			<Plug>(vimfiler_move_file)
@@ -872,13 +873,14 @@ parameters for an option.  You need to escape spaces with "\".
 		-no-quit
 		Doesn't close the vimfiler buffer after firing an action.
 
-						*vimfiler-options-quit*
-		-quit
+						*vimfiler-options-force-quit*
+		-force-quit
 		Close the vimfiler buffer after firing an action.
 
 						*vimfiler-options-winwidth*
 		-winwidth={window-width}
 		Specifies the width of a vimfiler buffer.
+		Note: If this option is 0, auto resize feature is disabled.
 
 						*vimfiler-options-winminwidth*
 		-winminwidth={window-width}
@@ -887,6 +889,7 @@ parameters for an option.  You need to escape spaces with "\".
 						*vimfiler-options-winheight*
 		-winheight={window-height}
 		Specifies the height of a vimfiler buffer.
+		Note: If this option is 0, auto resize feature is disabled.
 
 						*vimfiler-options-direction*
 		-direction={direction}
@@ -896,7 +899,7 @@ parameters for an option.  You need to escape spaces with "\".
 						*vimfiler-options-toggle*
 		-toggle
 		Close vimfiler buffer window if this vimfiler buffer name
-		window is exists.
+		window exists.
 		Note: If you set |vimfiler-options-find|, this feature is
 		disabled.
 
@@ -967,6 +970,10 @@ parameters for an option.  You need to escape spaces with "\".
 		-no-focus
 		No the focus on the vimfiler buffer after opening a vimfiler
 		buffer.
+
+						*vimfiler-options-invisible*
+		-invisible
+		Search inivisible vimfiler buffer.
 
 ==============================================================================
 COLUMNS						*vimfiler-columns*

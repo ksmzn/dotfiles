@@ -30,6 +30,7 @@
 'syntastic_auto_loc_list'	syntastic.txt	/*'syntastic_auto_loc_list'*
 'syntastic_check_on_open'	syntastic.txt	/*'syntastic_check_on_open'*
 'syntastic_check_on_wq'	syntastic.txt	/*'syntastic_check_on_wq'*
+'syntastic_cursor_columns'	syntastic.txt	/*'syntastic_cursor_columns'*
 'syntastic_debug'	syntastic.txt	/*'syntastic_debug'*
 'syntastic_debug_file'	syntastic.txt	/*'syntastic_debug_file'*
 'syntastic_echo_current_error'	syntastic.txt	/*'syntastic_echo_current_error'*
@@ -209,7 +210,6 @@
 <Plug>(unite_loop_cursor_up)	unite.txt	/*<Plug>(unite_loop_cursor_up)*
 <Plug>(unite_narrowing_dot)	unite.txt	/*<Plug>(unite_narrowing_dot)*
 <Plug>(unite_narrowing_input_history)	unite.txt	/*<Plug>(unite_narrowing_input_history)*
-<Plug>(unite_narrowing_path)	unite.txt	/*<Plug>(unite_narrowing_path)*
 <Plug>(unite_new_candidate)	unite.txt	/*<Plug>(unite_new_candidate)*
 <Plug>(unite_print_candidate)	unite.txt	/*<Plug>(unite_print_candidate)*
 <Plug>(unite_print_message_log)	unite.txt	/*<Plug>(unite_print_message_log)*
@@ -1025,9 +1025,11 @@ g:unite_matcher_fuzzy_max_input_length	unite.txt	/*g:unite_matcher_fuzzy_max_inp
 g:unite_no_default_keymappings	unite.txt	/*g:unite_no_default_keymappings*
 g:unite_prompt	unite.txt	/*g:unite_prompt*
 g:unite_quick_match_table	unite.txt	/*g:unite_quick_match_table*
+g:unite_redraw_hold_candidates	unite.txt	/*g:unite_redraw_hold_candidates*
 g:unite_source_alias_aliases	unite.txt	/*g:unite_source_alias_aliases*
 g:unite_source_bookmark_directory	unite.txt	/*g:unite_source_bookmark_directory*
 g:unite_source_buffer_time_format	unite.txt	/*g:unite_source_buffer_time_format*
+g:unite_source_file_async_command	unite.txt	/*g:unite_source_file_async_command*
 g:unite_source_file_ignore_pattern	unite.txt	/*g:unite_source_file_ignore_pattern*
 g:unite_source_file_rec_async_command	unite.txt	/*g:unite_source_file_rec_async_command*
 g:unite_source_file_rec_ignore_pattern	unite.txt	/*g:unite_source_file_rec_ignore_pattern*
@@ -1077,7 +1079,6 @@ g:vimfiler_data_directory	vimfiler.txt	/*g:vimfiler_data_directory*
 g:vimfiler_default_columns	vimfiler.txt	/*g:vimfiler_default_columns*
 g:vimfiler_detect_drives	vimfiler.txt	/*g:vimfiler_detect_drives*
 g:vimfiler_directory_display_top	vimfiler.txt	/*g:vimfiler_directory_display_top*
-g:vimfiler_draw_files_limit	vimfiler.txt	/*g:vimfiler_draw_files_limit*
 g:vimfiler_edit_action	vimfiler.txt	/*g:vimfiler_edit_action*
 g:vimfiler_enable_auto_cd	vimfiler.txt	/*g:vimfiler_enable_auto_cd*
 g:vimfiler_execute_file_list	vimfiler.txt	/*g:vimfiler_execute_file_list*
@@ -1956,6 +1957,7 @@ neocomplcache-unite-sources	neocomplcache.txt	/*neocomplcache-unite-sources*
 neocomplcache-user-sources	neocomplcache.txt	/*neocomplcache-user-sources*
 neocomplcache-variables	neocomplcache.txt	/*neocomplcache-variables*
 neocomplcache.txt	neocomplcache.txt	/*neocomplcache.txt*
+neosnippet	neosnippet.txt	/*neosnippet*
 neosnippet#expandable()	neosnippet.txt	/*neosnippet#expandable()*
 neosnippet#expandable_or_jumpable()	neosnippet.txt	/*neosnippet#expandable_or_jumpable()*
 neosnippet#get_snippets_directory()	neosnippet.txt	/*neosnippet#get_snippets_directory()*
@@ -2167,12 +2169,14 @@ syntastic-global-options	syntastic.txt	/*syntastic-global-options*
 syntastic-highlighting	syntastic.txt	/*syntastic-highlighting*
 syntastic-intro	syntastic.txt	/*syntastic-intro*
 syntastic-license	syntastic.txt	/*syntastic-license*
+syntastic-netrw	syntastic.txt	/*syntastic-netrw*
 syntastic-notes	syntastic.txt	/*syntastic-notes*
 syntastic-powershell	syntastic.txt	/*syntastic-powershell*
 syntastic-pymode	syntastic.txt	/*syntastic-pymode*
 syntastic-quickstart	syntastic.txt	/*syntastic-quickstart*
 syntastic-statusline-flag	syntastic.txt	/*syntastic-statusline-flag*
 syntastic-vim-virtualenv	syntastic.txt	/*syntastic-vim-virtualenv*
+syntastic-ycm	syntastic.txt	/*syntastic-ycm*
 syntastic.txt	syntastic.txt	/*syntastic.txt*
 syntax_complete	neocomplcache.txt	/*syntax_complete*
 tab'	latexhelp.txt	/*tab'*
@@ -2369,6 +2373,8 @@ unite-kind-common	unite.txt	/*unite-kind-common*
 unite-kind-completion	unite.txt	/*unite-kind-completion*
 unite-kind-directory	unite.txt	/*unite-kind-directory*
 unite-kind-file	unite.txt	/*unite-kind-file*
+unite-kind-file_base	unite.txt	/*unite-kind-file_base*
+unite-kind-file_vimfiler_base	unite.txt	/*unite-kind-file_vimfiler_base*
 unite-kind-guicmd	unite.txt	/*unite-kind-guicmd*
 unite-kind-jump_list	unite.txt	/*unite-kind-jump_list*
 unite-kind-neobundle	neobundle.txt	/*unite-kind-neobundle*
@@ -2414,7 +2420,9 @@ unite-options-no-cursor-line	unite.txt	/*unite-options-no-cursor-line*
 unite-options-no-empty	unite.txt	/*unite-options-no-empty*
 unite-options-no-focus	unite.txt	/*unite-options-no-focus*
 unite-options-no-quit	unite.txt	/*unite-options-no-quit*
+unite-options-no-resize	unite.txt	/*unite-options-no-resize*
 unite-options-no-split	unite.txt	/*unite-options-no-split*
+unite-options-path	unite.txt	/*unite-options-path*
 unite-options-profile-name	unite.txt	/*unite-options-profile-name*
 unite-options-prompt	unite.txt	/*unite-options-prompt*
 unite-options-prompt-direction	unite.txt	/*unite-options-prompt-direction*
@@ -2435,6 +2443,7 @@ unite-options-verbose	unite.txt	/*unite-options-verbose*
 unite-options-vertical	unite.txt	/*unite-options-vertical*
 unite-options-winheight	unite.txt	/*unite-options-winheight*
 unite-options-winwidth	unite.txt	/*unite-options-winwidth*
+unite-options-wipe	unite.txt	/*unite-options-wipe*
 unite-options-wrap	unite.txt	/*unite-options-wrap*
 unite-outline	unite-outline.txt	/*unite-outline*
 unite-outline-Util.get_indent_level()	unite-outline.txt	/*unite-outline-Util.get_indent_level()*
@@ -2519,6 +2528,7 @@ unite-source-command	unite.txt	/*unite-source-command*
 unite-source-directory	unite.txt	/*unite-source-directory*
 unite-source-directory/new	unite.txt	/*unite-source-directory\/new*
 unite-source-file	unite.txt	/*unite-source-file*
+unite-source-file/async	unite.txt	/*unite-source-file\/async*
 unite-source-file/new	unite.txt	/*unite-source-file\/new*
 unite-source-file_point	unite.txt	/*unite-source-file_point*
 unite-source-file_rec	unite.txt	/*unite-source-file_rec*
@@ -2606,11 +2616,12 @@ vimfiler-options-direction	vimfiler.txt	/*vimfiler-options-direction*
 vimfiler-options-double	vimfiler.txt	/*vimfiler-options-double*
 vimfiler-options-explorer	vimfiler.txt	/*vimfiler-options-explorer*
 vimfiler-options-find	vimfiler.txt	/*vimfiler-options-find*
+vimfiler-options-force-quit	vimfiler.txt	/*vimfiler-options-force-quit*
 vimfiler-options-horizontal	vimfiler.txt	/*vimfiler-options-horizontal*
+vimfiler-options-invisible	vimfiler.txt	/*vimfiler-options-invisible*
 vimfiler-options-no-focus	vimfiler.txt	/*vimfiler-options-no-focus*
 vimfiler-options-no-quit	vimfiler.txt	/*vimfiler-options-no-quit*
 vimfiler-options-project	vimfiler.txt	/*vimfiler-options-project*
-vimfiler-options-quit	vimfiler.txt	/*vimfiler-options-quit*
 vimfiler-options-reverse	vimfiler.txt	/*vimfiler-options-reverse*
 vimfiler-options-simple	vimfiler.txt	/*vimfiler-options-simple*
 vimfiler-options-split	vimfiler.txt	/*vimfiler-options-split*
