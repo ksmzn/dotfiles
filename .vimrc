@@ -543,7 +543,7 @@ else
   " 「S」で選択されたテキストを囲う
   NeoBundle 'tpope/vim-surround'
   " 高性能なテキスト整形ツール
-  NeoBundle 'vim-scripts/Align'
+  " NeoBundle 'vim-scripts/Align'
   " ヤンクの履歴を管理し、順々に参照、出力
   NeoBundle 'vim-scripts/YankRing.vim'
   let s:hooks = neobundle#get_hooks("YankRing.vim")
