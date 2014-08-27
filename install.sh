@@ -22,7 +22,7 @@ do
   [ $i = "README.md" ] && continue
   [ $i = "Brewfile" ] && continue
   [ $i = "install.sh" ] && continue
-  ln -s ~/dotfiles/$i ~/
+  ln -sf ~/dotfiles/$i ~/
 done
 vim -c ':NeoBundleInstall!' -c ':q!' -c ':q!'
 
