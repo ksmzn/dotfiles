@@ -767,6 +767,13 @@ array	latexhelp.txt	/*array*
 article-class	latexhelp.txt	/*article-class*
 auc-tex-mappings	latex-suite.txt	/*auc-tex-mappings*
 automatic-package-detection	latex-suite.txt	/*automatic-package-detection*
+autopep8-customization	autopep8.txt	/*autopep8-customization*
+autopep8-installation	autopep8.txt	/*autopep8-installation*
+autopep8-license	autopep8.txt	/*autopep8-license*
+autopep8-overview	autopep8.txt	/*autopep8-overview*
+autopep8-required	autopep8.txt	/*autopep8-required*
+autopep8-usage	autopep8.txt	/*autopep8-usage*
+autopep8.txt	autopep8.txt	/*autopep8.txt*
 b:django_support#project_root	vim-django-support.txt	/*b:django_support#project_root*
 b:neocomplcache_sources_list	neocomplcache.txt	/*b:neocomplcache_sources_list*
 b:quickrun_config	quickrun.txt	/*b:quickrun_config*
@@ -880,6 +887,7 @@ fugitive-:Gcommit	fugitive.txt	/*fugitive-:Gcommit*
 fugitive-:Gdiff	fugitive.txt	/*fugitive-:Gdiff*
 fugitive-:Ge	fugitive.txt	/*fugitive-:Ge*
 fugitive-:Gedit	fugitive.txt	/*fugitive-:Gedit*
+fugitive-:Gfetch	fugitive.txt	/*fugitive-:Gfetch*
 fugitive-:Ggrep	fugitive.txt	/*fugitive-:Ggrep*
 fugitive-:Git	fugitive.txt	/*fugitive-:Git*
 fugitive-:Git!	fugitive.txt	/*fugitive-:Git!*
@@ -887,9 +895,12 @@ fugitive-:Glcd	fugitive.txt	/*fugitive-:Glcd*
 fugitive-:Glgrep	fugitive.txt	/*fugitive-:Glgrep*
 fugitive-:Gllog	fugitive.txt	/*fugitive-:Gllog*
 fugitive-:Glog	fugitive.txt	/*fugitive-:Glog*
+fugitive-:Gmerge	fugitive.txt	/*fugitive-:Gmerge*
 fugitive-:Gmove	fugitive.txt	/*fugitive-:Gmove*
 fugitive-:Gpedit	fugitive.txt	/*fugitive-:Gpedit*
 fugitive-:Gpedit!	fugitive.txt	/*fugitive-:Gpedit!*
+fugitive-:Gpull	fugitive.txt	/*fugitive-:Gpull*
+fugitive-:Gpush	fugitive.txt	/*fugitive-:Gpush*
 fugitive-:Gread	fugitive.txt	/*fugitive-:Gread*
 fugitive-:Gread!	fugitive.txt	/*fugitive-:Gread!*
 fugitive-:Gremove	fugitive.txt	/*fugitive-:Gremove*

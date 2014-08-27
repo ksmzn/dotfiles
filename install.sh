@@ -1,17 +1,17 @@
 #!/bin/sh
 
-[[ -e ~/.dotfiles ]] || git clone git@github.com:sonots/.dotfiles.git ~/.dotfiles
-pushd ~/.dotfiles
+[[ -e ~/dotfiles ]] || git clone git@github.com:ksmzn/dotfiles.git ~/dotfiles
+pushd ~/dotfiles
 
 git submodule init
 git submodule update
 
 if [ `uname` = "Darwin" ]; then
-  pushd ~/.dotfiles/.vim/bundle/vimproc
+  pushd ~/dotfiles/.vim/bundle/vimproc
   make -f make_mac.mak
   popd
 
-  ln -s ~/.dotfiles/.tmux.conf.osx ~/.tmux.conf
+  ln -s ~/dotfiles/.tmux.conf.osx ~/.tmux.conf
 fi
 
 for i in `ls -a`
@@ -20,8 +20,9 @@ do
   [ $i = ".." ] && continue
   [ $i = ".git" ] && continue
   [ $i = "README.md" ] && continue
+  [ $i = "Brewfile" ] && continue
   [ $i = "install.sh" ] && continue
-  ln -s ~/.dotfiles/$i ~/
+  ln -s ~/dotfiles/$i ~/
 done
 vim -c ':NeoBundleInstall!' -c ':q!' -c ':q!'
 

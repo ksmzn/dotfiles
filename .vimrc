@@ -245,19 +245,26 @@ set nohlsearch "検索結果文字列の非ハイライト表示
 " その他
 "#######################
 set nocompatible "vi非互換モード
-set nowritebackup
-" set nobackup
-set backup
-" set noswapfile " No Swap
-set swapfile
-set noundofile " .un~ファイルを作らない
+"set nowritebackup
+"" set nobackup
+"set backup
+"" set noswapfile " No Swap
+"set swapfile
+"set noundofile " .un~ファイルを作らない
 
 if s:is_windows
   set backupdir=C:/Temp
   set directory=C:/Temp
-else
-  set backupdir=/tmp
-  set directory=/tmp
+elseif isdirectory($HOME . '/tmp')
+    "set nobackup " バックアップを取らない
+    " バックアップディレクトリを変更
+    set backupdir=$HOME/tmp
+    "set noswapfile " スワップファイルを作らない
+    " スワップファイルディレクトリを変更
+    set directory=$HOME/tmp
+    "set noundofile " Undo ファイルを作らない
+    " Undo ファイルディレクトリを変更
+    set undodir=$HOME/tmp
 endif
 
 " 括弧を自動補完

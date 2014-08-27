@@ -27,6 +27,7 @@ twilight
 unite-colorscheme
 unite-outline
 unite.vim
+vim-autopep8
 vim-coffee-script
 vim-colors-solarized
 vim-css-color
