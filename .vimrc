@@ -119,6 +119,8 @@ nnoremap <S-Down>  <C-w>+<CR>
 " quickrunで開いたバッファを閉じる
 nnoremap <Space>o :only<CR>
 
+" カーソル位置の単語をyankする
+nnoremap vv vawy
 "#######################
 " 表示系
 "#######################
