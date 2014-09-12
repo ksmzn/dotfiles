@@ -22,9 +22,15 @@ do
   [ $i = "README.md" ] && continue
   [ $i = "Brewfile" ] && continue
   [ $i = "install.sh" ] && continue
-  ln -sf ~/dotfiles/$i ~/
+  if [[ $i = "peco" ]]; then
+    ln -sf ~/dotfiles/$i ~/.config/
+  else
+    ln -sf ~/dotfiles/$i ~/
+  fi
 done
 vim -c ':NeoBundleInstall!' -c ':q!' -c ':q!'
 #[ ! -d ~/.vim/bundle ] && mkdir -p ~/.vim/bundle && git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim && echo "you should run following command to setup plugins ->  vim -c ':NeoBundleInstall'"
+
+
 
 popd
