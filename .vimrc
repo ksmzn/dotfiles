@@ -105,10 +105,10 @@ nnoremap <Tab> %
 vnoremap <Tab> %
 
 " Ctrl + hjkl でウィンドウ間を移動
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+"nnoremap <C-h> <C-w>h
+"nnoremap <C-j> <C-w>j
+"nnoremap <C-k> <C-w>k
+"nnoremap <C-l> <C-w>l
 
 " Shift + 矢印でウィンドウサイズを変更
 nnoremap <S-Left>  <C-w><<CR>
@@ -282,7 +282,7 @@ vnoremap " "zdi^V"<C-R>z^V"<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 
 " 挿入モードでCtrl+kを押すとクリップボードの内容を貼り付けられるようにする "
-inoremap <C-k>  <ESC>"*pa
+" inoremap <C-k>  <ESC>"*pa
 
 "##################
 " NeoBundle
@@ -554,18 +554,38 @@ else
   endfunction
 
   " もしneocompleteが使えない場合, neocomplcacheを使用する
-  if has('lua') && v:version >= 703 && has('patch885')
+  " if has('lua') && v:version >= 703 && has('patch885')
+  " if has('lua') && (v:version >= 703 || has('patch885'))
+  if has('lua') && v:version >= 703
     NeoBundleLazy 'Shougo/neocomplete.vim', {
           \ 'autoload': {
           \   'insert': 1,
           \ }}
     let s:hooks = neobundle#get_hooks("neocomplete.vim")
     function! s:hooks.on_source(bundle)
+      " Disable AutoComplPop.
       let g:acp_enableAtStartup = 0
+      " Use neocomplete.
+      " let g:neocomplete#enable_at_startup = 1
+      " Use smartcase.
       let g:neocomplete#enable_smart_case = 1
+      " Set minimum syntax keyword length.
       let g:neocomplete#sources#syntax#min_keyword_length = 3
-      " <TAB> で補完候補の選択
+      " <TAB>: completion.
       inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+      inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+      " Close popup by <Space>.
+      " inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+      " Enable omni completion.
+      autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+      autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+      autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+      " Enable heavy omni completion.
+      if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+      endif
     endfunction
     function! s:hooks.on_post_source(bundle)
       NeoCompleteEnable
@@ -587,25 +607,35 @@ else
     endfunction
   endif
 
-  " NeoBundleLazy "Shougo/neosnippet-snippets", {
-  NeoBundleLazy "Shougo/neosnippet", {
+  NeoBundleLazy 'Shougo/neosnippet', {
         \ "depends": ["honza/vim-snippets", "Shougo/neosnippet-snippets"],
         \ "autoload": {
         \   "insert": 1,
         \ }}
-  let s:hooks = neobundle#get_hooks("neosnippet.vim")
+  let s:hooks = neobundle#get_hooks("neosnippet")
   function! s:hooks.on_source(bundle)
     " Plugin key-mappings.
     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
     xmap <C-k>     <Plug>(neosnippet_expand_target)
+
     " SuperTab like snippets behavior.
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-          \ "\<Plug>(neosnippet_expand_or_jump)"
-          \: pumvisible() ? "\<C-n>" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-          \ "\<Plug>(neosnippet_expand_or_jump)"
-          \: "\<TAB>"
+    " imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    "       \ "\<Plug>(neosnippet_expand_or_jump)"
+    "       \: pumvisible() ? "\<C-n>" : "\<TAB>"
+    " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    "       \ "\<Plug>(neosnippet_expand_or_jump)"
+    "       \: "\<TAB>"
+    " <Tab>で候補移動, <Enter>で展開
+    imap <expr><CR> neosnippet#expandable() <bar><bar>
+            \ neosnippet#jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \ : "\<CR>"
+    imap <expr><TAB> pumvisible() ? "\<C-n>" 
+            \ : neosnippet#jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \ : "\<TAB>"
+    smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
     " For snippet_complete marker.
     if has('conceal')
       set conceallevel=2 concealcursor=i
@@ -635,17 +665,19 @@ else
   "}}}
 
   " Programming {{{
-  NeoBundleLazy 'thinca/vim-quickrun', {
+  NeoBundleLazy "thinca/vim-quickrun", {
         \ 'autoload': {
         \   'mappings': [['nxo', '<Plug>(quickrun)']]
         \ }}
+  " NeoBundle 'thinca/vim-quickrun'
   nmap <Leader>r <Plug>(quickrun)
   let s:hooks = neobundle#get_hooks("vim-quickrun")
-  " function! s:hooks.on_source(bundle)
+  function! s:hooks.on_source(bundle)
     let g:quickrun_config = {
-        \ '*': {'runner': 'vimproc'},
+        \ "_": {"runner": "vimproc"},
+        \ "hook/time/enable" : 1,
         \ }
-  " endfunction
+  endfunction
 
   " タグジャンプ
   NeoBundleLazy 'majutsushi/tagbar', {
@@ -689,44 +721,71 @@ else
         \ 'filetypes': ['julia'] }}
 
   " Python {{{
-  NeoBundleLazy "lambdalisue/vim-django-support", {
-        \ "autoload": {
-        \   "filetypes": ["python", "python3", "djangohtml"]
-        \ }}
+   NeoBundleLazy "lambdalisue/vim-django-support", {
+         \ "autoload": {
+         \   "filetypes": ["python", "python3", "djangohtml"]
+         \ }}
   " Vimで正しくvirtualenvを処理できるようにする
-  NeoBundleLazy "jmcantrell/vim-virtualenv", {
-        \ "autoload": {
-        \   "filetypes": ["python", "python3", "djangohtml"]
-        \ }}
-  " NeoBundleLazy 'davidhalter/jedi-vim', {
-  "       \ 'autoload': {
-  "       \   'filetypes': ['python', 'python3', 'djangohtml'],
-  "       \   'build': {
-  "       \     'mac': 'pip install jedi',
-  "       \     'unix': 'pip install jedi',
-  "       \   }
+  " NeoBundleLazy "jmcantrell/vim-virtualenv", {
+  "       \ "autoload": {
+  "       \   "filetypes": ["python", "python3", "djangohtml"]
   "       \ }}
-  " let s:hooks = neobundle#get_hooks("jedi-vim")
-  " function! s:hooks.on_source(bundle)
-  "   " jediにvimの設定を任せると'completeopt+=preview'するので
-  "   " 自動設定機能をOFFにし手動で設定を行う
-  "   let g:jedi#auto_vim_configuration = 0
-  "   " 補完の最初の項目が選択された状態だと使いにくいためオフにする
-  "   let g:jedi#popup_select_first = 0
-  "   let g:jedi#show_function_definition = 1
-  "   " quickrunと被るため大文字に変更
-  "   let g:jedi#rename_command = '<Leader>R'
-  "   " gundoと被るため大文字に変更
-  "   let g:jedi#goto_command = '<Leader>G'
-  " endfunction
+  NeoBundleLazy "davidhalter/jedi-vim", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"],
+      \ },
+      \ "build": {
+      \   "mac": "pip install jedi",
+      \   "unix": "pip install jedi",
+      \ }}
+  let s:hooks = neobundle#get_hooks("jedi-vim")
+  function! s:hooks.on_source(bundle)
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#popup_select_first = 0
+    " jedi#show_function_definitionは非推奨
+    "let g:jedi#show_function_definition = 1
+    let g:jedi#show_call_signatures = 1
+    let g:jedi#rename_command = '<Leader>R'
+    " jedi#goto_commandは非推奨
+    " let g:jedi#goto_command = '<Leader>G'
+    let g:jedi#goto_assignments_command = '<Leader>G'
+  endfunction
+
+  "let s:hooks = neobundle#get_hooks("jedi-vim")
+  "function! s:hooks.on_source(bundle)
+  "  " jediにvimの設定を任せると'completeopt+=preview'するので
+  "  " 自動設定機能をOFFにし手動で設定を行う
+  "  let g:jedi#auto_vim_configuration = 0
+  "  " 補完の最初の項目が選択された状態だと使いにくいためオフにする
+  "  let g:jedi#popup_select_first = 0
+  "  let g:jedi#show_function_definition = 1
+  "  " quickrunと被るため大文字に変更
+  "  " let g:jedi#rename_command = '<Leader>R'
+  "  " ↑が効かなかったので、下のように設定
+  "  " rename用のマッピングを無効にしたため、代わりにコマンドを定義
+  "  command! -nargs=0 JediRename :call jedi#rename()
+  "  " pythonのrename用のマッピングがquickrunとかぶるため回避させる
+  "  let g:jedi#rename_command = ''
+  "  " gundoと被るため大文字に変更
+  "  let g:jedi#goto_command = '<Leader>G'
+  "  " docstringは表示しない
+  "  " autocmd FileType python setlocal completeopt-=preview
+  "  " edi-vimとneocompleteの連携
+  "  autocmd FileType python setlocal omnifunc=jedi#completions
+  "  let g:jedi#completions_enabled = 0
+  "  if !exists('g:neocomplete#force_omni_input_patterns')
+  "          let g:neocomplete#force_omni_input_patterns = {}
+  "  endif
+  "  let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+  "endfunction
   " }}}
   "
   " LaTeX
   " NeoBundle 'jcf/vim-latex'
-  NeoBundleLazy 'jcf/vim-latex', {
-        \ 'autoload': {
-        \   'filetypes': ['tex']
-        \ }}
+  " NeoBundleLazy 'jcf/vim-latex', {
+  "       \ 'autoload': {
+  "       \   'filetypes': ['tex']
+  "       \ }}
   " set grepprg=grep\ -nH\ $*
   " " .tex ファイルをlatexとして認識する。
   " let g:tex_flavor = 'latex'
@@ -738,46 +797,46 @@ else
   " let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
   " let g:Tex_FormatDependency_pdf = 'dvi,pdf' " .tex -(platex)-> .dvi -(dvipdfmx) -> .pdf 
   " Vim-LaTeX settings
-  let s:bundle = neobundle#get_hooks("vim-latex")
-  function! s:hooks.on_source(bundle)
-    let OSTYPE = system('uname')
-    if OSTYPE == "Darwin\n"
-      set shellslash
-      set grepprg=grep\ -nH\ $*
-      let g:tex_flavor='latex'
-      let g:Imap_UsePlaceHolders = 1
-      let g:Imap_DeleteEmptyPlaceHolders = 1
-      let g:Imap_StickyPlaceHolders = 0
-      let g:Tex_DefaultTargetFormat = 'pdf'
-      let g:Tex_MultipleCompileFormats='dvi,pdf'
-      let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-      let g:Tex_FormatDependency_ps = 'dvi,ps'
-      let g:Tex_CompileRule_pdf = '/usr/texbin/ptex2pdf -u -l -ot "-synctex=1 -interaction=nonstopmode -file-line-error-style" $*'
-      let g:Tex_CompileRule_ps = '/usr/texbin/dvips -Ppdf -o $*.ps $*.dvi'
-      let g:Tex_CompileRule_dvi = '/usr/texbin/uplatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
-      let g:Tex_BibtexFlavor = '/usr/texbin/upbibtex'
-      let g:Tex_MakeIndexFlavor = '/usr/texbin/mendex -U $*.idx'
-      let g:Tex_UseEditorSettingInDVIViewer = 1
-      let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
-      let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
-    elseif OSTYPE == "Linux\n"
-      set shellslash
-      set grepprg=grep\ -nH\ $*
-      let g:tex_flavor='latex'
-      let g:Imap_UsePlaceHolders = 1
-      let g:Imap_DeleteEmptyPlaceHolders = 1
-      let g:Imap_StickyPlaceHolders = 0
-      let g:Tex_DefaultTargetFormat = 'pdf'
-      let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-      let g:Tex_FormatDependency_ps = 'dvi,ps'
-      let g:Tex_CompileRule_dvi = '/usr/bin/platex -shell-escape -interaction=nonstopmode $*'
-      let g:Tex_CompileRule_pdf = '/usr/bin/dvipdfmx $*.dvi'
-      let g:Tex_BibtexFlavor = '/usr/bin/pbibtex'
-      let g:Tex_ViewRule_dvi = '/usr/bin/gnome-open'
-      let g:Tex_ViewRule_pdf = '/usr/bin/gnome-open'
-    endif
-  endfunction
-  unlet s:bundle  "}}}
+  "let s:bundle = neobundle#get_hooks("vim-latex")
+  "function! s:hooks.on_source(bundle)
+  "  let OSTYPE = system('uname')
+  "  if OSTYPE == "Darwin\n"
+  "    set shellslash
+  "    set grepprg=grep\ -nH\ $*
+  "    let g:tex_flavor='latex'
+  "    let g:Imap_UsePlaceHolders = 1
+  "    let g:Imap_DeleteEmptyPlaceHolders = 1
+  "    let g:Imap_StickyPlaceHolders = 0
+  "    let g:Tex_DefaultTargetFormat = 'pdf'
+  "    let g:Tex_MultipleCompileFormats='dvi,pdf'
+  "    let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+  "    let g:Tex_FormatDependency_ps = 'dvi,ps'
+  "    let g:Tex_CompileRule_pdf = '/usr/texbin/ptex2pdf -u -l -ot "-synctex=1 -interaction=nonstopmode -file-line-error-style" $*'
+  "    let g:Tex_CompileRule_ps = '/usr/texbin/dvips -Ppdf -o $*.ps $*.dvi'
+  "    let g:Tex_CompileRule_dvi = '/usr/texbin/uplatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
+  "    let g:Tex_BibtexFlavor = '/usr/texbin/upbibtex'
+  "    let g:Tex_MakeIndexFlavor = '/usr/texbin/mendex -U $*.idx'
+  "    let g:Tex_UseEditorSettingInDVIViewer = 1
+  "    let g:Tex_ViewRule_dvi = '/usr/bin/open -a Preview'
+  "    let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview'
+  "  elseif OSTYPE == "Linux\n"
+  "    set shellslash
+  "    set grepprg=grep\ -nH\ $*
+  "    let g:tex_flavor='latex'
+  "    let g:Imap_UsePlaceHolders = 1
+  "    let g:Imap_DeleteEmptyPlaceHolders = 1
+  "    let g:Imap_StickyPlaceHolders = 0
+  "    let g:Tex_DefaultTargetFormat = 'pdf'
+  "    let g:Tex_FormatDependency_pdf = 'dvi,pdf'
+  "    let g:Tex_FormatDependency_ps = 'dvi,ps'
+  "    let g:Tex_CompileRule_dvi = '/usr/bin/platex -shell-escape -interaction=nonstopmode $*'
+  "    let g:Tex_CompileRule_pdf = '/usr/bin/dvipdfmx $*.dvi'
+  "    let g:Tex_BibtexFlavor = '/usr/bin/pbibtex'
+  "    let g:Tex_ViewRule_dvi = '/usr/bin/gnome-open'
+  "    let g:Tex_ViewRule_pdf = '/usr/bin/gnome-open'
+  "  endif
+  "endfunction
+  "unlet s:bundle  "}}}
 
   " install missing plugins
   NeoBundleCheck
