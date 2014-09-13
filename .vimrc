@@ -544,23 +544,41 @@ else
   " Editing support {{{
   " 置換する対象文字列をハイライトなど
   NeoBundle 'osyo-manga/vim-over'
-  " over.vimの起動
-  nnoremap <silent> <Leader>m :OverCommandLine<CR>
-  " カーソル下の単語をハイライト付きで置換
-  nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
-  " コピーした文字列をハイライト付きで置換
-  nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
+  let s:hooks = neobundle#get_hooks("vim-over")
+  function! s:hooks.on_source(bundle)
+    " over.vimの起動
+    nnoremap <silent> <Leader>m :OverCommandLine<CR>
+    " カーソル下の単語をハイライト付きで置換
+    nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+    " コピーした文字列をハイライト付きで置換
+    nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
+  endfunction
 
   " 「S」で選択されたテキストを囲う
   NeoBundle 'tpope/vim-surround'
   " 高性能なテキスト整形ツール
   " NeoBundle 'vim-scripts/Align'
   " ヤンクの履歴を管理し、順々に参照、出力
-  NeoBundle 'vim-scripts/YankRing.vim'
-  let s:hooks = neobundle#get_hooks("YankRing.vim")
+  "NeoBundle 'vim-scripts/YankRing.vim'
+  "let s:hooks = neobundle#get_hooks("YankRing.vim")
+  "function! s:hooks.on_source(bundle)
+  "  let yankring_history_file = ".yankring_history"
+  "endfunction
+
+  NeoBundle 'LeafCage/yankround.vim'
+  let s:hooks = neobundle#get_hooks("yankround.vim")
   function! s:hooks.on_source(bundle)
-    let yankring_history_file = ".yankring_history"
+    nmap p <Plug>(yankround-p)
+    xmap p <Plug>(yankround-p)
+    nmap P <Plug>(yankround-P)
+    nmap gp <Plug>(yankround-gp)
+    xmap gp <Plug>(yankround-gp)
+    nmap gP <Plug>(yankround-gP)
+    nmap <C-p> <Plug>(yankround-prev)
+    nmap <C-n> <Plug>(yankround-next)
+    "let yankring_history_file = ".yankring_history"
   endfunction
+
 
   " もしneocompleteが使えない場合, neocomplcacheを使用する
   " if has('lua') && v:version >= 703 && has('patch885')
