@@ -421,10 +421,14 @@ else
 
   "NeoBundle "Shougo/unite.vim"
   NeoBundleLazy "Shougo/unite.vim", {
+        \ "depends": ["Shougo/neomru.vim"],
         \ "autoload": {
         \   "commands": ["Unite", "UniteWithBufferDir"]
         \ }}
-  NeoBundle 'Shougo/neomru.vim'
+  "NeoBundle 'Shougo/neomru.vim'
+  "NeoBundleLazy 'Shougo/neomru.vim', {
+  "      \ "depends": ["Shougo/unite.vim"]
+  "      \ }
   " カラースキーム一覧表示に Unite.vim を使う
   NeoBundleLazy 'ujihisa/unite-colorscheme'
   " アウトライナー
