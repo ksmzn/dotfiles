@@ -1,3 +1,6 @@
+##################################################################################
+# 基本設定
+##################################################################################
 #complete
 fpath=(path/to/zsh-completions/src /Users/ksmzn ~/.zsh/functions/Completion(N-/) ${fpath})
 
@@ -42,6 +45,20 @@ zstyle ':completion:*:default' menu select=1 list-colors 'di=36' 'ln=35' 'ex=32'
 #zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls -G'
 
+export PATH=/usr/local/bin:$PATH
+
+export PATH="/usr/local/mysql/bin:$PATH"
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+
+# 統計環境Rを使うため、最後に実行したコマンドを実行するコマンドr を使用不可に。
+disable r
+
+# javac の出力する文字コードをUTF-8に
+# alias javac='javac -J-Dfile.encoding=UTF-8'
+# alias java='java -Dfile.encoding=UTF-8'
 ##################################################################################
 # Python
 ##################################################################################
@@ -57,23 +74,20 @@ if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export PIP_RESPECT_VIRTUALENV=true
 fi
 
+##################################################################################
+# Peco
+##################################################################################
+peco-select-history() {
+    BUFFER=$(history 1 | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --query "$LBUFFER")
+    CURSOR=${#BUFFER}
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
 
-
-export PATH=/usr/local/bin:$PATH
-
-export PATH="/usr/local/mysql/bin:$PATH"
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-
-# 統計環境Rを使うため、最後に実行したコマンドを実行するコマンドr を使用不可に。
-disable r
-
-# javac の出力する文字コードをUTF-8に
-# alias javac='javac -J-Dfile.encoding=UTF-8'
-# alias java='java -Dfile.encoding=UTF-8'
-
+##################################################################################
+# Enterでlsとgitを表示する
+##################################################################################
 #chpwd() {
 #    ls_abbrev
 #}
@@ -130,6 +144,9 @@ function do_enter() {
 zle -N do_enter
 bindkey '^m' do_enter
 
+##################################################################################
+# Ruby
+##################################################################################
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -149,6 +166,9 @@ function bundle(){
     fi
 }
 
+##################################################################################
+# OS別の読み込み
+##################################################################################
 case "${OSTYPE}" in
 # MacOSX
 darwin*)
