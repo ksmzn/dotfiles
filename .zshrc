@@ -85,6 +85,24 @@ peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
+peco-find-cd() {
+  local FILENAME="$1"
+  local MAXDEPTH="${2:-3}"
+  local BASE_DIR="${3:-`pwd`}"
+
+  if [ -z "$FILENAME" ] ; then
+    echo "Usage: peco-find-cd <FILENAME> [<MAXDEPTH> [<BASE_DIR>]]" >&2
+    return 1
+  fi
+
+  local DIR=$(find ${BASE_DIR} -maxdepth ${MAXDEPTH} -name ${FILENAME} | peco | head -n 1)
+
+  if [ -n "$DIR" ] ; then
+    DIR=${DIR%/*}
+    echo "pushd \"$DIR\""
+    pushd "$DIR"
+  fi
+}
 ##################################################################################
 # Enterでlsとgitを表示する
 ##################################################################################
