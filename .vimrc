@@ -419,10 +419,12 @@ else
         \ |   silent! execute 'normal! "_da>'
         \ | endif
 
+  "NeoBundle "Shougo/unite.vim"
   NeoBundleLazy "Shougo/unite.vim", {
         \ "autoload": {
         \   "commands": ["Unite", "UniteWithBufferDir"]
         \ }}
+  NeoBundle 'Shougo/neomru.vim'
   " カラースキーム一覧表示に Unite.vim を使う
   NeoBundleLazy 'ujihisa/unite-colorscheme'
   " アウトライナー
