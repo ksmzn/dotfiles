@@ -16,7 +16,7 @@ setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 
 # Vi ライクな操作
-bindkey -v
+#bindkey -v
 
 # zshのTAB補完を有効にする
 autoload -U compinit; compinit -u
@@ -103,6 +103,19 @@ peco-find-cd() {
     pushd "$DIR"
   fi
 }
+zle -N peco-find-cd
+bindkey '^@' peco-find-cd
+#function peco-cdr () {
+#    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+#    if [ -n "$selected_dir" ]; then
+#        BUFFER="cd ${selected_dir}"
+#        zle accept-line
+#    fi
+#    zle clear-screen
+#}
+#zle -N peco-cdr
+#bindkey '^@' peco-cdr
+
 ##################################################################################
 # Enterでlsとgitを表示する
 ##################################################################################
