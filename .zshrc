@@ -60,6 +60,20 @@ disable r
 # alias javac='javac -J-Dfile.encoding=UTF-8'
 # alias java='java -Dfile.encoding=UTF-8'
 ##################################################################################
+# cdr
+##################################################################################
+if [[ -n $(echo ${^fpath}/chpwd_recent_dirs(N)) && -n $(echo ${^fpath}/cdr(N)) ]]; then
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+  add-zsh-hook chpwd chpwd_recent_dirs
+  zstyle ':completion:*:*:cdr:*:*' menu selection
+  zstyle ':completion:*' recent-dirs-insert both
+  zstyle ':chpwd:*' recent-dirs-max 500
+  zstyle ':chpwd:*' recent-dirs-default true
+  mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/shell"
+  zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
+  zstyle ':chpwd:*' recent-dirs-pushd true
+fi
+##################################################################################
 # Python
 ##################################################################################
 export PATH=$PATH:/Library/Python/2.7/site-packages/bs4
@@ -85,36 +99,49 @@ peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
-peco-find-cd() {
-  local FILENAME="$1"
-  local MAXDEPTH="${2:-3}"
-  local BASE_DIR="${3:-`pwd`}"
-
-  if [ -z "$FILENAME" ] ; then
-    echo "Usage: peco-find-cd <FILENAME> [<MAXDEPTH> [<BASE_DIR>]]" >&2
-    return 1
-  fi
-
-  local DIR=$(find ${BASE_DIR} -maxdepth ${MAXDEPTH} -name ${FILENAME} | peco | head -n 1)
-
-  if [ -n "$DIR" ] ; then
-    DIR=${DIR%/*}
-    echo "pushd \"$DIR\""
-    pushd "$DIR"
-  fi
-}
-zle -N peco-find-cd
-bindkey '^@' peco-find-cd
-#function peco-cdr () {
-#    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
-#    if [ -n "$selected_dir" ]; then
-#        BUFFER="cd ${selected_dir}"
-#        zle accept-line
-#    fi
-#    zle clear-screen
+#peco-find-cd() {
+#  local FILENAME="$1"
+#  local MAXDEPTH="${2:-3}"
+#  local BASE_DIR="${3:-`pwd`}"
+#
+#  if [ -z "$FILENAME" ] ; then
+#    echo "Usage: peco-find-cd <FILENAME> [<MAXDEPTH> [<BASE_DIR>]]" >&2
+#    return 1
+#  fi
+#
+#  local DIR=$(find ${BASE_DIR} -maxdepth ${MAXDEPTH} -name ${FILENAME} | peco | head -n 1)
+#
+#  if [ -n "$DIR" ] ; then
+#    DIR=${DIR%/*}
+#    echo "pushd \"$DIR\""
+#    pushd "$DIR"
+#  fi
 #}
-#zle -N peco-cdr
-#bindkey '^@' peco-cdr
+function peco-cdr () {
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-cdr
+bindkey '^@' peco-cdr
+
+# git add <file>の絞り込み
+function peco-git-add() {
+    local SELECTED_FILE_TO_ADD="$(git status --porcelain | \
+        peco --query "$LBUFFER" | \
+        awk -F ' ' '{print $NF}')"
+    if [ -n "$SELECTED_FILE_TO_ADD" ]; then
+      BUFFER="git add $(echo "$SELECTED_FILE_TO_ADD" | tr '\n' ' ')"
+      CURSOR=$#BUFFER
+    fi
+    zle accept-line
+    # zle clear-screen
+}
+zle -N peco-git-add
+bindkey '^g^a' peco-git-add
 
 ##################################################################################
 # Enterでlsとgitを表示する
