@@ -731,10 +731,35 @@ else
   " let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 
   " PythonコードがPEP8に従うように自動修正
-  NeoBundleLazy 'vim-autopep8', {'autoload': {
+  NeoBundleLazy 'tell-k/vim-autopep8', {'autoload': {
         \ 'filetypes': ['python', 'python3'] }}
-  " Shift + F で自動修正
-  autocmd FileType python map <buffer> <S-f> :call Autopep8()<CR>
+  let s:hooks = neobundle#get_hooks("vim-autopep8")
+  function! s:hooks.on_source(bundle)
+    " Shift + F で自動修正
+    autocmd FileType python map <buffer> <S-f> :call Autopep8()<CR>
+  endfunction
+
+  " PHPコードがPSR-2に従うように自動修正
+  NeoBundleLazy 'stephpy/vim-php-cs-fixer', {
+        \ "verbose" : 1,
+        \ 'autoload': {'filetypes': ['php'] }
+        \ }
+  "NeoBundle 'fabpot/PHP-CS-Fixer'
+  let s:hooks = neobundle#get_hooks("vim-php-cs-fixer")
+  function! s:hooks.on_source(bundle)
+    " If php-cs-fixer is in $PATH, you don't need to define line below
+    " let g:php_cs_fixer_path = "~/php-cs-fixer.phar" " define the path to the php-cs-fixer.phar
+    let g:php_cs_fixer_level = "all"                  " which level ?
+    let g:php_cs_fixer_config = "default"             " configuration
+    let g:php_cs_fixer_php_path = "php"               " Path to PHP
+    " If you want to define specific fixers:
+    "let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"
+    let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
+    let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
+    let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
+    nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+    nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+  endfunction
 
   " jQuery
   NeoBundleLazy "jQuery", {'autoload': {
