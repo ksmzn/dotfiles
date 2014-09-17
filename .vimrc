@@ -836,10 +836,10 @@ else
   "endfunction
   " }}}
   "
-  NeoBundleLazy 'jcf/vim-latex', {
-        \ 'autoload': {
-        \   'filetypes': ['tex']
-        \ }}
+  "NeoBundleLazy 'jcf/vim-latex', {
+  "      \ 'autoload': {
+  "      \   'filetypes': ['tex']
+  "      \ }}
   " LaTeX
   " NeoBundle 'jcf/vim-latex'
   " NeoBundleLazy 'jcf/vim-latex', {
