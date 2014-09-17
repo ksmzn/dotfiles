@@ -773,8 +773,6 @@ else
         \ 'filetypes': ['html', 'css', 'djangohtml'] }}
 
   " Julia
-  " .jl のfiletypeがjuliaでもjulia-vimが起動しないのでやむを得ず
-  au BufNewFile,BufRead *.jl setf julia
   NeoBundleLazy 'JuliaLang/julia-vim', {'autoload': {
         \ 'filetypes': ['julia'] }}
 
@@ -838,6 +836,10 @@ else
   "endfunction
   " }}}
   "
+  NeoBundleLazy 'jcf/vim-latex', {
+        \ 'autoload': {
+        \   'filetypes': ['tex']
+        \ }}
   " LaTeX
   " NeoBundle 'jcf/vim-latex'
   " NeoBundleLazy 'jcf/vim-latex', {
