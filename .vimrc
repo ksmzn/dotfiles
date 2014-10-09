@@ -713,13 +713,15 @@ else
   endfunction
 
   " タグジャンプ
-  NeoBundleLazy 'majutsushi/tagbar', {
-        \ "autload": {
-        \   "commands": ["TagbarToggle"],
-        \ },
-        \ "build": {
-        \   "mac": "brew install ctags",
-        \ }}
+  NeoBundle 'majutsushi/tagbar'
+  "NeoBundleLazy 'majutsushi/tagbar', {
+  "      \ "verbose" : 1,
+  "      \ "autload": {
+  "      \   "commands": ["TagbarToggle"],
+  "      \ },
+  "      \ "build": {
+  "      \   "mac": "brew install ctags",
+  "      \ }}
   nmap <Leader>t :TagbarToggle<CR>
 
   " シンタックスチェックプラグイン
@@ -741,7 +743,6 @@ else
 
   " PHPコードがPSR-2に従うように自動修正
   NeoBundleLazy 'stephpy/vim-php-cs-fixer', {
-        \ "verbose" : 1,
         \ 'autoload': {'filetypes': ['php'] }
         \ }
   "NeoBundle 'fabpot/PHP-CS-Fixer'
@@ -761,6 +762,10 @@ else
     nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
   endfunction
 
+  " デバッガ
+  NeoBundleLazy 'joonty/vdebug', {'autoload': {
+        \ 'filetypes': ['php'] }}
+
   " jQuery
   NeoBundleLazy "jQuery", {'autoload': {
         \ 'filetypes': ['coffee', 'coffeescript', 'javascript', 'html', 'djangohtml'] }}
@@ -773,8 +778,15 @@ else
         \ 'filetypes': ['html', 'css', 'djangohtml'] }}
 
   " Julia
-  NeoBundleLazy 'JuliaLang/julia-vim', {'autoload': {
-        \ 'filetypes': ['julia'] }}
+  "NeoBundle 'JuliaLang/julia-vim'
+  "NeoBundleLazy 'JuliaLang/julia-vim', {
+  "      \ 'verbose' : 1,
+  "      \ 'autoload': {'filetypes': ['julia']}
+  "      \ }
+  NeoBundleLazy "JuliaLang/julia-vim", {
+        \ "autoload": {
+        \   "filetypes": ["julia"]
+        \ }}
 
   " Python {{{
    NeoBundleLazy "lambdalisue/vim-django-support", {
@@ -837,16 +849,16 @@ else
   " }}}
   "
   " Lisp, Scheme
-  NeoBundle 'amdt/vim-niji'
-  NeoBundleLazy 'aharisu/vim_goshrepl', {
-        \ 'autoload': {
-        \   'filetypes': ['lisp', 'scheme']
-        \ }}
-  let s:bundle = neobundle#get_hooks("vim_goshrepl")
-  function! s:hooks.on_source(bundle)
-    let g:neocomplete#keyword_patterns = {}
-    let g:neocomplete#keyword_patterns['gosh-repl'] = "[[:alpha:]+*/@$_=.!?-][[:alnum:]+*/@$_:=.!?-]*"
-  endfunction
+  "NeoBundle 'amdt/vim-niji'
+  "NeoBundleLazy 'aharisu/vim_goshrepl', {
+  "      \ 'autoload': {
+  "      \   'filetypes': ['lisp', 'scheme']
+  "      \ }}
+  "let s:bundle = neobundle#get_hooks("vim_goshrepl")
+  "function! s:hooks.on_source(bundle)
+  "  let g:neocomplete#keyword_patterns = {}
+  "  let g:neocomplete#keyword_patterns['gosh-repl'] = "[[:alpha:]+*/@$_=.!?-][[:alnum:]+*/@$_:=.!?-]*"
+  "endfunction
   "NeoBundleLazy 'aharisu/vim-gdev', {
   "      \ 'autoload': {
   "      \   'filetypes': ['lisp', 'scheme']
@@ -872,6 +884,7 @@ else
   "  nmap <F12> <Plug>(gosh_goto_define)
   "  nmap <F11> <Plug>(gosh_goto_define_split)
   "endfunction
+
 
   " LaTeX
   " NeoBundle 'jcf/vim-latex'
@@ -937,3 +950,4 @@ else
   unlet s:hooks
 endif
 filetype plugin indent on
+
