@@ -438,7 +438,8 @@ else
         \ }}
   nnoremap [unite] <Nop>
   nmap U [unite]
-  nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+  nnoremap <silent> [unite]d :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+  nnoremap <silent> [unite]f :<C-u>Unite file<CR>
   nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
   nnoremap <silent> [unite]r :<C-u>Unite register<CR>
   nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
@@ -559,6 +560,17 @@ else
     " コピーした文字列をハイライト付きで置換
     nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
   endfunction
+
+  " 素早くコメントアウトする
+  NeoBundle "tyru/caw.vim"
+  " \c でカーソル行をコメントアウト
+  " 再度 \c でコメントアウトを解除
+  " 選択してから複数行の \c も可能
+  nmap \c <Plug>(caw:I:toggle)
+  vmap \c <Plug>(caw:I:toggle)
+  " \C でコメントアウトの解除
+  nmap \C <Plug>(caw:I:uncomment)
+  vmap \C <Plug>(caw:I:uncomment)
 
   " 「S」で選択されたテキストを囲う
   NeoBundle 'tpope/vim-surround'
@@ -766,6 +778,10 @@ else
   NeoBundleLazy 'joonty/vdebug', {'autoload': {
         \ 'filetypes': ['php'] }}
 
+  " C++
+  NeoBundleLazy 'vim-jp/cpp-vim', {
+              \ 'autoload' : {'filetypes' : 'cpp'}
+              \ }
   " jQuery
   NeoBundleLazy "jQuery", {'autoload': {
         \ 'filetypes': ['coffee', 'coffeescript', 'javascript', 'html', 'djangohtml'] }}
@@ -775,7 +791,7 @@ else
 
   " NeoBundleLazy 'mattn/zencoding-vim', {'autoload': {
   NeoBundleLazy 'mattn/emmet-vim', {'autoload': {
-        \ 'filetypes': ['html', 'css', 'djangohtml'] }}
+        \ 'filetypes': ['html', 'css', 'scss', 'sass', 'djangohtml'] }}
 
   " Julia
   "NeoBundle 'JuliaLang/julia-vim'
