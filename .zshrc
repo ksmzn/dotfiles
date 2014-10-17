@@ -46,7 +46,7 @@ zstyle ':completion:*:default' menu select=1 list-colors 'di=36' 'ln=35' 'ex=32'
 alias ls='ls -G'
 
 export PATH=/usr/local/bin:$PATH
-
+export PATH=/usr/local/sbin:$PATH
 export PATH="/usr/local/mysql/bin:$PATH"
 
 ### Added by the Heroku Toolbelt
