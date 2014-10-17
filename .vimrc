@@ -814,6 +814,15 @@ else
   "       \ "autoload": {
   "       \   "filetypes": ["python", "python3", "djangohtml"]
   "       \ }}
+   NeoBundleLazy "vim-scripts/python_match.vim", {
+         \ "autoload": {
+         \   "filetypes": ["python", "python3", "djangohtml"]
+         \ }}
+   NeoBundleLazy "mjbrownie/django-template-textobjects", {
+         \ "depends": ["kana/vim-textobj-user"],
+         \ "autoload": {
+         \   "filetypes": ["python", "python3", "djangohtml"]
+         \ }}
   NeoBundleLazy "davidhalter/jedi-vim", {
       \ "autoload": {
       \   "filetypes": ["python", "python3", "djangohtml"],
