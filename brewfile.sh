@@ -101,3 +101,11 @@ brew cask install rstudio
 brew cask alfred link
 
 brew cask cleanup
+
+# zsh のbrew補完を有効にする
+p=`pwd`
+cd /usr/local/share/zsh/site-functions
+ln -s ../../../Library/Contributions/brew_zsh_completion.zsh _brew
+cd ${p}
+
+
