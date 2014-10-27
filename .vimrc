@@ -166,6 +166,8 @@ let &t_EI = "\e]50;CursorShape=0\x7"
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
 
+" texのconcealを無効化（#^ω^）
+let g:tex_conceal=''
 "#######################
 " プログラミングヘルプ系
 "#######################
@@ -725,8 +727,6 @@ else
           \   },
           \   'tex':{
           \     'command' : 'latexmk',
-          \     'outputter' : 'error',
-          \     'outputter/error/error' : 'quickfix',
           \     'cmdopt': '-pdfdvi',
           \     'exec': ['%c %o %s', 'open %s:r.pdf']
           \   },
@@ -740,6 +740,11 @@ else
 "           \   'cmdopt': '-pdfdvi',
 "           \   'exec': ['%c %o %s']
 "           \ }
+"           \     'exec': ['%c %o %s', 'open %s:r.pdf']
+"           \     'outputter/error/success' : 'buffer',
+"           \     'outputter/error/error' : 'quickfix',
+"           \     'outputter' : 'error',
+"           \     'outputter' : 'quickfix',
   endfunction
 
   " タグジャンプ
