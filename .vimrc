@@ -195,33 +195,36 @@ if has("autocmd")
   " これらのftではインデントを無効に
   "autocmd FileType php filetype indent off
 
-  autocmd FileType apache     setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType aspvbs     setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType c          setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType cpp        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType cs         setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType css        setlocal sw=2 sts=2 ts=2 et
-  autocmd FileType diff       setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType eruby      setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType html       setlocal sw=2 sts=2 ts=2 et
-  autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType javascript setlocal sw=4 sts=4 ts=8 et
-  autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType python     setlocal sw=4 sts=4 ts=8 et
-  autocmd FileType kivy     setlocal sw=4 sts=4 ts=8 et
-  autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
-  autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
-  autocmd FileType sh         setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType sql        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType vb         setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType vim        setlocal sw=2 sts=2 ts=2 et
-  autocmd FileType wsh        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType xhtml      setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType xml        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
-  autocmd FileType zsh        setlocal sw=4 sts=4 ts=4 et
-  autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
+  augroup FileTypeSetLocal
+    autocmd!
+    autocmd FileType apache     setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType aspvbs     setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType c          setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType cpp        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType cs         setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType css        setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType diff       setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType eruby      setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType html       setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType javascript setlocal sw=4 sts=4 ts=8 et
+    autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType python     setlocal sw=4 sts=4 ts=8 et
+    autocmd FileType kivy     setlocal sw=4 sts=4 ts=8 et
+    autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType sh         setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType sql        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType vb         setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType vim        setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType wsh        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType xhtml      setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType xml        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType zsh        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
+  augroup END
 endif
 
 augroup FileTypeDetect
@@ -704,7 +707,7 @@ else
   NeoBundleLazy "vim-scripts/TaskList.vim", {
         \ "autoload": {
         \   "mappings": ['<Plug>TaskList'],
-        \}}
+        \ }}
   nmap <Leader>T <plug>TaskList
 
   " ブラウジング
@@ -713,6 +716,7 @@ else
 
   " Programming {{{
   NeoBundleLazy "thinca/vim-quickrun", {
+        \ 'depends': 'osyo-manga/shabadou.vim',
         \ 'autoload': {
         \   'mappings': [['nxo', '<Plug>(quickrun)']]
         \ }}
@@ -722,13 +726,18 @@ else
   function! s:hooks.on_source(bundle)
     let g:quickrun_config = {
           \   "_": {
+          \     "hook/close_quickfix/enable_success" : 1,
+          \     "hook/close_buffer/enable_failure" : 1,
+          \     "outputter" : "multi:buffer:quickfix",
+          \     "hook/neco/enable" : 1,
+          \     "hook/neco/wait" : 20,
           \     "runner": "vimproc",
           \     'hook/time/enable' : 1
           \   },
           \   'tex':{
           \     'command' : 'latexmk',
-          \     'cmdopt': '-pdfdvi',
-          \     'exec': ['%c %o %s', 'open %s:r.pdf']
+          \     'cmdopt': '-pv',
+          \     'exec': ['%c %o %s']
           \   },
           \ }
     "\ 'hook/time/enable' : 1,
@@ -744,7 +753,7 @@ else
 "           \     'outputter/error/success' : 'buffer',
 "           \     'outputter/error/error' : 'quickfix',
 "           \     'outputter' : 'error',
-"           \     'outputter' : 'quickfix',
+"           \     'outputter/error/error' : 'quickfix',
   endfunction
 
   " タグジャンプ
