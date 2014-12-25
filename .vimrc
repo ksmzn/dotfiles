@@ -121,6 +121,9 @@ nnoremap <Space>o :only<CR>
 
 " カーソル位置の単語をyankする
 nnoremap vv vawy
+
+" 行末までのヤンク
+nnoremap Y y$
 "#######################
 " 表示系
 "#######################
@@ -135,6 +138,7 @@ set title "編集中のファイル名を表示
 set ruler "ルーラーの表示
 set showcmd "入力中のコマンドをステータスに表示する
 set showmatch "括弧入力時の対応する括弧を表示
+set matchtime=1 "showmatchのカーソルが飛ぶ時間を0.1秒の何倍か
 set matchpairs& matchpairs+=<:> " 対応括弧に'<'と'>'のペアを追加
 set backspace=indent,eol,start " バックスペースでなんでも消せるようにする
 set laststatus=2 "ステータスラインを常に表示
