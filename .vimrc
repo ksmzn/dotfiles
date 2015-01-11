@@ -741,6 +741,8 @@ else
           \   },
           \   'tex':{
           \     'command' : 'latexmk',
+            \   'outputter' : 'error',
+            \   'outputter/error/error' : 'quickfix',
           \     'cmdopt': '-pv',
           \     'exec': ['%c %o %s']
           \   },
