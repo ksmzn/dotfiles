@@ -307,10 +307,14 @@ else
   if has('vim_starting')
     execute "set runtimepath+=" . s:neobundle_root
   endif
-  call neobundle#rc(s:bundle_root)
+"   call neobundle#rc(s:bundle_root)
+
+  call neobundle#begin(s:bundle_root)
 
   " Let NeoBundle manage NeoBundle
   NeoBundleFetch 'Shougo/neobundle.vim'
+
+  call neobundle#end()
 
   " Enable async process via vimproc
   NeoBundle "Shougo/vimproc", {
