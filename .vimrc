@@ -837,10 +837,10 @@ else
         \ 'filetypes': ['html', 'css', 'scss', 'sass', 'djangohtml'] }}
 
   " Julia
-  NeoBundleLazy 'JuliaLang/julia-vim', {
-        \ 'autoload': {
-        \   'filetypes': ['julia']
-        \ }}
+  "NeoBundleLazy 'JuliaLang/julia-vim', {
+  "      \ 'autoload': {
+  "      \   'filetypes': ['julia']
+  "      \ }}
 
   " Python {{{
    NeoBundleLazy "lambdalisue/vim-django-support", {

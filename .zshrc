@@ -78,16 +78,6 @@ fi
 ##################################################################################
 export PATH=$PATH:/Library/Python/2.7/site-packages/bs4
 
-#virtualenv settings
-#export WORKON_HOME=$HOME/.virtualenvs
-#source `which virtualenvwrapper.sh`
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-    source /usr/local/bin/virtualenvwrapper.sh
-    export PIP_RESPECT_VIRTUALENV=true
-fi
-
 # pip zsh completion start
 function _pip_completion {
   local words cword
