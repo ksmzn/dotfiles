@@ -1,2 +1,8 @@
 export EDITOR=vim
 alias vi=vim
+
+# ibus
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+exec ibus-daemon -dx &
