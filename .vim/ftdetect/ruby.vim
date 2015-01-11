@@ -1,1 +1,2 @@
-au BufNewFile,BufRead *.erb setf html ".erbを開くときはファイルタイプをhtmlにする
+".erbを開くときはファイルタイプをhtmlにする
+au BufNewFile,BufRead *.erb setf html

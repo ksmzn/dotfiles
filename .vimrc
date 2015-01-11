@@ -716,7 +716,7 @@ else
   nmap <Leader>T <plug>TaskList
 
   " ブラウジング
-  NeoBundle 'yuratomo/w3m.vim'
+  " NeoBundle 'yuratomo/w3m.vim'
   "}}}
 
   " Programming {{{
@@ -833,14 +833,9 @@ else
         \ 'filetypes': ['html', 'css', 'scss', 'sass', 'djangohtml'] }}
 
   " Julia
-  "NeoBundle 'JuliaLang/julia-vim'
-  "NeoBundleLazy 'JuliaLang/julia-vim', {
-  "      \ 'verbose' : 1,
-  "      \ 'autoload': {'filetypes': ['julia']}
-  "      \ }
-  NeoBundleLazy "JuliaLang/julia-vim", {
-        \ "autoload": {
-        \   "filetypes": ["julia"]
+  NeoBundleLazy 'JuliaLang/julia-vim', {
+        \ 'autoload': {
+        \   'filetypes': ['julia']
         \ }}
 
   " Python {{{
