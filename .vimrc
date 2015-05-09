@@ -1,4 +1,3 @@
-" vim: foldlevel=0 sts=2 sw=2 smarttab et ai textwidth=0
 if !&compatible
   " disable vi compatible features
   set nocompatible
@@ -55,15 +54,13 @@ endif
 "#######################
 " キースワップ
 "#######################
-map ¥ <leader>
+" map \ <leader>
+let mapleader = ","
+noremap \ ,
 
 "" .vimrcの編集を簡単にする
 nnoremap <silent> <Space>ev  :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> <Space>eg  :<C-u>edit $MYGVIMRC<CR>
-" .vimrcや.gvimrcを変更すると、自動的に変更が反映されるようにする
-augroup MyAutoCmd
-  autocmd!
-augroup END
 
 if !has('gui_running') && !(has('win32') || has('win64'))
   " .vimrcの再読込時にも色が変化するようにする
@@ -99,6 +96,12 @@ nnoremap g# g#zz
 " j, k による移動を折り返されたテキストでも自然に振る舞うように変更
 nnoremap j gj
 nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
+" :と;入れ替え
+nnoremap ; :
+nnoremap : ;
 
 " TABにて対応ペアにジャンプ
 nnoremap <Tab> %
@@ -124,6 +127,42 @@ nnoremap vv vawy
 
 " 行末までのヤンク
 nnoremap Y y$
+
+"入力モードで削除
+inoremap <C-d> <Del>
+inoremap <C-h> <BackSpace>
+
+"コマンドモードでemacsチックに
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
+cnoremap <C-h> <BackSpace>
+
+"コマンドモードの履歴
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+"コマンドモードでペースト
+cnoremap <C-y> <C-r>"
+
+" 括弧を自動補完
+inoremap {{ {}<LEFT>
+inoremap [[ []<LEFT>
+inoremap (( ()<LEFT>
+inoremap "" ""<LEFT>
+inoremap '' ''<LEFT>
+inoremap $$ $$<LEFT>
+vnoremap { "zdi^V{<C-R>z}<ESC>
+vnoremap [ "zdi^V[<C-R>z]<ESC>
+vnoremap ( "zdi^V(<C-R>z)<ESC>
+vnoremap " "zdi^V"<C-R>z^V"<ESC>
+vnoremap ' "zdi'<C-R>z'<ESC>
+
+" 挿入モードでCtrl+kを押すとクリップボードの内容を貼り付けられるようにする "
+" inoremap <C-k>  <ESC>"*pa
+
 "#######################
 " 表示系
 "#######################
@@ -163,14 +202,22 @@ hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
 
 " iTerm2で、カーソルの形状を変更
-let &t_SI = "\e]50;CursorShape=1\x7"
-let &t_EI = "\e]50;CursorShape=0\x7"
+if $TERM_PROGRAM == 'iTerm.app'
+  " different cursors for insert vs normal mode
+  if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+    let &t_SI = "\e]50;CursorShape=1\x7"
+    let &t_EI = "\e]50;CursorShape=0\x7"
+  endif
+endif
 
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
 
-" texのconcealを無効化（#^ω^）
+" texのconcealを無効化
 let g:tex_conceal=''
 "#######################
 " プログラミングヘルプ系
@@ -213,13 +260,14 @@ if has("autocmd")
     autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
     autocmd FileType javascript setlocal sw=4 sts=4 ts=8 et
     autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
-    autocmd FileType php        setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType php        setlocal sw=4 sts=4 ts=4 noet
     autocmd FileType python     setlocal sw=4 sts=4 ts=8 et
     autocmd FileType kivy       setlocal sw=4 sts=4 ts=8 et
     autocmd FileType r          setlocal sw=2 sts=2 ts=2 et
     autocmd FileType ruby       setlocal sw=2 sts=2 ts=2 et
     autocmd FileType haml       setlocal sw=2 sts=2 ts=2 et
     autocmd FileType sh         setlocal sw=4 sts=4 ts=4 et
+    autocmd FileType stan       setlocal sw=2 sts=2 ts=8 et
     autocmd FileType sql        setlocal sw=4 sts=4 ts=4 et
     autocmd FileType vb         setlocal sw=4 sts=4 ts=4 et
     autocmd FileType vim        setlocal sw=2 sts=2 ts=2 et
@@ -229,21 +277,10 @@ if has("autocmd")
     autocmd FileType yaml       setlocal sw=2 sts=2 ts=2 et
     autocmd FileType zsh        setlocal sw=4 sts=4 ts=4 et
     autocmd FileType scala      setlocal sw=2 sts=2 ts=2 et
+    autocmd FileType jsp,asp,php,xml,perl syntax sync minlines=500 maxlines=1000
   augroup END
 endif
 
-augroup FileTypeDetect
-  autocmd!
-  autocmd BufNewFile,BufRead *.tex,*.latex,*.sty,*.dtx,*.ltx,*.bbl setf tex
-  autocmd BufNewFile,BufRead *.md  setf markdown
-  autocmd BufNewFile,BufRead *.less setf less
-  autocmd BufNewFile,BufRead *.coffee setf coffee
-  autocmd BufNewFile,BufRead *.erb setf html
-  autocmd BufNewFile,BufRead *.kv setf kivy
-augroup END
-
-" 特定のファイルの時に雛形を表示
-autocmd BufNewFile *.py 0r $HOME/.vim/template/python.py
 "#######################
 " 検索系
 "#######################
@@ -257,12 +294,6 @@ set nohlsearch "検索結果文字列の非ハイライト表示
 " その他
 "#######################
 set nocompatible "vi非互換モード
-"set nowritebackup
-"" set nobackup
-"set backup
-"" set noswapfile " No Swap
-"set swapfile
-"set noundofile " .un~ファイルを作らない
 
 if s:is_windows
   set backupdir=C:/Temp
@@ -278,21 +309,6 @@ elseif isdirectory($HOME . '/tmp')
     " Undo ファイルディレクトリを変更
     set undodir=$HOME/tmp
 endif
-
-" 括弧を自動補完
-inoremap {{ {}<LEFT>
-inoremap [[ []<LEFT>
-inoremap (( ()<LEFT>
-inoremap "" ""<LEFT>
-inoremap '' ''<LEFT>
-vnoremap { "zdi^V{<C-R>z}<ESC>
-vnoremap [ "zdi^V[<C-R>z]<ESC>
-vnoremap ( "zdi^V(<C-R>z)<ESC>
-vnoremap " "zdi^V"<C-R>z^V"<ESC>
-vnoremap ' "zdi'<C-R>z'<ESC>
-
-" 挿入モードでCtrl+kを押すとクリップボードの内容を貼り付けられるようにする "
-" inoremap <C-k>  <ESC>"*pa
 
 "##################
 " NeoBundle
@@ -363,13 +379,15 @@ else
   " NeoBundle 'cohama/vim-hier'
 
   " インデントの可視化
-  NeoBundle "nathanaelkane/vim-indent-guides"
-  let s:hooks = neobundle#get_hooks("vim-indent-guides")
-  function! s:hooks.on_source(bundle)
-    let g:indent_guides_guide_size = 1
-    nnoremap <silent> [toggle]i  :IndentGuidesToggle<CR>
-    IndentGuidesEnable
-  endfunction
+  NeoBundle 'nathanaelkane/vim-indent-guides'
+  let s:hooks = neobundle#get_hooks('vim-indent-guides')
+  let g:indent_guides_guide_size = 1
+  let g:indent_guides_enable_on_vim_startup = 1
+"   function! s:hooks.on_source(bundle)
+"     let g:indent_guides_guide_size = 1
+"     nnoremap <silent> [toggle]i  :IndentGuidesToggle<CR>
+"     IndentGuidesEnable
+"   endfunction
 
   " マークの表示
   " NeoBundleLazy 'vim-scripts/ShowMarks', {
@@ -563,6 +581,15 @@ else
   "}}}
 
   " Editing support {{{
+  " Make blockwise Visual mode more useful
+  NeoBundleLazy 'kana/vim-niceblock', {
+        \ 'mappings' : ['<Plug>(niceblock-I)', '<Plug>(niceblock-A)' ] }
+  let s:hooks = neobundle#get_hooks("vim-niceblock")
+  function! s:hooks.on_source(bundle)
+    " vやVでビジュアル選択した後にrを押しても置換前と同じ表示幅で置換してくれる
+    xnoremap <expr> r  niceblock#force_blockwise('r')
+  endfunction
+
   " 置換する対象文字列をハイライトなど
   NeoBundle 'osyo-manga/vim-over'
   let s:hooks = neobundle#get_hooks("vim-over")
@@ -577,25 +604,25 @@ else
 
   " 素早くコメントアウトする
   NeoBundle "tyru/caw.vim"
-  " \c でカーソル行をコメントアウト
-  " 再度 \c でコメントアウトを解除
-  " 選択してから複数行の \c も可能
-  nmap \c <Plug>(caw:I:toggle)
-  vmap \c <Plug>(caw:I:toggle)
-  " \C でコメントアウトの解除
-  nmap \C <Plug>(caw:I:uncomment)
-  vmap \C <Plug>(caw:I:uncomment)
+  " <Leader>c でカーソル行をコメントアウト
+  " 再度 <Leader>c でコメントアウトを解除
+  " 選択してから複数行の <Leader>c も可能
+  nmap <Leader>c <Plug>(caw:I:toggle)
+  vmap <Leader>c <Plug>(caw:I:toggle)
+  " <Leader>C でコメントアウトの解除
+  nmap <Leader>C <Plug>(caw:I:uncomment)
+  vmap <Leader>C <Plug>(caw:I:uncomment)
 
   " 「S」で選択されたテキストを囲う
   NeoBundle 'tpope/vim-surround'
   " 高性能なテキスト整形ツール
   " NeoBundle 'vim-scripts/Align'
   " ヤンクの履歴を管理し、順々に参照、出力
-  "NeoBundle 'vim-scripts/YankRing.vim'
-  "let s:hooks = neobundle#get_hooks("YankRing.vim")
-  "function! s:hooks.on_source(bundle)
-  "  let yankring_history_file = ".yankring_history"
-  "endfunction
+  NeoBundle 'vim-scripts/YankRing.vim'
+  let s:hooks = neobundle#get_hooks("YankRing.vim")
+  function! s:hooks.on_source(bundle)
+   let yankring_history_file = ".yankring_history"
+  endfunction
 
   NeoBundle 'LeafCage/yankround.vim'
   let s:hooks = neobundle#get_hooks("yankround.vim")
@@ -786,6 +813,7 @@ else
         \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
         \ }}
   " let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+  let g:syntastic_disabled_filetypes = ['html', 'tex']
 
   " PythonコードがPEP8に従うように自動修正
   NeoBundleLazy 'tell-k/vim-autopep8', {'autoload': {
@@ -797,29 +825,32 @@ else
   endfunction
 
   " PHPコードがPSR-2に従うように自動修正
-  NeoBundleLazy 'stephpy/vim-php-cs-fixer', {
-        \ 'autoload': {'filetypes': ['php'] }
-        \ }
-  "NeoBundle 'fabpot/PHP-CS-Fixer'
-  let s:hooks = neobundle#get_hooks("vim-php-cs-fixer")
-  function! s:hooks.on_source(bundle)
-    " If php-cs-fixer is in $PATH, you don't need to define line below
-    " let g:php_cs_fixer_path = "~/php-cs-fixer.phar" " define the path to the php-cs-fixer.phar
-    let g:php_cs_fixer_level = "all"                  " which level ?
-    let g:php_cs_fixer_config = "default"             " configuration
-    let g:php_cs_fixer_php_path = "php"               " Path to PHP
-    " If you want to define specific fixers:
-    "let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"
-    let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
-    let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
-    let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
-    nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
-    nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
-  endfunction
-
+"   NeoBundleLazy 'stephpy/vim-php-cs-fixer', {
+"         \ 'autoload': {'filetypes': ['php'] }
+"         \ }
+"   "NeoBundle 'fabpot/PHP-CS-Fixer'
+"   let s:hooks = neobundle#get_hooks("vim-php-cs-fixer")
+"   function! s:hooks.on_source(bundle)
+"     " If php-cs-fixer is in $PATH, you don't need to define line below
+"     " let g:php_cs_fixer_path = "~/php-cs-fixer.phar" " define the path to the php-cs-fixer.phar
+"     let g:php_cs_fixer_level = "all"                  " which level ?
+"     let g:php_cs_fixer_config = "default"             " configuration
+"     let g:php_cs_fixer_php_path = "php"               " Path to PHP
+"     " If you want to define specific fixers:
+"     "let g:php_cs_fixer_fixers_list = "linefeed,short_tag,indentation"
+"     let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
+"     let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
+"     let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
+"     nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+"     nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+"   endfunction
+"
   " デバッガ
   NeoBundleLazy 'joonty/vdebug', {'autoload': {
         \ 'filetypes': ['php'] }}
+
+  " Evernote
+"   NeoBundle 'neilagabriel/vim-geeknote'
 
   " C++
   NeoBundleLazy 'vim-jp/cpp-vim', {
@@ -843,44 +874,44 @@ else
   "      \ }}
 
   " Python {{{
-   NeoBundleLazy "lambdalisue/vim-django-support", {
-         \ "autoload": {
-         \   "filetypes": ["python", "python3", "djangohtml"]
-         \ }}
+"    NeoBundleLazy 'lambdalisue/vim-django-support', {
+"          \ 'autoload': {
+"          \   'filetypes': ['python', 'python3', 'djangohtml']
+"          \ }}
   " Vimで正しくvirtualenvを処理できるようにする
-  " NeoBundleLazy "jmcantrell/vim-virtualenv", {
-  "       \ "autoload": {
-  "       \   "filetypes": ["python", "python3", "djangohtml"]
-  "       \ }}
-   NeoBundleLazy "vim-scripts/python_match.vim", {
-         \ "autoload": {
-         \   "filetypes": ["python", "python3", "djangohtml"]
-         \ }}
-   NeoBundleLazy "mjbrownie/django-template-textobjects", {
-         \ "depends": ["kana/vim-textobj-user"],
-         \ "autoload": {
-         \   "filetypes": ["python", "python3", "djangohtml"]
-         \ }}
-  NeoBundleLazy "davidhalter/jedi-vim", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3", "djangohtml"],
-      \ },
-      \ "build": {
-      \   "mac": "pip install jedi",
-      \   "unix": "pip install jedi",
-      \ }}
-  let s:hooks = neobundle#get_hooks("jedi-vim")
-  function! s:hooks.on_source(bundle)
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#popup_select_first = 0
-    " jedi#show_function_definitionは非推奨
-    "let g:jedi#show_function_definition = 1
-    let g:jedi#show_call_signatures = 1
-    let g:jedi#rename_command = '<Leader>R'
-    " jedi#goto_commandは非推奨
-    " let g:jedi#goto_command = '<Leader>G'
-    let g:jedi#goto_assignments_command = '<Leader>G'
-  endfunction
+"   NeoBundleLazy 'jmcantrell/vim-virtualenv', {
+"         \ 'autoload': {
+"         \   'filetypes': ['python', 'python3', 'djangohtml']
+"         \ }}
+  NeoBundleLazy 'vim-scripts/python_match.vim', {
+        \ 'autoload': {
+        \   'filetypes': ['python', 'python3', 'djangohtml']
+        \ }}
+  NeoBundleLazy 'mjbrownie/django-template-textobjects', {
+        \ 'depends': ['kana/vim-textobj-user'],
+        \ 'autoload': {
+        \   'filetypes': ['python', 'python3', 'djangohtml']
+        \ }}
+"   NeoBundleLazy 'davidhalter/jedi-vim', {
+"       \ 'autoload': {
+"       \   'filetypes': ['python', 'python3', 'djangohtml'],
+"       \ },
+"       \ 'build': {
+"       \   'mac': 'pip install jedi',
+"       \   'unix': 'pip install jedi',
+"       \ }}
+"   let s:hooks = neobundle#get_hooks('jedi-vim')
+"   function! s:hooks.on_source(bundle)
+"     let g:jedi#auto_vim_configuration = 0
+"     let g:jedi#popup_select_first = 0
+"     " jedi#show_function_definitionは非推奨
+"     "let g:jedi#show_function_definition = 1
+"     let g:jedi#show_call_signatures = 1
+"     let g:jedi#rename_command = '<Leader>R'
+"     " jedi#goto_commandは非推奨
+"     " let g:jedi#goto_command = '<Leader>G'
+"     let g:jedi#goto_assignments_command = '<Leader>G'
+"   endfunction
 
   "let s:hooks = neobundle#get_hooks("jedi-vim")
   "function! s:hooks.on_source(bundle)
@@ -985,6 +1016,14 @@ else
   "    let g:Tex_ViewRule_pdf = '/usr/bin/gnome-open'
   "  endif
   "endfunction
+
+  " Stan
+  NeoBundleLazy 'maverickg/stan.vim', {
+        \ 'autoload': {
+        \   'filetypes': ['stan']
+        \ }}
+
+
   "unlet s:bundle  "}}}
 
   " install missing plugins
@@ -993,4 +1032,3 @@ else
   unlet s:hooks
 endif
 filetype plugin indent on
-
