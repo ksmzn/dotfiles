@@ -79,7 +79,8 @@ brew cask install dropbox
 brew cask install evernote
 brew cask install xtrafinder
 brew cask install yorufukurou
-brew cask install keyremap4macbook
+brew cask install karabiner
+brew cask install seil
 brew cask install skitch
 brew cask install github
 brew cask install lastpass-universal
