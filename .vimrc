@@ -56,6 +56,7 @@ endif
 " キースワップ
 "#######################
 map ¥ <leader>
+let mapleader = ','
 
 "" .vimrcの編集を簡単にする
 nnoremap <silent> <Space>ev  :<C-u>edit $MYVIMRC<CR>
