@@ -944,16 +944,16 @@ else
   "
   " Lisp, Scheme
   "NeoBundle 'amdt/vim-niji'
-  NeoBundleLazy 'aharisu/vim_goshrepl', {
-        \ 'autoload': {
-        \   'filetypes': ['lisp', 'scheme']
-        \ }}
-  let s:bundle = neobundle#get_hooks("vim_goshrepl")
-  function! s:hooks.on_source(bundle)
-    let g:neocomplete#keyword_patterns = {}
-    let g:neocomplete#keyword_patterns['gosh-repl'] = \
-    '[[:alpha:]+*/@$_=.!?-][[:alnum:]+*/@$_:=.!?-]*'
-  endfunction
+"   NeoBundleLazy 'aharisu/vim_goshrepl', {
+"         \ 'autoload': {
+"         \   'filetypes': ['lisp', 'scheme']
+"         \ }}
+"   let s:bundle = neobundle#get_hooks("vim_goshrepl")
+"   function! s:hooks.on_source(bundle)
+"     let g:neocomplete#keyword_patterns = {}
+"     let g:neocomplete#keyword_patterns['gosh-repl'] = \
+"     '[[:alpha:]+*/@$_=.!?-][[:alnum:]+*/@$_:=.!?-]*'
+"   endfunction
   "NeoBundleLazy 'aharisu/vim-gdev', {
   "      \ 'autoload': {
   "      \   'filetypes': ['lisp', 'scheme']
