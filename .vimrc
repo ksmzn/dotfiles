@@ -426,7 +426,7 @@ else
         \ 'filetypes': 'css' }}
   " syntax for HTML5
   NeoBundleLazy 'othree/html5.vim', {'autoload': {
-        \ 'filetypes': ['html', 'djangohtml'] }}
+        \ 'filetypes': ['html', 'jinja2'] }}
   " syntax /indent /omnicomplete for LESS
   NeoBundleLazy 'groenewege/vim-less.git', {'autoload': {
         \ 'filetypes': 'less' }}
@@ -807,13 +807,13 @@ else
   nmap <Leader>t :TagbarToggle<CR>
 
   " シンタックスチェックプラグイン
-  NeoBundle "scrooloose/syntastic", {
-        \ "build": {
-        \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
-        \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
-        \ }}
-  " let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-  let g:syntastic_disabled_filetypes = ['html', 'tex']
+"   NeoBundle 'scrooloose/syntastic', {
+"         \ 'build': {
+"         \   'mac': ['pip install pyflake', 'npm -g install coffeelint'],
+"         \   'unix': ['pip install pyflake', 'npm -g install coffeelint'],
+"         \ }}
+"   ' let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+"   let g:syntastic_disabled_filetypes = ['html', 'tex']
 
   " PythonコードがPEP8に従うように自動修正
   NeoBundleLazy 'tell-k/vim-autopep8', {'autoload': {
@@ -858,14 +858,14 @@ else
               \ }
   " jQuery
   NeoBundleLazy "jQuery", {'autoload': {
-        \ 'filetypes': ['coffee', 'coffeescript', 'javascript', 'html', 'djangohtml'] }}
+        \ 'filetypes': ['coffee', 'coffeescript', 'javascript', 'html', 'jinja2'] }}
   " CoffeeScript
   NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload': {
         \ 'filetypes': ['coffee', 'coffeescript'] }}
 
   " NeoBundleLazy 'mattn/zencoding-vim', {'autoload': {
   NeoBundleLazy 'mattn/emmet-vim', {'autoload': {
-        \ 'filetypes': ['html', 'css', 'scss', 'sass', 'djangohtml'] }}
+        \ 'filetypes': ['html', 'css', 'scss', 'sass', 'jinja2'] }}
 
   " Julia
   "NeoBundleLazy 'JuliaLang/julia-vim', {
@@ -876,42 +876,42 @@ else
   " Python {{{
 "    NeoBundleLazy 'lambdalisue/vim-django-support', {
 "          \ 'autoload': {
-"          \   'filetypes': ['python', 'python3', 'djangohtml']
+"          \   'filetypes': ['python', 'python3', 'jinja2']
 "          \ }}
   " Vimで正しくvirtualenvを処理できるようにする
-"   NeoBundleLazy 'jmcantrell/vim-virtualenv', {
-"         \ 'autoload': {
-"         \   'filetypes': ['python', 'python3', 'djangohtml']
-"         \ }}
+  NeoBundleLazy 'jmcantrell/vim-virtualenv', {
+        \ 'autoload': {
+        \   'filetypes': ['python', 'python3', 'jinja2']
+        \ }}
   NeoBundleLazy 'vim-scripts/python_match.vim', {
         \ 'autoload': {
-        \   'filetypes': ['python', 'python3', 'djangohtml']
+        \   'filetypes': ['python', 'python3', 'jinja2']
         \ }}
   NeoBundleLazy 'mjbrownie/django-template-textobjects', {
         \ 'depends': ['kana/vim-textobj-user'],
         \ 'autoload': {
-        \   'filetypes': ['python', 'python3', 'djangohtml']
+        \   'filetypes': ['python', 'python3', 'jinja2']
         \ }}
-"   NeoBundleLazy 'davidhalter/jedi-vim', {
-"       \ 'autoload': {
-"       \   'filetypes': ['python', 'python3', 'djangohtml'],
-"       \ },
-"       \ 'build': {
-"       \   'mac': 'pip install jedi',
-"       \   'unix': 'pip install jedi',
-"       \ }}
-"   let s:hooks = neobundle#get_hooks('jedi-vim')
-"   function! s:hooks.on_source(bundle)
-"     let g:jedi#auto_vim_configuration = 0
-"     let g:jedi#popup_select_first = 0
-"     " jedi#show_function_definitionは非推奨
-"     "let g:jedi#show_function_definition = 1
-"     let g:jedi#show_call_signatures = 1
-"     let g:jedi#rename_command = '<Leader>R'
-"     " jedi#goto_commandは非推奨
-"     " let g:jedi#goto_command = '<Leader>G'
-"     let g:jedi#goto_assignments_command = '<Leader>G'
-"   endfunction
+  NeoBundleLazy 'davidhalter/jedi-vim', {
+      \ 'autoload': {
+      \   'filetypes': ['python', 'python3', 'jinja2'],
+      \ },
+      \ 'build': {
+      \   'mac': 'pip install jedi',
+      \   'unix': 'pip install jedi',
+      \ }}
+  let s:hooks = neobundle#get_hooks('jedi-vim')
+  function! s:hooks.on_source(bundle)
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#popup_select_first = 0
+    " jedi#show_function_definitionは非推奨
+    "let g:jedi#show_function_definition = 1
+    let g:jedi#show_call_signatures = 1
+    let g:jedi#rename_command = '<Leader>R'
+    " jedi#goto_commandは非推奨
+    " let g:jedi#goto_command = '<Leader>G'
+    let g:jedi#goto_assignments_command = '<Leader>G'
+  endfunction
 
   "let s:hooks = neobundle#get_hooks("jedi-vim")
   "function! s:hooks.on_source(bundle)
