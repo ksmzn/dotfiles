@@ -148,17 +148,18 @@ cnoremap <C-n> <Down>
 cnoremap <C-y> <C-r>"
 
 " 括弧を自動補完
-inoremap {{ {}<LEFT>
-inoremap [[ []<LEFT>
-inoremap (( ()<LEFT>
-inoremap "" ""<LEFT>
-inoremap '' ''<LEFT>
-inoremap $$ $$<LEFT>
-vnoremap { "zdi^V{<C-R>z}<ESC>
-vnoremap [ "zdi^V[<C-R>z]<ESC>
-vnoremap ( "zdi^V(<C-R>z)<ESC>
-vnoremap " "zdi^V"<C-R>z^V"<ESC>
-vnoremap ' "zdi'<C-R>z'<ESC>
+" kana/vim-smartinput を入れたため、停止
+" inoremap {{ {}<LEFT>
+" inoremap [[ []<LEFT>
+" inoremap (( ()<LEFT>
+" inoremap "" ""<LEFT>
+" inoremap '' ''<LEFT>
+" inoremap $$ $$<LEFT>
+" vnoremap { "zdi^V{<C-R>z}<ESC>
+" vnoremap [ "zdi^V[<C-R>z]<ESC>
+" vnoremap ( "zdi^V(<C-R>z)<ESC>
+" vnoremap " "zdi^V"<C-R>z^V"<ESC>
+" vnoremap ' "zdi'<C-R>z'<ESC>
 
 " 挿入モードでCtrl+kを押すとクリップボードの内容を貼り付けられるようにする "
 " inoremap <C-k>  <ESC>"*pa
@@ -581,6 +582,23 @@ else
   "}}}
 
   " Editing support {{{
+  NeoBundle 'kana/vim-operator-user'
+
+  " 「S」で選択されたテキストを囲う
+  NeoBundle 'rhysd/vim-operator-surround'
+  map ys <Plug>(operator-surround-append)
+  map ds <Plug>(operator-surround-delete)
+  map cs <Plug>(operator-surround-replace)
+  " NeoBundle 'tpope/vim-surround'
+
+  " テキストオブジェクトで置換
+  NeoBundle 'kana/vim-operator-replace.git'
+  map R  <Plug>(operator-replace)
+
+  " 対応する括弧等を入力する
+  NeoBundle 'kana/vim-smartinput'
+
+
   " Make blockwise Visual mode more useful
   NeoBundleLazy 'kana/vim-niceblock', {
         \ 'mappings' : ['<Plug>(niceblock-I)', '<Plug>(niceblock-A)' ] }
@@ -612,9 +630,6 @@ else
   " <Leader>C でコメントアウトの解除
   nmap <Leader>C <Plug>(caw:I:uncomment)
   vmap <Leader>C <Plug>(caw:I:uncomment)
-
-  " 「S」で選択されたテキストを囲う
-  NeoBundle 'tpope/vim-surround'
   " 高性能なテキスト整形ツール
   " NeoBundle 'vim-scripts/Align'
   " ヤンクの履歴を管理し、順々に参照、出力
