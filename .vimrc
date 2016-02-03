@@ -798,6 +798,8 @@ else
 "           \     'outputter/error/error' : 'quickfix',
   endfunction
 
+  NeoBundle 'ujihisa/repl.vim'
+
   " タグジャンプ
   NeoBundle 'majutsushi/tagbar'
   "NeoBundleLazy 'majutsushi/tagbar', {
