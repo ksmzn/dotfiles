@@ -566,29 +566,17 @@ else
   " gitラッパープラグイン
   " vim-fugitive use `autocmd` a lost so cannot be loaded with Lazy
   NeoBundle "tpope/vim-fugitive"
-  "NeoBundleLazy "tpope/vim-fugitive", {
-  "      \ "autoload": {
-  "      \   "commands": [
-  "      \     "Gstatus", "Gwrite", "Gread", "Gmove",
-  "      \     "Gremove", "Gcommit", "Gblame", "Gdiff",
-  "      \     "Gbrowse",
-  "      \ ]}}
-  " Git の GUI ツールと同等のこと行えるプラグイン
-  NeoBundleLazy "gregsexton/gitv", {
-        \ "depends": ["tpope/vim-fugitive"],
-        \ "autoload": {
-        \   "commands": ["Gitv"],
-        \ }}
-  "}}}
+  " unite source for using git.
+  NeoBundle 'kmnk/vim-unite-giti'
 
   " Editing support {{{
   NeoBundle 'kana/vim-operator-user'
 
   " 「S」で選択されたテキストを囲う
-  NeoBundle 'rhysd/vim-operator-surround'
-  map ys <Plug>(operator-surround-append)
-  map ds <Plug>(operator-surround-delete)
-  map cs <Plug>(operator-surround-replace)
+"   NeoBundle 'rhysd/vim-operator-surround'
+"   map ys <Plug>(operator-surround-append)
+"   map ds <Plug>(operator-surround-delete)
+"   map cs <Plug>(operator-surround-replace)
   " NeoBundle 'tpope/vim-surround'
 
   " テキストオブジェクトで置換
@@ -681,7 +669,8 @@ else
       autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
       autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
       autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-      autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"       autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+      autocmd FileType python setlocal omnifunc=jedi#completions
       autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
       " Enable heavy omni completion.
       if !exists('g:neocomplete#sources#omni#input_patterns')
