@@ -1,4 +1,3 @@
-alias ios='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 ##################################################################################
 # Python
 ##################################################################################
@@ -13,9 +12,8 @@ fi
 # Vim
 ##################################################################################
 # デフォルトのVimをMacVim Kaoriyaに
-export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+export EDITOR=/usr/local/bin/nvim
+alias vim=/usr/local/bin/nvim
 
 ##################################################################################
 # Homebrew

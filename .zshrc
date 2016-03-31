@@ -73,11 +73,20 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
   zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/shell/chpwd-recent-dirs"
   zstyle ':chpwd:*' recent-dirs-pushd true
 fi
+
+##################################################################################
+# hub
+##################################################################################
+function git(){hub "$@"} # zsh
+
+##################################################################################
+# direnv
+##################################################################################
+eval "$(direnv hook zsh)" 
+
 ##################################################################################
 # Python
 ##################################################################################
-export PATH=$PATH:/Library/Python/2.7/site-packages/bs4
-
 # pip zsh completion start
 function _pip_completion {
   local words cword
@@ -89,6 +98,11 @@ function _pip_completion {
 }
 compctl -K _pip_completion pip
 # pip zsh completion end
+
+# pyenv
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 ##################################################################################
 # Peco
