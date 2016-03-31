@@ -1,0 +1,11 @@
+- name: OSX Local Provisioner
+  hosts: localhost
+  connection: local
+  user: naoto_koshimizu
+  roles:
+    - homebrew
+    - xquartz
+    - ricty
+    - rstudio
+    - setting
+    - dotfiles

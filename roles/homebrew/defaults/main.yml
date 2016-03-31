@@ -1,0 +1,50 @@
+---
+homebrew_installed_packages:
+  - python3 
+  - zsh
+  - wget
+  - curl
+  - nkf
+  - cmake
+  - tree
+  - ctags
+  - nkf
+  - jq
+  - peco
+  - hub
+  - tig
+  - direnv
+  - imagemagick
+  - { name: neovim, state: head }
+  - gcc
+  - { name: pyenv, state: head }
+  - { name: pyenv-virtualenv, state: head }
+  - mecab
+  - mecab-ipadic
+  - xz
+
+homebrew_upgrade_all_packages: no
+
+homebrew_taps:
+  - homebrew/binary
+  - homebrew/dupes
+  - homebrew/science
+  - neovim/homebrew-neovim
+  - caskroom/cask
+
+homebrew_cask_apps:
+  - firefox
+  - google-chrome
+  - google-japanese-ime
+  - karabiner
+  - slack
+  - iterm2
+  - flux
+  - dash
+  - alfred
+  - evernote
+
+homebrew_cask_appdir: /Applications
+
+homebrew_use_brewfile: true
+homebrew_brewfile_dir: '~'

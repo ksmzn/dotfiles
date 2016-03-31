@@ -1,0 +1,15 @@
+---
+
+- debug: msg="{{ ansible_env.HOME }}"
+
+# - name: check if my dotfiles dir exists at HOME dir
+#   command: ls -l {{ ansible_env.HOME }}/dotfiles
+#   ignore_errors: True
+#   register: dotfiles_exist
+
+- name: get my dotfiles repo
+  git: repo=https://github.com/ksmzn/dotfiles.git dest={{ ansible_env.HOME }}/dotfiles
+
+- name: Creates config directory
+  file: path={{ ansible_env.HOME }}/.config state=directory
+

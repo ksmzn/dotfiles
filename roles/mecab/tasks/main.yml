@@ -1,0 +1,6 @@
+---
+
+- name: get mecab-ipadic-NEologd
+  git: repo=https://github.com/neologd/mecab-ipadic-neologd.git
+       dest={{ ansible_env.HOME }}/tmp
+       depth=1

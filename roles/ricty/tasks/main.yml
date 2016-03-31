@@ -1,0 +1,15 @@
+---
+# Ricty
+- name: Tap external Homebrew repositories
+  homebrew_tap: tap={{ item }} state=present
+  with_items: sanemat/font
+
+- name: fontforge のインストール (for Ricty)
+  homebrew: name=fontforge
+- name: Ricty のインストール
+  homebrew: name=ricty
+- name: 生成されたフォントファイルをコピー
+  shell: cp -f $(brew --cellar ricty)/*/share/fonts/Ricty*.ttf ~/Library/Fonts/
+  args:
+    creates: ~/Library/Fonts/Ricty-Bold.ttf
+  notify: run fc-cache

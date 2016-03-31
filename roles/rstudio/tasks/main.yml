@@ -1,0 +1,7 @@
+---
+
+- name: Install R
+  homebrew: name=r state='latest'
+
+- name: Install RStudio
+  homebrew_cask: name=rstudio state='installed'

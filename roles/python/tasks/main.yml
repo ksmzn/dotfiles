@@ -1,0 +1,15 @@
+---
+# WIP
+
+- name: get latest miniconda version
+  shell: >
+    pyenv install -l | grep miniconda | tail -n 1
+  register: latest_miniconda
+  ignore_errors: True
+  changed_when: False
+
+- debug: msg="{{ latest_miniconda.stdout }}"
+
+- name: install miniconda
+  shell: >
+    pyenv install "{{  latest_miniconda.stdout }}"
