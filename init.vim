@@ -151,7 +151,7 @@ cnoremap <C-y> <C-r>"
 " 表示系
 "#######################
 " 文字コードの指定
-set enc=utf-8
+" set enc=utf-8
 set fenc=utf-8
 set fencs=iso-2022-jp,utf-8,euc-jp,cp932
 
@@ -499,7 +499,7 @@ else
     endif
 
 
-    call dein#add('Shougo/deoplete.vim')
+    call dein#add('Shougo/deoplete.nvim')
     let g:deoplete#enable_at_startup = 1
 
 
