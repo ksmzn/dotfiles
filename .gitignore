@@ -1,5 +1,7 @@
 .vim/bundle/*
+.vim/dein/*
 !.vim/bundle/neobundle.vim
+!.vim/dein/dein.vim
 .DS_Store
 *.un~
 *~
