@@ -16,6 +16,7 @@ do
   [ $i = "README.md" ] && continue
   [ $i = "install.sh" ] && continue
   [ $i = ".envrc" ] && continue
+  [ $i = "roles" ] && continue
   if [[ $i = "peco" ]]; then
     ln -sf ~/dotfiles/$i ~/.config/
   elif [[ $i = "init.vim" ]]; then

@@ -8,7 +8,7 @@
 #   register: dotfiles_exist
 
 - name: get my dotfiles repo
-  git: repo=https://github.com/ksmzn/dotfiles.git dest={{ ansible_env.HOME }}/dotfiles
+  git: repo=https://github.com/ksmzn/dotfiles.git dest={{ ansible_env.HOME }}/dotfiles update=yes
 
 - name: Creates config directory
   file: path={{ ansible_env.HOME }}/.config state=directory
