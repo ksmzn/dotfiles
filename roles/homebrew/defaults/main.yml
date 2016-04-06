@@ -43,6 +43,9 @@ homebrew_cask_apps:
   - dash
   - alfred
   - evernote
+  - mendeley-desktop
+  - java
+  - sqlworkbenchj
 
 homebrew_cask_appdir: /Applications
 
