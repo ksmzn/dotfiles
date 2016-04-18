@@ -266,6 +266,9 @@ if has("autocmd")
   augroup END
 endif
 
+let g:python_host_prog = expand('$HOME') . '~/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = expand('$HOME') . '/.pyenv/versions/neovim3/bin/python'
+
 "#######################
 " 検索系
 "#######################
