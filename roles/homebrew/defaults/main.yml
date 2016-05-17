@@ -22,6 +22,7 @@ homebrew_installed_packages:
   - mecab
   - mecab-ipadic
   - xz
+  - postgres
 
 homebrew_upgrade_all_packages: no
 
