@@ -47,6 +47,7 @@ homebrew_cask_apps:
   - java
   - sqlworkbenchj
   - kindle
+  - anki
 
 homebrew_cask_appdir: /Applications
 
