@@ -54,7 +54,6 @@ else
         \if has('gui_running') | source $MYGVIMRC
   autocmd MyAutoCmd BufWritePost $MYGVIMRC if has('gui_running') | source $MYGVIMRC
 endif
-""}}}
 
 " <Leader><Leader>で変更があれば保存
 noremap <Leader><Leader> :up<CR>
@@ -193,8 +192,8 @@ if $TERM_PROGRAM == 'iTerm.app'
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
   else
     let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-"     let &t_SI = "\e]50;CursorShape=1\x7"
-"     let &t_EI = "\e]50;CursorShape=0\x7"
+    "     let &t_SI = "\e]50;CursorShape=1\x7"
+    "     let &t_EI = "\e]50;CursorShape=0\x7"
   endif
 endif
 
@@ -266,7 +265,7 @@ if has("autocmd")
   augroup END
 endif
 
-let g:python_host_prog = expand('$HOME') . '~/.pyenv/versions/neovim2/bin/python'
+let g:python_host_prog = expand('$HOME') . '/.pyenv/versions/neovim2/bin/python'
 let g:python3_host_prog = expand('$HOME') . '/.pyenv/versions/neovim3/bin/python'
 
 "#######################
@@ -285,15 +284,15 @@ if s:is_windows
   set backupdir=C:/Temp
   set directory=C:/Temp
 elseif isdirectory($HOME . '/tmp')
-    "set nobackup " バックアップを取らない
-    " バックアップディレクトリを変更
-    set backupdir=$HOME/tmp
-    "set noswapfile " スワップファイルを作らない
-    " スワップファイルディレクトリを変更
-    set directory=$HOME/tmp
-    "set noundofile " Undo ファイルを作らない
-    " Undo ファイルディレクトリを変更
-    set undodir=$HOME/tmp
+  "set nobackup " バックアップを取らない
+  " バックアップディレクトリを変更
+  set backupdir=$HOME/tmp
+  "set noswapfile " スワップファイルを作らない
+  " スワップファイルディレクトリを変更
+  set directory=$HOME/tmp
+  "set noundofile " Undo ファイルを作らない
+  " Undo ファイルディレクトリを変更
+  set undodir=$HOME/tmp
 endif
 
 "##################
@@ -364,7 +363,7 @@ else
       autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=236
       let g:indent_guides_start_level= 2
     endif
-"
+    "
     " File Management {{{
 
     call dein#add("Shougo/unite.vim", {
@@ -445,12 +444,14 @@ else
     " Editing support {{{
     call dein#add('kana/vim-operator-user')
 
-    " 「S」で選択されたテキストを囲う
-    call dein#add('rhysd/vim-operator-surround')
-    map ys <Plug>(operator-surround-append)
-    map ds <Plug>(operator-surround-delete)
-    map cs <Plug>(operator-surround-replace)
-    " call dein#add('tpope/vim-surround')
+    " 選択されたテキストを囲う
+    call dein#add('machakann/vim-sandwich')
+    call operator#sandwich#set('delete', 'all', 'highlight', 0)
+    call operator#sandwich#set('all', 'all', 'cursor', 'keep')
+    "call dein#add('rhysd/vim-operator-surround')
+    "map sa <Plug>(operator-surround-append)
+    "map sd <Plug>(operator-surround-delete)
+    "map sr <Plug>(operator-surround-replace)
 
     " テキストオブジェクトで置換
     call dein#add('kana/vim-operator-replace.git')
@@ -485,7 +486,7 @@ else
     " ヤンクの履歴を管理し、順々に参照、出力
     call dein#add('vim-scripts/YankRing.vim')
     if dein#tap("YankRing.vim")
-    let yankring_history_file = ".yankring_history"
+      let yankring_history_file = ".yankring_history"
     endif
 
     call dein#add('LeafCage/yankround.vim')
@@ -504,13 +505,14 @@ else
 
     call dein#add('Shougo/deoplete.nvim')
     let g:deoplete#enable_at_startup = 1
+    call dein#add('zchee/deoplete-jedi')
 
 
     call dein#add('Shougo/neosnippet', {
-             \ 'on_map': ['<Plug>(neosnippet_expand_or_jump)',
-             \            '<Plug>(neosnippet_expand_target)'],
-             \ 'depends': ['neosnippet-snippets', 'vim-snippets'],
-             \ 'lazy': 1})
+          \ 'on_map': ['<Plug>(neosnippet_expand_or_jump)',
+          \            '<Plug>(neosnippet_expand_target)'],
+          \ 'depends': ['neosnippet-snippets', 'vim-snippets'],
+          \ 'lazy': 1})
     call dein#add('Shougo/neosnippet-snippets', {'lazy': 1})
     call dein#add('honza/vim-snippets', {'lazy': 1})
     if dein#tap("neosnippet")
@@ -528,13 +530,13 @@ else
       "       \: "\<TAB>"
       " <Tab>で候補移動, <Enter>で展開
       imap <expr><CR> neosnippet#expandable() <bar><bar>
-              \ neosnippet#jumpable() ?
-              \ "\<Plug>(neosnippet_expand_or_jump)"
-              \ : "\<CR>"
+            \ neosnippet#jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \ : "\<CR>"
       imap <expr><TAB> pumvisible() ? "\<C-n>" 
-              \ : neosnippet#jumpable() ?
-              \ "\<Plug>(neosnippet_expand_or_jump)"
-              \ : "\<TAB>"
+            \ : neosnippet#jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)"
+            \ : "\<TAB>"
       smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
       " For snippet_complete marker.
       if has('conceal')
@@ -546,16 +548,16 @@ else
       let g:neosnippet#snippets_directory=s:dein_root . '/vim-snippets/snippets'
     endif
 
-"           \ 'lazy': 1
+    "           \ 'lazy': 1
     " Programming {{{
-"     call dein#add('thinca/vim-quickrun')
+    "     call dein#add('thinca/vim-quickrun')
     call dein#add('thinca/vim-quickrun', {
           \ 'depends' : 'shabadou.vim',
           \ 'on_map': [['nxo', '<Plug>(quickrun)']],
           \ 'lazy' : 1,
           \ })
-"           \ 'depends': 'vim-quickrun',
-"     call dein#add('osyo-manga/shabadou.vim')
+    "           \ 'depends': 'vim-quickrun',
+    "     call dein#add('osyo-manga/shabadou.vim')
     call dein#add('osyo-manga/shabadou.vim', {
           \ 'lazy' : 1,
           \ })
@@ -584,13 +586,13 @@ else
     call dein#add('ujihisa/repl.vim')
 
     " シンタックスチェックプラグイン
-  "   call dein#add('scrooloose/syntastic', {
-  "         \ 'build': {
-  "         \   'mac': ['pip install pyflake', 'npm -g install coffeelint'],
-  "         \   'unix': ['pip install pyflake', 'npm -g install coffeelint'],
-  "         \ }})
-  "   ' let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-  "   let g:syntastic_disabled_filetypes = ['html', 'tex']
+    "   call dein#add('scrooloose/syntastic', {
+    "         \ 'build': {
+    "         \   'mac': ['pip install pyflake', 'npm -g install coffeelint'],
+    "         \   'unix': ['pip install pyflake', 'npm -g install coffeelint'],
+    "         \ }})
+    "   ' let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+    "   let g:syntastic_disabled_filetypes = ['html', 'tex']
 
     call dein#add('mattn/emmet-vim', {'autoload': {
           \ 'filetypes': ['html', 'css', 'scss', 'sass', 'jinja2'] },
@@ -614,14 +616,14 @@ else
           \ },
           \ 'lazy': 1})
     call dein#add('davidhalter/jedi-vim', {
-        \ 'autoload': {
-        \   'filetypes': ['python', 'python3', 'jinja2'],
-        \ },
-        \ 'build': {
-        \   'mac': 'pip install jedi',
-        \   'unix': 'pip install jedi',
-        \ },
-        \ 'lazy': 1})
+          \ 'autoload': {
+          \   'filetypes': ['python', 'python3', 'jinja2'],
+          \ },
+          \ 'build': {
+          \   'mac': 'pip install jedi',
+          \   'unix': 'pip install jedi',
+          \ },
+          \ 'lazy': 1})
     if dein#tap("jedi-vim")
       let g:jedi#auto_vim_configuration = 0
       let g:jedi#popup_select_first = 0
