@@ -49,6 +49,7 @@ homebrew_cask_apps:
   - sqlworkbenchj
   - kindle
   - anki
+  - cyberduck
 
 homebrew_cask_appdir: /Applications
 
