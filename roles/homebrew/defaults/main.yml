@@ -22,6 +22,7 @@ homebrew_installed_packages:
   - mecab
   - mecab-ipadic
   - xz
+  - ghq
   - postgres
 
 homebrew_upgrade_all_packages: no
@@ -30,6 +31,7 @@ homebrew_taps:
   - homebrew/binary
   - homebrew/dupes
   - homebrew/science
+  - homebrew/python
   - neovim/homebrew-neovim
   - caskroom/cask
 

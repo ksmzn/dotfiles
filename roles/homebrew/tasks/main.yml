@@ -10,9 +10,6 @@
     state={{ item.state | default('latest') }}
   with_items: "{{ homebrew_installed_packages }}" 
 
-- name: homebrew-cask のインストール
-  homebrew: name=brew-cask state=latest
-
 - name: cask パッケージをインストール
   homebrew_cask: >
     name={{ item.name | default(item) }}
