@@ -1,32 +1,13 @@
-alias vim=$HOME/local/bin/vim
-alias vi=vim
+alias vim=/usr/bin/nvim
 export EDITOR=vim
-
-## ibus
-#export GTK_IM_MODULE=ibus
-#export XMODIFIERS=@im=ibus
-#export QT_IM_MODULE=ibus
-#exec ibus-daemon -dx &
 
 ##################################################################################
 # Python
 ##################################################################################
-# python PATH
-export PATH=/usr/local/python-3.4/bin:$PATH
-
 # pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-# virtualenvwrapper
-if [ -f /usr/local/python-3.4/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/python-3.4/bin/python3.4
-    export PROJECT_HOME=$HOME/Devel
-    source /usr/local/python-3.4/bin/virtualenvwrapper.sh
-    export PIP_RESPECT_VIRTUALENV=true
-fi
 
 # vagrant
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
