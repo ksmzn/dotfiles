@@ -85,12 +85,13 @@ cnoremap <C-y> <C-r>"
 "#######################
 " Variables
 "#######################
+let s:config_root = expand('~/.vim')
+
 let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_cygwin = has('win32unix')
 let s:is_darwin = has('mac') || has('macunix') || has('gui_macvim')
 let s:is_linux = !s:is_windows && !s:is_cygwin && !s:is_darwin
 
-let s:config_root = expand('~/.vim')
 if s:is_windows
   " use english interface
   language message en
@@ -247,24 +248,29 @@ elseif isdirectory($HOME . '/tmp')
   set undofile " Undo ファイルを作る。
 endif
 
+" Set python paths
+let g:python_host_prog = expand('$HOME') . '/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = expand('$HOME') . '/.pyenv/versions/neovim3/bin/python'
 
 "#######################
 " dein
 "#######################
 "let s:dein_root = s:config_root . '/dein'
 "let s:deinvim_root = s:dein_root . '/repos/github.com/Shougo/dein.vim'
-let g:dein_plugin_dir = expand('~/.cache/dein')
+let s:dein_plugin_dir = expand('~/.cache/dein')
+let s:dein_cache_dir = s:dein_plugin_dir . '/repos/github.com/Shougo/dein.vim'
 
 if &compatible
   set nocompatible
 endif
-"set runtimepath+=s:deinvim_root
+
 " set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+" set runtimepath+=s:dein_cache_dir
 
-if dein#load_state(dein_plugin_dir)
+if dein#load_state(s:dein_plugin_dir)
 
-  call dein#begin(dein_plugin_dir)
+  call dein#begin(s:dein_plugin_dir)
 
   " Basic
   call dein#add('Shougo/dein.vim')
@@ -283,13 +289,6 @@ if dein#load_state(dein_plugin_dir)
     \   }
     \ }
 
-  call dein#add('Shougo/deoplete.nvim')
-  let g:deoplete#enable_at_startup = 1
-"   if has('vim_starting')
-"     call deoplete#enable()
-"   endif
-"   call dein#add('davidhalter/jedi-vim')
-"   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
 
   " インデント可視化
   call dein#add('nathanaelkane/vim-indent-guides')
@@ -335,14 +334,18 @@ if dein#load_state(dein_plugin_dir)
 "       \ }
 "   endif
 
-  " Editing support
+  call dein#add('Shougo/deoplete.nvim')
+  let g:deoplete#enable_at_startup = 1
+  call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
+
+  "" Editing support
   "
   " Recognize charcode automatically
   call dein#add("banyan/recognize_charcode.vim")
 
 
 
-  " Snippets
+  "" Snippets
   call dein#add('Shougo/neosnippet', {
     \ 'on_map': ['<Plug>(neosnippet_expand_or_jump)',
     \            '<Plug>(neosnippet_expand_target)'],
@@ -371,13 +374,11 @@ if dein#load_state(dein_plugin_dir)
 
   call dein#end()
 endif
+
 " Installation check.
 if dein#check_install()
   call dein#install()
 endif
-" Set python paths
-let g:python_host_prog = expand('$HOME') . '/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = expand('$HOME') . '/.pyenv/versions/neovim3/bin/python'
 
 colorscheme iceberg
 filetype plugin indent on
