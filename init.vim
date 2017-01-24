@@ -148,11 +148,14 @@ if $TERM_PROGRAM == 'iTerm.app'
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
     let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
   else
-    let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-    "     let &t_SI = "\e]50;CursorShape=1\x7"
-    "     let &t_EI = "\e]50;CursorShape=0\x7"
+    let &t_SI = "\e]50;CursorShape=1\x7"
+    let &t_EI = "\e]50;CursorShape=0\x7"
   endif
 endif
+" let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 "全角スペース
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
@@ -276,6 +279,22 @@ if dein#load_state(s:dein_plugin_dir)
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
 
+  " Unite
+  call dein#add('Shougo/denite.nvim')
+  if dein#tap('denite.nvim')
+    nnoremap <silent> <C-k><C-f> :<C-u>Denite file_rec<CR>
+    nnoremap <silent> <C-k><C-g> :<C-u>Denite grep<CR>
+    nnoremap <silent> <C-k><C-l> :<C-u>Denite line<CR>
+    nnoremap <silent> <C-k><C-u> :<C-u>Denite file_mru<CR>
+    nnoremap <silent> <C-k><C-y> :<C-u>Denite neoyank<CR>
+    call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+  endif
+  call dein#add('Shougo/neoyank.vim')
+  call dein#add('Shougo/neomru.vim')
+
   " Style / Display
   call dein#add('cocopon/iceberg.vim')
 
@@ -334,16 +353,34 @@ if dein#load_state(s:dein_plugin_dir)
 "       \ }
 "   endif
 
+  "" Git
+
+  call dein#add('tpope/vim-fugitive')
+
+  "" Editing support
   call dein#add('Shougo/deoplete.nvim')
   let g:deoplete#enable_at_startup = 1
   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
 
-  "" Editing support
-  "
   " Recognize charcode automatically
   call dein#add("banyan/recognize_charcode.vim")
 
-
+  call dein#add('kana/vim-operator-user', {
+    \ 'depends': ['vim-operator-replace', 'vim-operator-surround'],
+    \ })
+  call dein#add('kana/vim-operator-replace')
+  if dein#tap('vim-operator-replace')
+    nmap _ <Plug>(operator-replace)
+  endif
+  call dein#add('rhysd/vim-operator-surround')
+  if dein#tap('vim-operator-surround')
+    " 括弧を追加する
+    map <silent> ys <Plug>(operator-surround-append)
+    " 括弧を削除する
+    map <silent> ds <Plug>(operator-surround-delete)
+    " 括弧を入れ替える
+    map <silent> cs <Plug>(operator-surround-replace)
+  endif
 
   "" Snippets
   call dein#add('Shougo/neosnippet', {
@@ -367,6 +404,7 @@ if dein#load_state(s:dein_plugin_dir)
   " <Leader>C でコメントアウトの解除
   nmap <Leader>C <Plug>(caw:zeropos:uncomment)
   vmap <Leader>C <Plug>(caw:zeropos:uncomment)
+
 
   "" Language
   " Go
