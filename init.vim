@@ -375,11 +375,11 @@ if dein#load_state(s:dein_plugin_dir)
   call dein#add('rhysd/vim-operator-surround')
   if dein#tap('vim-operator-surround')
     " 括弧を追加する
-    map <silent> ys <Plug>(operator-surround-append)
+    map <silent> Sy <Plug>(operator-surround-append)
     " 括弧を削除する
-    map <silent> ds <Plug>(operator-surround-delete)
+    map <silent> Sd <Plug>(operator-surround-delete)
     " 括弧を入れ替える
-    map <silent> cs <Plug>(operator-surround-replace)
+    map <silent> Sc <Plug>(operator-surround-replace)
   endif
 
   "" Snippets
