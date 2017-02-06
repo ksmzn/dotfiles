@@ -2,7 +2,8 @@
 " key config
 "#######################
 
-let mapleader = ","
+let mapleader = ','
+let maplocalleader = ','
 noremap \ ,
 
 " .vimrcの編集を簡単にする
@@ -331,7 +332,7 @@ if dein#load_state(s:dein_plugin_dir)
   call dein#add('osyo-manga/shabadou.vim', {
     \ 'lazy' : 1,
     \ })
-  nmap <Leader>r <Plug>(quickrun)
+  nmap <Leader>q <Plug>(quickrun)
 "   if dein#tap('vim-quickrun')
 "     let g:quickrun_config = {
 "       \   '_': {
@@ -361,6 +362,11 @@ if dein#load_state(s:dein_plugin_dir)
   call dein#add('Shougo/deoplete.nvim')
   let g:deoplete#enable_at_startup = 1
   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
+  " for Nvim-R
+"   if !exists('g:deoplete#omni_patterns')
+"       let g:deoplete#omni_patterns = {}
+"   endif
+"   let g:deoplete#omni_patterns.r = '[[:alnum:].\\]\+'
 
   " Recognize charcode automatically
   call dein#add("banyan/recognize_charcode.vim")
@@ -409,6 +415,9 @@ if dein#load_state(s:dein_plugin_dir)
   "" Language
   " Go
   call dein#add('fatih/vim-go', {'on_ft': 'go'})
+
+  " R
+  call dein#add('jalvesaq/Nvim-R')
 
   call dein#end()
 endif
