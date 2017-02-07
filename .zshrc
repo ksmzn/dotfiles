@@ -87,23 +87,23 @@ function git(){hub "$@"} # zsh
 ##################################################################################
 # Python
 ##################################################################################
-# pip zsh completion start
-function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] ) )
-}
-compctl -K _pip_completion pip
-# pip zsh completion end
-
-# pyenv
-
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
+# # pip zsh completion start
+# function _pip_completion {
+#   local words cword
+#   read -Ac words
+#   read -cn cword
+#   reply=( $( COMP_WORDS="$words[*]" \
+#              COMP_CWORD=$(( cword-1 )) \
+#              PIP_AUTO_COMPLETE=1 $words[1] ) )
+# }
+# compctl -K _pip_completion pip
+# # pip zsh completion end
+#
+# # pyenv
+#
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+#
 ##################################################################################
 # Peco
 ##################################################################################
@@ -245,6 +245,9 @@ bindkey '^m' do_enter
 ##################################################################################
 export GOPATH=$HOME/dev
 export PATH=$PATH:$GOPATH/bin
+
+# Glide
+export GO15VENDOREXPERIMENT=1
 
 ##################################################################################
 # OS別の読み込み
