@@ -133,17 +133,17 @@ bindkey '^r' peco-select-history
 #    pushd "$DIR"
 #  fi
 #}
-function peco-cdr () {
-    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
-        zle accept-line
-    fi
-    zle clear-screen
-}
-zle -N peco-cdr
-bindkey '^@' peco-cdr
-
+# function peco-cdr () {
+#     local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+#     if [ -n "$selected_dir" ]; then
+#         BUFFER="cd ${selected_dir}"
+#         zle accept-line
+#     fi
+#     zle clear-screen
+# }
+# zle -N peco-cdr
+# bindkey '^@' peco-cdr
+#
 # git add <file>の絞り込み
 function peco-git-add() {
     local SELECTED_FILE_TO_ADD="$(git status --porcelain | \
