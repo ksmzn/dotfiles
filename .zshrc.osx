@@ -1,13 +1,13 @@
-##################################################################################
-# Python
-##################################################################################
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-    export PROJECT_HOME=$HOME/Devel
-    source /usr/local/bin/virtualenvwrapper.sh
-    export PIP_RESPECT_VIRTUALENV=true
-fi
+# ##################################################################################
+# # Python
+# ##################################################################################
+# if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+#     export WORKON_HOME=$HOME/.virtualenvs
+#     export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
+#     export PROJECT_HOME=$HOME/Devel
+#     source /usr/local/bin/virtualenvwrapper.sh
+#     export PIP_RESPECT_VIRTUALENV=true
+# fi
 ##################################################################################
 # Vim
 ##################################################################################
