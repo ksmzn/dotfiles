@@ -20,4 +20,3 @@ export VAGRANT_DEFAULT_PROVIDER=virtualbox
 # peco
 ##################################################################################
 alias peco=~/bin/peco
-

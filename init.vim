@@ -178,6 +178,11 @@ set expandtab "タブの代わりに空白文字挿入
 " ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
+" ctags
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+set tags=./tags;
+" nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
 " softtabstopはTabキー押し下げ時の挿入される空白の量，0の場合はtabstopと同じ，BSにも影響する
 set tabstop=2 shiftwidth=2 softtabstop=0
 if has("autocmd")
@@ -288,9 +293,11 @@ if dein#load_state(s:dein_plugin_dir)
     nnoremap <silent> <C-k><C-l> :<C-u>Denite line<CR>
     nnoremap <silent> <C-k><C-u> :<C-u>Denite file_mru<CR>
     nnoremap <silent> <C-k><C-y> :<C-u>Denite neoyank<CR>
-    call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-    call denite#custom#var('grep', 'command', ['ag'])
+    " Change file_rec command.
+    call denite#custom#var('file_rec', 'command',
+    \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
     call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
     call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
   endif
   call dein#add('Shougo/neoyank.vim')
