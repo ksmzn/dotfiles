@@ -206,7 +206,8 @@ if has("autocmd")
     autocmd FileType html       setlocal sw=2 sts=2 ts=2 et
     autocmd FileType go         setlocal sw=4 sts=4 ts=4 noet
     autocmd FileType java       setlocal sw=4 sts=4 ts=4 et
-    autocmd FileType javascript setlocal sw=4 sts=4 ts=8 et
+    autocmd FileType javascript setlocal sw=2 sts=2 ts=4 et
+    autocmd FileType jsx        setlocal sw=2 sts=2 ts=4 et
     autocmd FileType perl       setlocal sw=4 sts=4 ts=4 et
     autocmd FileType php        setlocal sw=4 sts=4 ts=4 noet
     autocmd FileType python     setlocal sw=4 sts=4 ts=8 et
@@ -361,6 +362,11 @@ if dein#load_state(s:dein_plugin_dir)
 "       \ }
 "   endif
 
+  " Asynchronous Lint Engine  
+  call dein#add('w0rp/ale')
+  let g:ale_linters = {
+  \   'javascript': ['eslint'],
+  \}
   "" Git
 
   call dein#add('tpope/vim-fugitive')
@@ -420,11 +426,17 @@ if dein#load_state(s:dein_plugin_dir)
 
 
   "" Language
+  " JavaScript
+  " javascriptとJSXの2つのファイルタイプを指定する
+  au BufRead,BufNewFile *.jsx set filetype=javascript.jsx
+  call dein#add('pangloss/vim-javascript', {'on_ft': ['js', 'jsx']})
+  call dein#add('mxw/vim-jsx', {'on_ft': 'jsx'})
+
   " Go
   call dein#add('fatih/vim-go', {'on_ft': 'go'})
 
   " R
-  call dein#add('jalvesaq/Nvim-R')
+  call dein#add('jalvesaq/Nvim-R', {'on_ft': 'R'})
 
   call dein#end()
 endif
