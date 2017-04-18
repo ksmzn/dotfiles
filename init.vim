@@ -229,7 +229,10 @@ if has("autocmd")
     autocmd FileType jsp,asp,php,xml,perl syntax sync minlines=500 maxlines=1000
   augroup END
 endif
-
+augroup FiletypeGroup
+    autocmd!
+    au BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+augroup END
 "#######################
 " 検索系
 "#######################
@@ -364,17 +367,27 @@ if dein#load_state(s:dein_plugin_dir)
 
   " Asynchronous Lint Engine  
   call dein#add('w0rp/ale')
-  let g:ale_linters = {
-  \   'javascript': ['eslint'],
-  \}
-  "" Git
+  let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
+  let g:ale_linter_aliases = {'jsx': 'css'}
+  " run the linters when I save the file, rather than continuously as I type.
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 0
 
+  "" Git
   call dein#add('tpope/vim-fugitive')
 
   "" Editing support
   call dein#add('Shougo/deoplete.nvim')
   let g:deoplete#enable_at_startup = 1
   call dein#add('zchee/deoplete-jedi', {'on_ft': 'python'})
+  call dein#add('carlitux/deoplete-ternjs', {'on_ft': ['javascript', 'jsx'], 'build': 'yarn global add tern'})
+  let g:tern_request_timeout = 1
+  let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
+  let g:tern#filetypes = [
+                  \ 'javascript',
+                  \ 'jsx',
+                  \ 'javascript.jsx',
+                  \ ]
   " for Nvim-R
 "   if !exists('g:deoplete#omni_patterns')
 "       let g:deoplete#omni_patterns = {}
