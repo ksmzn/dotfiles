@@ -8,6 +8,10 @@
 #     source /usr/local/bin/virtualenvwrapper.sh
 #     export PIP_RESPECT_VIRTUALENV=true
 # fi
+# pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 ##################################################################################
 # Vim
 ##################################################################################
