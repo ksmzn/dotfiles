@@ -298,14 +298,26 @@ if dein#load_state(s:dein_plugin_dir)
     nnoremap <silent> <C-k><C-u> :<C-u>Denite file_mru<CR>
     nnoremap <silent> <C-k><C-y> :<C-u>Denite neoyank<CR>
     " Change file_rec command.
-    call denite#custom#var('file_rec', 'command',
-    \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
+"     call denite#custom#var('file_rec', 'command',
+"     \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+"     call denite#custom#var('grep', 'recursive_opts', [])
+"     call denite#custom#var('grep', 'pattern_opt', [])
+"     call denite#custom#var('grep', 'default_opts', ['--follow', '--no-group', '--no-color'])
   endif
   call dein#add('Shougo/neoyank.vim')
   call dein#add('Shougo/neomru.vim')
+
+  call dein#add('sbdchd/neoformat')
+  let g:neoformat_javascript_prettiereslint = {
+        \ 'exe': 'prettier-eslint',
+        \ 'args': ['--stdin'],
+        \ 'stdin': 1,
+        \ }
+  augroup fmt
+    autocmd!
+    autocmd BufWritePre * Neoformat
+  augroup END
+  let g:neoformat_enabled_javascript = ['prettiereslint'] 
 
   " Style / Display
   call dein#add('cocopon/iceberg.vim')
@@ -367,8 +379,8 @@ if dein#load_state(s:dein_plugin_dir)
 
   " Asynchronous Lint Engine  
   call dein#add('w0rp/ale')
-  let g:ale_linters = {'jsx': ['stylelint', 'eslint']}
-  let g:ale_linter_aliases = {'jsx': 'css'}
+  let g:ale_linters = {'javascript': ['flow', 'stylelint', 'prettier-eslint', 'eslint']}
+"   let g:ale_linter_aliases = {'javascript': 'css'}
   " run the linters when I save the file, rather than continuously as I type.
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
