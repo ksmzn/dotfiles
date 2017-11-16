@@ -307,17 +307,17 @@ if dein#load_state(s:dein_plugin_dir)
   call dein#add('Shougo/neoyank.vim')
   call dein#add('Shougo/neomru.vim')
 
-  call dein#add('sbdchd/neoformat')
-  let g:neoformat_javascript_prettiereslint = {
-        \ 'exe': 'prettier-eslint',
-        \ 'args': ['--stdin'],
-        \ 'stdin': 1,
-        \ }
-  augroup fmt
-    autocmd!
-    autocmd BufWritePre * Neoformat
-  augroup END
-  let g:neoformat_enabled_javascript = ['prettiereslint'] 
+"   call dein#add('sbdchd/neoformat')
+"   let g:neoformat_javascript_prettiereslint = {
+"         \ 'exe': 'prettier-eslint',
+"         \ 'args': ['--stdin'],
+"         \ 'stdin': 1,
+"         \ }
+"   augroup fmt
+"     autocmd!
+"     autocmd BufWritePre * Neoformat
+"   augroup END
+"   let g:neoformat_enabled_javascript = ['prettiereslint'] 
 
   " Style / Display
   call dein#add('cocopon/iceberg.vim')
@@ -380,10 +380,17 @@ if dein#load_state(s:dein_plugin_dir)
   " Asynchronous Lint Engine  
   call dein#add('w0rp/ale')
   let g:ale_linters = {'javascript': ['flow', 'stylelint', 'prettier-eslint', 'eslint']}
-"   let g:ale_linter_aliases = {'javascript': 'css'}
-  " run the linters when I save the file, rather than continuously as I type.
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
+"   let g:ale_linters = {'javascript': ['flow', 'stylelint', 'eslint']}
+"   let g:ale_linter_aliases = {'javascript': 'css'}
+
+"   let g:ale_fixers = {}
+"   let g:ale_fixers['javascript'] = ['prettier_eslint']
+  let g:ale_fixers = {
+  \   'javascript': ['prettier', 'eslint'],
+  \}
+  let g:ale_fix_on_save = 1
 
   "" Git
   call dein#add('tpope/vim-fugitive')
