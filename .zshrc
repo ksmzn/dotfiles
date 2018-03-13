@@ -2,7 +2,7 @@
 # 基本設定
 ##################################################################################
 #complete
-fpath=(path/to/zsh-completions/src /Users/ksmzn ~/.zsh/functions/Completion(N-/) ${fpath})
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # 履歴ファイルの保存先
 export HISTFILE=${HOME}/.zsh_history
