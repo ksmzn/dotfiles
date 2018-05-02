@@ -377,9 +377,32 @@ if dein#load_state(s:dein_plugin_dir)
 "       \ }
 "   endif
 
+  " gtags
+  " vim上でgtagsを使う
+  call dein#add('lighttiger2505/gtags.vim')
+  if dein#tap('gtags.vim')
+    " 今のファイルの関数などの一覧
+    nnoremap <silent> <Space>f :Gtags -f %<CR>
+    " カーソル下の単語が含まれるタグの表示
+    nnoremap <silent> <Space>j :GtagsCursor<CR>
+    " カーソル下の単語の定義元を表示
+    nnoremap <silent> <Space>d :<C-u>exe('Gtags '.expand('<cword>'))<CR>
+    " カーソル下の単語の参照先を表示
+    nnoremap <silent> <Space>r :<C-u>exe('Gtags -r '.expand('<cword>'))<CR>
+  endif
+"   " ターミナル上でのctagsやgtagsの生成やそれらの自動化をしてくれるプラグイン
+"   call dein#add('jsfaint/gen_tags.vim')
+"   let g:gen_tags#ctags_auto_gen = 1
+"   let g:gen_tags#gtags_auto_gen = 1
+
+
+
   " Asynchronous Lint Engine  
   call dein#add('w0rp/ale')
-  let g:ale_linters = {'javascript': ['flow', 'stylelint', 'prettier-eslint', 'eslint']}
+  let g:ale_linters = {
+  \   'javascript': ['flow', 'stylelint', 'prettier-eslint', 'eslint'],
+  \   'python': ['flake8']
+  \}
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
 "   let g:ale_linters = {'javascript': ['flow', 'stylelint', 'eslint']}
@@ -389,6 +412,7 @@ if dein#load_state(s:dein_plugin_dir)
 "   let g:ale_fixers['javascript'] = ['prettier_eslint']
   let g:ale_fixers = {
   \   'javascript': ['prettier', 'eslint'],
+  \   'python': ['autopep8', 'isort']
   \}
   let g:ale_fix_on_save = 1
 
