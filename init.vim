@@ -64,6 +64,10 @@ nnoremap vv vawy
 " 行末までのヤンク
 nnoremap Y y$
 
+" 別ウィンドウのリストなどで上下に移動
+nnoremap <C-n> :cn<CR>
+nnoremap <C-p> :cp<CR>
+
 "入力モードで削除
 inoremap <C-d> <Del>
 inoremap <C-h> <BackSpace>
