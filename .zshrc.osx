@@ -9,8 +9,10 @@
 #     export PIP_RESPECT_VIRTUALENV=true
 # fi
 # pyenv
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if type pyenv > /dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 ##################################################################################
 # Vim
