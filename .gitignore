@@ -8,3 +8,6 @@
 *.swp
 Brewfile
 *.retry
+.config
+peco
+.envrc
