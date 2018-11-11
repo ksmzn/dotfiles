@@ -267,6 +267,15 @@ export GO15VENDOREXPERIMENT=1
 export PATH=$HOME/study/dart/flutter/bin:$PATH
 
 ##################################################################################
+# GCP
+##################################################################################
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/naotokoshimizu/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/naotokoshimizu/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/naotokoshimizu/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/naotokoshimizu/google-cloud-sdk/completion.zsh.inc'; fi
+
+##################################################################################
 # OS別の読み込み
 ##################################################################################
 case "${OSTYPE}" in
