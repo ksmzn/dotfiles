@@ -84,7 +84,7 @@ function git(){hub "$@"} # zsh
 ##################################################################################
 # direnv
 ##################################################################################
-# eval "$(direnv hook zsh)" 
+eval "$(direnv hook zsh)" 
 
 ##################################################################################
 # tmux
@@ -109,7 +109,23 @@ fi
 # }
 # compctl -K _pip_completion pip
 # # pip zsh completion end
-#
+
+# pipenv shell の自動実行
+function auto_pipenv_shell {
+    if [ ! -n "${PIPENV_ACTIVE+1}" ]; then
+        if [ -f "Pipfile" ] ; then
+            pipenv shell
+        fi
+    fi
+}
+
+function cd {
+    builtin cd "$@"
+    auto_pipenv_shell
+}
+
+auto_pipenv_shell
+
 ##################################################################################
 # Peco
 ##################################################################################
