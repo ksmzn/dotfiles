@@ -5,6 +5,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 #complete
 fpath=(/usr/local/share/zsh-completions $fpath)
+fpath+=~/.zfunc
 
 # 履歴ファイルの保存先
 export HISTFILE=${HOME}/.zsh_history
@@ -272,10 +273,10 @@ export PATH=~/.npm-global/bin:$PATH
 # Go
 ##################################################################################
 export GOPATH=$HOME/dev
-export PATH=$PATH:$GOPATH/bin
-
-# Glide
-export GO15VENDOREXPERIMENT=1
+# export PATH=$PATH:$GOPATH/bin
+# 
+# # Glide
+# export GO15VENDOREXPERIMENT=1
 
 ##################################################################################
 # Dart
@@ -304,3 +305,10 @@ linux*)
     [ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
     ;;
 esac
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/naotokoshimizu/Projects/casting_asia_aws_lambda/mobile_push_notification/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/naotokoshimizu/Projects/casting_asia_aws_lambda/mobile_push_notification/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/naotokoshimizu/Projects/casting_asia_aws_lambda/mobile_push_notification/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/naotokoshimizu/Projects/casting_asia_aws_lambda/mobile_push_notification/node_modules/tabtab/.completions/sls.zsh

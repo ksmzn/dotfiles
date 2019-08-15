@@ -40,3 +40,10 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # brewでインストールしたbasictexのpath
 export PATH=/usr/texbin:$PATH
+
+##################################################################################
+# Android
+##################################################################################
+# https://docs.expo.io/versions/latest/workflow/android-studio-emulator/
+export ANDROID_SDK=$HOME/Library/Android/sdk
+export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
